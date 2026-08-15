@@ -20,6 +20,8 @@ class AppColors {
   static const Color pageBackground = Color(0xFFF7F6F2);
   static const Color mapBase = Color(0xFFE8E6E1);
   static const Color mapGridRoads = Color(0xFFDEDCD6);
+  static const Color statBlockBackground = Color(0xFFECEAE4);
+  static const Color tabTrackBackground = Color.fromARGB(15, 26, 26, 26);
 
   // Status Colors (Requests/Availability)
   static const Color statusUrgentBg = Color(0xFFF6DCDE);

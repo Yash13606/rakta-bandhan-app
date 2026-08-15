@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../theme/app_colors.dart';
 import 'find_donors_screen.dart';
 
@@ -210,7 +210,7 @@ class HomeScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFECEAE4), // muted background fill, no border
+                  color: AppColors.statBlockBackground, // muted background fill, no border
                   borderRadius: BorderRadius.circular(14),
                 ),
                 child: Row(

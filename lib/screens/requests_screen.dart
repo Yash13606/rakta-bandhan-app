@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../theme/app_colors.dart';
 
 class RequestsScreen extends StatefulWidget {
@@ -106,7 +106,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
               margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
               padding: const EdgeInsets.all(4.0),
               decoration: BoxDecoration(
-                color: const Color.fromARGB(15, 26, 26, 26), // subtle neutral border/shadow shade
+                color: AppColors.tabTrackBackground, // subtle neutral border/shadow shade
                 borderRadius: BorderRadius.circular(24),
               ),
               child: Row(
