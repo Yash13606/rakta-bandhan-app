@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import '../services/backend.dart';
 import '../theme/app_colors.dart';
 
-class DonorDetailsScreen extends StatelessWidget {
+class DonorDetailsScreen extends StatefulWidget {
   final String name;
   final String initials;
   final String bloodGroup;
@@ -21,6 +22,39 @@ class DonorDetailsScreen extends StatelessWidget {
     required this.isAvailable,
     this.city = 'Thiruvananthapuram',
   });
+
+  @override
+  State<DonorDetailsScreen> createState() => _DonorDetailsScreenState();
+}
+
+class _DonorDetailsScreenState extends State<DonorDetailsScreen> {
+  bool _isSending = false;
+
+  Future<void> _sendRequest() async {
+    setState(() => _isSending = true);
+    try {
+      final pos = await Backend.instance.currentPosition();
+      await Backend.instance.createRequest(
+        bloodGroup: widget.bloodGroup,
+        unitsNeeded: 1,
+        urgency: 'urgent',
+        lat: pos.latitude,
+        lng: pos.longitude,
+        locationLabel: 'Requested via ${widget.name}\'s profile',
+      );
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Blood request sent — visible to nearby ${widget.bloodGroup} donors.')),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Could not send request. Please try again.')),
+      );
+    } finally {
+      if (mounted) setState(() => _isSending = false);
+    }
+  }
 
   String _translateBloodGroup(String bg) {
     switch (bg) {
@@ -78,7 +112,7 @@ class DonorDetailsScreen extends StatelessWidget {
                   ),
                   alignment: Alignment.center,
                   child: Text(
-                    initials,
+                    widget.initials,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                           color: AppColors.primary,
                           fontWeight: FontWeight.w500,
@@ -91,7 +125,7 @@ class DonorDetailsScreen extends StatelessWidget {
 
               // 2. Centered Name
               Text(
-                name,
+                widget.name,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontSize: 20,
@@ -109,7 +143,7 @@ class DonorDetailsScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
-                    bloodGroup,
+                    widget.bloodGroup,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: AppColors.primary,
                           fontWeight: FontWeight.w500,
@@ -123,7 +157,7 @@ class DonorDetailsScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (isVerified) ...[
+                  if (widget.isVerified) ...[
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
@@ -154,7 +188,7 @@ class DonorDetailsScreen extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: isAvailable
+                      color: widget.isAvailable
                           ? AppColors.statusAvailableBg
                           : AppColors.border,
                       borderRadius: BorderRadius.circular(6),
@@ -166,16 +200,16 @@ class DonorDetailsScreen extends StatelessWidget {
                           height: 6,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: isAvailable
+                            color: widget.isAvailable
                                 ? AppColors.statusAvailableText
                                 : AppColors.textMuted,
                           ),
                         ),
                         const SizedBox(width: 6),
                         Text(
-                          isAvailable ? 'Available now' : 'Unavailable',
+                          widget.isAvailable ? 'Available now' : 'Unavailable',
                           style: TextStyle(
-                            color: isAvailable
+                            color: widget.isAvailable
                                 ? AppColors.statusAvailableText
                                 : AppColors.textSecondary,
                             fontSize: 11,
@@ -200,7 +234,7 @@ class DonorDetailsScreen extends StatelessWidget {
                   ),
                   const SizedBox(width: 6),
                   Text(
-                    '$distance · $city',
+                    '${widget.distance} · ${widget.city}',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: AppColors.textSecondary,
                         ),
@@ -229,7 +263,7 @@ class DonorDetailsScreen extends StatelessWidget {
                             ),
                       ),
                       Text(
-                        _translateBloodGroup(bloodGroup),
+                        _translateBloodGroup(widget.bloodGroup),
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               color: AppColors.textPrimary,
                               fontWeight: FontWeight.w500,
@@ -248,9 +282,9 @@ class DonorDetailsScreen extends StatelessWidget {
                             ),
                       ),
                       Text(
-                        isAvailable ? 'Available now' : 'Unavailable',
+                        widget.isAvailable ? 'Available now' : 'Unavailable',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: isAvailable
+                              color: widget.isAvailable
                                   ? AppColors.statusAvailableText
                                   : AppColors.textMuted,
                               fontWeight: FontWeight.w500,
@@ -266,49 +300,24 @@ class DonorDetailsScreen extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Blood request sent to $name.'),
-                      ),
-                    );
-                  },
-                  child: const Text('Request donor'),
+                  onPressed: _isSending ? null : _sendRequest,
+                  child: _isSending
+                      ? const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.whiteTextOnPrimary),
+                        )
+                      : const Text('Request donor'),
                 ),
               ),
-              const SizedBox(height: 12),
-
-              // 9. Call and WhatsApp side-by-side secondary buttons
-              Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton.icon(
-                      onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Calling $name...'),
-                          ),
-                        );
-                      },
-                      icon: const Icon(LucideIcons.phone, size: 14),
-                      label: const Text('Call'),
+              const SizedBox(height: 8),
+              Text(
+                'Contact details unlock once ${widget.name.split(' ').first} accepts your request.',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: AppColors.textMuted,
+                      fontSize: 12,
                     ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: OutlinedButton.icon(
-                      onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Opening WhatsApp chat with $name...'),
-                          ),
-                        );
-                      },
-                      icon: const Icon(LucideIcons.messageSquare, size: 14),
-                      label: const Text('WhatsApp'),
-                    ),
-                  ),
-                ],
               ),
               const SizedBox(height: 20),
             ],

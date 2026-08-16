@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import '../services/backend.dart';
 import '../theme/app_colors.dart';
 import 'donor_details_screen.dart';
 
@@ -12,38 +15,44 @@ class FindDonorsScreen extends StatefulWidget {
 
 class _FindDonorsScreenState extends State<FindDonorsScreen> {
   final TextEditingController _searchController = TextEditingController();
+  Position? _position;
 
-  final List<Map<String, dynamic>> _nearbyDonors = [
-    {
-      'initials': 'AG',
-      'name': 'Ashi Gupta',
-      'bloodGroup': 'O+',
-      'isVerified': true,
-      'distance': '1.2 km away',
-      'isAvailable': true,
-    },
-    {
-      'initials': 'RN',
-      'name': 'Rahul Nair',
-      'bloodGroup': 'A-',
-      'isVerified': false,
-      'distance': '1.8 km away',
-      'isAvailable': true,
-    },
-    {
-      'initials': 'SP',
-      'name': 'Siddharth Patel',
-      'bloodGroup': 'B+',
-      'isVerified': true,
-      'distance': '2.5 km away',
-      'isAvailable': false,
-    },
-  ];
+  @override
+  void initState() {
+    super.initState();
+    Backend.instance.currentPosition().then((p) {
+      if (mounted) setState(() => _position = p);
+    });
+  }
 
   @override
   void dispose() {
     _searchController.dispose();
     super.dispose();
+  }
+
+  Future<void> _sendRequestTo(Map<String, dynamic> donor) async {
+    final bloodGroup = donor['bloodGroup'] as String;
+    try {
+      final pos = _position ?? await Backend.instance.currentPosition();
+      await Backend.instance.createRequest(
+        bloodGroup: bloodGroup,
+        unitsNeeded: 1,
+        urgency: 'urgent',
+        lat: pos.latitude,
+        lng: pos.longitude,
+        locationLabel: 'Requested via Find Donors',
+      );
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('$bloodGroup blood request sent — visible to nearby donors.')),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Could not send request. Please try again.')),
+      );
+    }
   }
 
   @override
@@ -81,14 +90,13 @@ class _FindDonorsScreenState extends State<FindDonorsScreen> {
             ),
           ),
 
-          // 2. Custom Map Pins
-          // Pin 1: Ashi Gupta (O+)
+          // 2. Custom Map Pins (decorative placement — no paid maps/geocoding
+          // API wired up; real donor data drives the list below instead)
           Positioned(
             top: 150,
             left: 120,
             child: _buildMapPin(context, 'O+'),
           ),
-          // Pin 2: Rahul Nair (A-)
           Positioned(
             top: 250,
             right: 80,
@@ -173,13 +181,32 @@ class _FindDonorsScreenState extends State<FindDonorsScreen> {
 
                   // Scrollable Donor List
                   Expanded(
-                    child: ListView.separated(
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                      itemCount: _nearbyDonors.length,
-                      separatorBuilder: (context, index) => const SizedBox(height: 12),
-                      itemBuilder: (context, index) {
-                        final donor = _nearbyDonors[index];
-                        return _buildDonorCard(context, donor);
+                    child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                      stream: Backend.instance.availableDonorsStream(),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return const Center(child: CircularProgressIndicator(strokeWidth: 2));
+                        }
+                        final myUid = Backend.instance.currentUser?.uid;
+                        final docs = snapshot.data!.docs.where((d) => d.id != myUid).toList();
+                        if (docs.isEmpty) {
+                          return const Center(
+                            child: Text(
+                              'No available donors nearby yet.',
+                              style: TextStyle(color: AppColors.textSecondary, fontSize: 13),
+                            ),
+                          );
+                        }
+                        final donors = docs.map((d) => _donorCardData(d)).toList()
+                          ..sort((a, b) =>
+                              (a['distanceKm'] as double).compareTo(b['distanceKm'] as double));
+
+                        return ListView.separated(
+                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                          itemCount: donors.length,
+                          separatorBuilder: (context, index) => const SizedBox(height: 12),
+                          itemBuilder: (context, index) => _buildDonorCard(context, donors[index]),
+                        );
                       },
                     ),
                   ),
@@ -391,15 +418,7 @@ class _FindDonorsScreenState extends State<FindDonorsScreen> {
               const SizedBox(width: 8),
               Expanded(
                 child: OutlinedButton(
-                  onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          'Blood request sent to ${donor['name']}.',
-                        ),
-                      ),
-                    );
-                  },
+                  onPressed: () => _sendRequestTo(donor),
                   child: const Text('Request'),
                 ),
               ),
@@ -408,6 +427,29 @@ class _FindDonorsScreenState extends State<FindDonorsScreen> {
         ],
       ),
     );
+  }
+
+  Map<String, dynamic> _donorCardData(QueryDocumentSnapshot<Map<String, dynamic>> doc) {
+    final data = doc.data();
+    final name = data['name'] as String? ?? 'Donor';
+    final initials = name.trim().isEmpty
+        ? '?'
+        : name.trim().split(RegExp(r'\s+')).take(2).map((w) => w[0].toUpperCase()).join();
+    final lat = (data['lat'] as num?)?.toDouble();
+    final lng = (data['lng'] as num?)?.toDouble();
+    final km = (_position != null && lat != null && lng != null)
+        ? distanceKm(_position!.latitude, _position!.longitude, lat, lng)
+        : 0.0;
+
+    return {
+      'name': name,
+      'initials': initials,
+      'bloodGroup': data['blood_group'] as String? ?? '',
+      'isVerified': data['is_verified'] as bool? ?? false,
+      'isAvailable': data['is_available'] as bool? ?? false,
+      'distance': '${km.toStringAsFixed(1)} km away',
+      'distanceKm': km,
+    };
   }
 }
 

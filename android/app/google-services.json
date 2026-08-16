@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "323116488555",
+    "project_id": "project-673480bf-b9b8-4e5b-8a1",
+    "storage_bucket": "project-673480bf-b9b8-4e5b-8a1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:323116488555:android:9764f97cbf9e29bfb15e2e",
+        "android_client_info": {
+          "package_name": "com.raktabandhan.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "323116488555-io25mv8im3hprcqt1ooe2t8kps4d7rn4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1PBGC-VJi4koP0FAXSZyPZjKKxtt6oQs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "323116488555-io25mv8im3hprcqt1ooe2t8kps4d7rn4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
