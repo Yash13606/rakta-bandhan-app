@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../services/backend.dart';
@@ -25,6 +27,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   String? _bloodGroupError;
   bool _isSubmitting = false;
 
+  List<Map<String, dynamic>> _addressSuggestions = [];
+  double? _selectedLat;
+  double? _selectedLng;
+  bool _searchingAddress = false;
+  Timer? _addressDebounce;
+
   final List<String> _bloodGroups = [
     'A+', 'A-', 'B+', 'B-',
     'O+', 'O-', 'AB+', 'AB-'
@@ -38,10 +46,39 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   void dispose() {
+    _addressDebounce?.cancel();
     _nameController.dispose();
     _whatsappController.dispose();
     _locationController.dispose();
     super.dispose();
+  }
+
+  void _onLocationChanged(String value) {
+    _selectedLat = null;
+    _selectedLng = null;
+    _addressDebounce?.cancel();
+    if (value.trim().length < 3) {
+      setState(() => _addressSuggestions = []);
+      return;
+    }
+    _addressDebounce = Timer(const Duration(milliseconds: 400), () async {
+      setState(() => _searchingAddress = true);
+      final results = await Backend.instance.searchAddress(value);
+      if (!mounted) return;
+      setState(() {
+        _addressSuggestions = results;
+        _searchingAddress = false;
+      });
+    });
+  }
+
+  void _pickAddress(Map<String, dynamic> suggestion) {
+    setState(() {
+      _locationController.text = suggestion['label'] as String;
+      _selectedLat = suggestion['lat'] as double;
+      _selectedLng = suggestion['lng'] as double;
+      _addressSuggestions = [];
+    });
   }
 
   Future<void> _handleRegister() async {
@@ -58,13 +95,21 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
     setState(() => _isSubmitting = true);
     try {
-      final position = await Backend.instance.currentPosition();
+      double lat, lng;
+      if (_selectedLat != null && _selectedLng != null) {
+        lat = _selectedLat!;
+        lng = _selectedLng!;
+      } else {
+        final position = await Backend.instance.currentPosition();
+        lat = position.latitude;
+        lng = position.longitude;
+      }
       await Backend.instance.registerDonor(
         name: name,
         phone: whatsapp,
         bloodGroup: _selectedBloodGroup!,
-        lat: position.latitude,
-        lng: position.longitude,
+        lat: lat,
+        lng: lng,
       );
       if (!mounted) return;
       Navigator.pushAndRemoveUntil(
@@ -180,13 +225,57 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               TextField(
                 controller: _locationController,
                 style: Theme.of(context).textTheme.bodyLarge,
-                decoration: const InputDecoration(
+                onChanged: _onLocationChanged,
+                decoration: InputDecoration(
                   hintText: 'Search city or area',
-                  suffixIcon: Icon(
-                    LucideIcons.mapPin,
-                  ),
+                  suffixIcon: _searchingAddress
+                      ? const Padding(
+                          padding: EdgeInsets.all(14),
+                          child: SizedBox(
+                            width: 16,
+                            height: 16,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          ),
+                        )
+                      : const Icon(LucideIcons.mapPin),
                 ),
               ),
+              if (_addressSuggestions.isNotEmpty)
+                Container(
+                  margin: const EdgeInsets.only(top: 6),
+                  decoration: BoxDecoration(
+                    color: AppColors.surface,
+                    border: Border.all(color: AppColors.border),
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      for (final suggestion in _addressSuggestions)
+                        ListTile(
+                          dense: true,
+                          leading: const Icon(LucideIcons.mapPin, size: 16, color: AppColors.textSecondary),
+                          title: Text(
+                            suggestion['label'] as String,
+                            style: Theme.of(context).textTheme.bodySmall,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          onTap: () => _pickAddress(suggestion),
+                        ),
+                    ],
+                  ),
+                )
+              else if (_selectedLat != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 6),
+                  child: Text(
+                    'Location pinned',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: AppColors.statusAvailableText,
+                        ),
+                  ),
+                ),
               const SizedBox(height: 24),
 
               // Blood Group Grid

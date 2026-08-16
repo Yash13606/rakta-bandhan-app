@@ -1,8 +1,10 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:http/http.dart' as http;
 
 /// Recipient blood group -> donor groups that can give to it.
 const bloodCompatibility = <String, List<String>>{
@@ -315,6 +317,35 @@ class Backend {
       return await Geolocator.getCurrentPosition();
     } catch (_) {
       return _fallbackPosition();
+    }
+  }
+
+  /// Free OpenStreetMap Nominatim geocoding — no API key, no billing (same
+  /// no-paid-tools choice as the MapLibre/CARTO map elsewhere in this app).
+  /// Converts a typed address into a pickable list of {label, lat, lng}.
+  Future<List<Map<String, dynamic>>> searchAddress(String query) async {
+    if (query.trim().length < 3) return [];
+    final uri = Uri.https('nominatim.openstreetmap.org', '/search', {
+      'q': query,
+      'format': 'jsonv2',
+      'limit': '5',
+    });
+    try {
+      final response = await http.get(
+        uri,
+        headers: {'User-Agent': 'RaktaBandhan/1.0 (Rotary Club blood donor app)'},
+      );
+      if (response.statusCode != 200) return [];
+      final results = jsonDecode(response.body) as List;
+      return results
+          .map((r) => {
+                'label': r['display_name'] as String,
+                'lat': double.parse(r['lat'] as String),
+                'lng': double.parse(r['lon'] as String),
+              })
+          .toList();
+    } catch (_) {
+      return [];
     }
   }
 

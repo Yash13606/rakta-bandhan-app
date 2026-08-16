@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -17,6 +19,11 @@ class _FindDonorsScreenState extends State<FindDonorsScreen> {
   final TextEditingController _searchController = TextEditingController();
   Position? _position;
 
+  List<Map<String, dynamic>> _suggestions = [];
+  String? _searchedLabel;
+  bool _searching = false;
+  Timer? _debounce;
+
   @override
   void initState() {
     super.initState();
@@ -27,8 +34,57 @@ class _FindDonorsScreenState extends State<FindDonorsScreen> {
 
   @override
   void dispose() {
+    _debounce?.cancel();
     _searchController.dispose();
     super.dispose();
+  }
+
+  void _onSearchChanged(String value) {
+    _debounce?.cancel();
+    if (value.trim().length < 3) {
+      setState(() => _suggestions = []);
+      return;
+    }
+    _debounce = Timer(const Duration(milliseconds: 400), () async {
+      setState(() => _searching = true);
+      final results = await Backend.instance.searchAddress(value);
+      if (!mounted) return;
+      setState(() {
+        _suggestions = results;
+        _searching = false;
+      });
+    });
+  }
+
+  void _pickLocation(Map<String, dynamic> suggestion) {
+    setState(() {
+      _searchController.text = suggestion['label'] as String;
+      _searchedLabel = suggestion['label'] as String;
+      _position = Position(
+        latitude: suggestion['lat'] as double,
+        longitude: suggestion['lng'] as double,
+        timestamp: DateTime.now(),
+        accuracy: 0,
+        altitude: 0,
+        altitudeAccuracy: 0,
+        heading: 0,
+        headingAccuracy: 0,
+        speed: 0,
+        speedAccuracy: 0,
+      );
+      _suggestions = [];
+    });
+  }
+
+  void _clearSearch() {
+    setState(() {
+      _searchController.clear();
+      _searchedLabel = null;
+      _suggestions = [];
+    });
+    Backend.instance.currentPosition().then((p) {
+      if (mounted) setState(() => _position = p);
+    });
   }
 
   Future<void> _sendRequestTo(Map<String, dynamic> donor) async {
@@ -41,7 +97,7 @@ class _FindDonorsScreenState extends State<FindDonorsScreen> {
         urgency: 'urgent',
         lat: pos.latitude,
         lng: pos.longitude,
-        locationLabel: 'Requested via Find Donors',
+        locationLabel: _searchedLabel ?? 'Requested via Find Donors',
       );
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -90,8 +146,9 @@ class _FindDonorsScreenState extends State<FindDonorsScreen> {
             ),
           ),
 
-          // 2. Custom Map Pins (decorative placement — no paid maps/geocoding
-          // API wired up; real donor data drives the list below instead)
+          // 2. Custom Map Pins (decorative — static painted map, not real
+          // tiles; the donor list below is the real data, sorted by
+          // distance from the searched location or device GPS)
           Positioned(
             top: 150,
             left: 120,
@@ -117,20 +174,56 @@ class _FindDonorsScreenState extends State<FindDonorsScreen> {
                   width: 1.0,
                 ),
               ),
-              child: TextField(
-                controller: _searchController,
-                style: Theme.of(context).textTheme.bodyLarge,
-                decoration: const InputDecoration(
-                  hintText: 'Search location',
-                  prefixIcon: Icon(
-                    LucideIcons.search,
-                    color: AppColors.textSecondary,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextField(
+                    controller: _searchController,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                    onChanged: _onSearchChanged,
+                    decoration: InputDecoration(
+                      hintText: 'Search location',
+                      prefixIcon: const Icon(
+                        LucideIcons.search,
+                        color: AppColors.textSecondary,
+                      ),
+                      suffixIcon: _searching
+                          ? const Padding(
+                              padding: EdgeInsets.all(14),
+                              child: SizedBox(
+                                width: 16,
+                                height: 16,
+                                child: CircularProgressIndicator(strokeWidth: 2),
+                              ),
+                            )
+                          : (_searchedLabel != null
+                              ? IconButton(
+                                  icon: const Icon(LucideIcons.x, size: 18, color: AppColors.textSecondary),
+                                  onPressed: _clearSearch,
+                                )
+                              : null),
+                      border: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      contentPadding: const EdgeInsets.symmetric(vertical: 14),
+                    ),
                   ),
-                  border: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(vertical: 14),
-                ),
+                  if (_suggestions.isNotEmpty) ...[
+                    const Divider(height: 1),
+                    for (final suggestion in _suggestions)
+                      ListTile(
+                        dense: true,
+                        leading: const Icon(LucideIcons.mapPin, size: 16, color: AppColors.textSecondary),
+                        title: Text(
+                          suggestion['label'] as String,
+                          style: Theme.of(context).textTheme.bodySmall,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        onTap: () => _pickLocation(suggestion),
+                      ),
+                  ],
+                ],
               ),
             ),
           ),
