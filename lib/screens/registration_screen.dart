@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import '../services/backend.dart';
 import '../theme/app_colors.dart';
 import 'main_navigation_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
-  const RegistrationScreen({super.key});
+  final String phoneNumber;
+
+  const RegistrationScreen({super.key, required this.phoneNumber});
 
   @override
   State<RegistrationScreen> createState() => _RegistrationScreenState();
@@ -20,11 +23,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   String? _nameError;
   String? _whatsappError;
   String? _bloodGroupError;
+  bool _isSubmitting = false;
 
   final List<String> _bloodGroups = [
     'A+', 'A-', 'B+', 'B-',
     'O+', 'O-', 'AB+', 'AB-'
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _whatsappController.text = widget.phoneNumber;
+  }
 
   @override
   void dispose() {
@@ -34,7 +44,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     super.dispose();
   }
 
-  void _handleRegister() {
+  Future<void> _handleRegister() async {
     final name = _nameController.text.trim();
     final whatsapp = _whatsappController.text.trim();
 
@@ -44,11 +54,29 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       _bloodGroupError = _selectedBloodGroup == null ? 'Please select a blood group' : null;
     });
 
-    if (name.isNotEmpty && whatsapp.isNotEmpty && _selectedBloodGroup != null) {
+    if (name.isEmpty || whatsapp.isEmpty || _selectedBloodGroup == null) return;
+
+    setState(() => _isSubmitting = true);
+    try {
+      final position = await Backend.instance.currentPosition();
+      await Backend.instance.registerDonor(
+        name: name,
+        phone: whatsapp,
+        bloodGroup: _selectedBloodGroup!,
+        lat: position.latitude,
+        lng: position.longitude,
+      );
+      if (!mounted) return;
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const MainNavigationScreen()),
         (route) => false,
+      );
+    } catch (e) {
+      if (!mounted) return;
+      setState(() => _isSubmitting = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Registration failed. Please try again.')),
       );
     }
   }
@@ -271,8 +299,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: _handleRegister,
-                  child: const Text('Complete registration'),
+                  onPressed: _isSubmitting ? null : _handleRegister,
+                  child: _isSubmitting
+                      ? const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.whiteTextOnPrimary),
+                        )
+                      : const Text('Complete registration'),
                 ),
               ),
               const SizedBox(height: 20),

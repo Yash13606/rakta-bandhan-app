@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import '../services/backend.dart';
 import '../theme/app_colors.dart';
 import 'login_screen.dart';
 
@@ -11,12 +13,34 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  bool _isAvailable = true;
+  @override
+  void initState() {
+    super.initState();
+    // Client-side stand-in for scheduledReactivation.js — flips
+    // is_available back on if the 90-day cooldown has already elapsed.
+    Backend.instance.maybeReactivate();
+  }
 
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(message)),
     );
+  }
+
+  Future<void> _logOut() async {
+    await Backend.instance.signOut();
+    if (!mounted) return;
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => const LoginScreen()),
+      (route) => false,
+    );
+  }
+
+  String _initials(String name) {
+    final trimmed = name.trim();
+    if (trimmed.isEmpty) return '?';
+    return trimmed.split(RegExp(r'\s+')).take(2).map((w) => w[0].toUpperCase()).join();
   }
 
   @override
@@ -43,258 +67,254 @@ class _ProfileScreenState extends State<ProfileScreen> {
         centerTitle: true,
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SizedBox(height: 12),
+        child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+          stream: Backend.instance.myDonorDocStream(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(child: CircularProgressIndicator(strokeWidth: 2));
+            }
+            final data = snapshot.data!.data() ?? {};
+            final name = data['name'] as String? ?? '';
+            final bloodGroup = data['blood_group'] as String? ?? '—';
+            final isVerified = data['is_verified'] as bool? ?? false;
+            final isAvailable = data['is_available'] as bool? ?? false;
 
-              // 1. Centered Circular Avatar
-              Center(
-                child: Container(
-                  width: 80,
-                  height: 80,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.primaryLightTint,
-                  ),
-                  alignment: Alignment.center,
-                  child: Text(
-                    'AG',
-                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                          color: AppColors.primary,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 28,
-                        ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-
-              // 2. Centered Name
-              Text(
-                'Ashi Gupta',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
-                    ),
-              ),
-              const SizedBox(height: 8),
-
-              // 3. Blood Badge
-              Center(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryLightTint,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    'O+',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: AppColors.primary,
-                          fontWeight: FontWeight.w500,
-                        ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-
-              // 4. Badges (Verified & Availability Dot/Label together)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+            return SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: AppColors.statusAvailableBg,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    child: const Row(
-                      children: [
-                        Icon(
-                          LucideIcons.check,
-                          color: AppColors.statusAvailableText,
-                          size: 12,
-                        ),
-                        SizedBox(width: 4),
-                        Text(
-                          'Verified',
-                          style: TextStyle(
-                            color: AppColors.statusAvailableText,
-                            fontSize: 11,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
+                  const SizedBox(height: 12),
+
+                  // 1. Centered Circular Avatar
+                  Center(
+                    child: Container(
+                      width: 80,
+                      height: 80,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.primaryLightTint,
+                      ),
+                      alignment: Alignment.center,
+                      child: Text(
+                        _initials(name),
+                        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 28,
+                            ),
+                      ),
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: _isAvailable
-                          ? AppColors.statusAvailableBg
-                          : AppColors.border,
-                      borderRadius: BorderRadius.circular(6),
+                  const SizedBox(height: 16),
+
+                  // 2. Centered Name
+                  Text(
+                    name,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                  ),
+                  const SizedBox(height: 8),
+
+                  // 3. Blood Badge
+                  Center(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryLightTint,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        bloodGroup,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.w500,
+                            ),
+                      ),
                     ),
-                    child: Row(
-                      children: [
+                  ),
+                  const SizedBox(height: 16),
+
+                  // 4. Badges (Verified & Availability Dot/Label together)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (isVerified) ...[
                         Container(
-                          width: 6,
-                          height: 6,
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                           decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: _isAvailable
-                                ? AppColors.statusAvailableText
-                                : AppColors.textMuted,
+                            color: AppColors.statusAvailableBg,
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: const Row(
+                            children: [
+                              Icon(
+                                LucideIcons.check,
+                                color: AppColors.statusAvailableText,
+                                size: 12,
+                              ),
+                              SizedBox(width: 4),
+                              Text(
+                                'Verified',
+                                style: TextStyle(
+                                  color: AppColors.statusAvailableText,
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        const SizedBox(width: 6),
-                        Text(
-                          _isAvailable ? 'Available now' : 'Unavailable',
-                          style: TextStyle(
-                            color: _isAvailable
-                                ? AppColors.statusAvailableText
-                                : AppColors.textSecondary,
-                            fontSize: 11,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
+                        const SizedBox(width: 8),
                       ],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
-
-              // 5. Divider
-              const Divider(
-                color: AppColors.border,
-                height: 1,
-              ),
-              const SizedBox(height: 16),
-
-              // 6. Menu Rows
-              _buildMenuRow(
-                context,
-                icon: LucideIcons.user,
-                label: 'Personal information',
-                onTap: () => _showSnackBar('Opening Personal information...'),
-              ),
-              _buildMenuRow(
-                context,
-                icon: LucideIcons.history,
-                label: 'Donation history',
-                onTap: () => _showSnackBar('Opening Donation history...'),
-              ),
-              _buildMenuRow(
-                context,
-                icon: LucideIcons.phone,
-                label: 'Emergency contact',
-                onTap: () => _showSnackBar('Opening Emergency contact...'),
-              ),
-              _buildMenuRow(
-                context,
-                icon: LucideIcons.settings,
-                label: 'Settings',
-                onTap: () => _showSnackBar('Opening Settings...'),
-              ),
-
-              const SizedBox(height: 8),
-              // 7. Divider
-              const Divider(
-                color: AppColors.border,
-                height: 1,
-              ),
-              const SizedBox(height: 8),
-
-              // 8. Availability Row
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(
-                          LucideIcons.activity,
-                          color: AppColors.textSecondary,
-                          size: 20,
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: isAvailable ? AppColors.statusAvailableBg : AppColors.border,
+                          borderRadius: BorderRadius.circular(6),
                         ),
-                        const SizedBox(width: 12),
-                        Text(
-                          'Availability',
-                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                color: AppColors.textPrimary,
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 6,
+                              height: 6,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: isAvailable
+                                    ? AppColors.statusAvailableText
+                                    : AppColors.textMuted,
+                              ),
+                            ),
+                            const SizedBox(width: 6),
+                            Text(
+                              isAvailable ? 'Available now' : 'Unavailable',
+                              style: TextStyle(
+                                color: isAvailable
+                                    ? AppColors.statusAvailableText
+                                    : AppColors.textSecondary,
+                                fontSize: 11,
                                 fontWeight: FontWeight.w500,
                               ),
-                        ),
-                      ],
-                    ),
-                    Switch(
-                      value: _isAvailable,
-                      activeThumbColor: AppColors.primary,
-                      activeTrackColor: AppColors.primaryLightTint,
-                      inactiveThumbColor: AppColors.textMuted,
-                      inactiveTrackColor: AppColors.border,
-                      onChanged: (val) {
-                        setState(() {
-                          _isAvailable = val;
-                        });
-                        _showSnackBar(
-                          _isAvailable
-                              ? 'You are now available for donation'
-                              : 'You are now offline',
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 8),
-              // 9. Divider
-              const Divider(
-                color: AppColors.border,
-                height: 1,
-              ),
-              const SizedBox(height: 16),
-
-              // 10. Log Out row
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => const LoginScreen()),
-                    (route) => false,
-                  );
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 4.0),
-                  child: Row(
-                    children: [
-                      const Icon(
-                        LucideIcons.logOut,
-                        color: AppColors.textSecondary,
-                        size: 20,
-                      ),
-                      const SizedBox(width: 12),
-                      Text(
-                        'Log out',
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              color: AppColors.textSecondary,
                             ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
-                ),
+                  const SizedBox(height: 24),
+
+                  const Divider(color: AppColors.border, height: 1),
+                  const SizedBox(height: 16),
+
+                  // 6. Menu Rows
+                  _buildMenuRow(
+                    context,
+                    icon: LucideIcons.user,
+                    label: 'Personal information',
+                    onTap: () => _showSnackBar('$name · $bloodGroup · ${data['phone'] ?? ''}'),
+                  ),
+                  _buildMenuRow(
+                    context,
+                    icon: LucideIcons.history,
+                    label: 'Donation history',
+                    onTap: () async {
+                      final count = await Backend.instance.myDonationCount();
+                      if (!mounted) return;
+                      _showSnackBar('$count donation(s) so far. Thank you.');
+                    },
+                  ),
+                  _buildMenuRow(
+                    context,
+                    icon: LucideIcons.phone,
+                    label: 'Emergency contact',
+                    onTap: () => _showSnackBar('Opening Emergency contact...'),
+                  ),
+                  _buildMenuRow(
+                    context,
+                    icon: LucideIcons.settings,
+                    label: 'Settings',
+                    onTap: () => _showSnackBar('Opening Settings...'),
+                  ),
+
+                  const SizedBox(height: 8),
+                  const Divider(color: AppColors.border, height: 1),
+                  const SizedBox(height: 8),
+
+                  // 8. Availability Row
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(
+                              LucideIcons.activity,
+                              color: AppColors.textSecondary,
+                              size: 20,
+                            ),
+                            const SizedBox(width: 12),
+                            Text(
+                              'Availability',
+                              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    color: AppColors.textPrimary,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                            ),
+                          ],
+                        ),
+                        Switch(
+                          value: isAvailable,
+                          activeThumbColor: AppColors.primary,
+                          activeTrackColor: AppColors.primaryLightTint,
+                          inactiveThumbColor: AppColors.textMuted,
+                          inactiveTrackColor: AppColors.border,
+                          onChanged: (val) async {
+                            await Backend.instance.setAvailability(val);
+                            _showSnackBar(
+                              val ? 'You are now available for donation' : 'You are now offline',
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 8),
+                  const Divider(color: AppColors.border, height: 1),
+                  const SizedBox(height: 16),
+
+                  // 10. Log Out row
+                  GestureDetector(
+                    onTap: _logOut,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 4.0),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            LucideIcons.logOut,
+                            color: AppColors.textSecondary,
+                            size: 20,
+                          ),
+                          const SizedBox(width: 12),
+                          Text(
+                            'Log out',
+                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                  color: AppColors.textSecondary,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                ],
               ),
-              const SizedBox(height: 20),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

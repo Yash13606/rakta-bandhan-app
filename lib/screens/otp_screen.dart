@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import '../services/backend.dart';
 import '../theme/app_colors.dart';
+import 'main_navigation_screen.dart';
 import 'registration_screen.dart';
 
 class OtpScreen extends StatefulWidget {
@@ -19,6 +21,7 @@ class _OtpScreenState extends State<OtpScreen> {
   final List<TextEditingController> _controllers = List.generate(6, (_) => TextEditingController());
   final List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
   String? _errorMessage;
+  bool _isVerifying = false;
 
   @override
   void dispose() {
@@ -39,21 +42,42 @@ class _OtpScreenState extends State<OtpScreen> {
     return '+91 ******$phone';
   }
 
-  void _handleVerify() {
+  Future<void> _handleVerify() async {
     final otpStr = _controllers.map((c) => c.text.trim()).join();
     if (otpStr.length != 6) {
       setState(() {
         _errorMessage = 'Please enter the 6-digit OTP verification code';
       });
-    } else {
-      setState(() {
-        _errorMessage = null;
-      });
-      // Navigate to Registration details
-      Navigator.push(
+      return;
+    }
+
+    setState(() {
+      _errorMessage = null;
+      _isVerifying = true;
+    });
+
+    try {
+      // Demo mode: any 6-digit code is accepted, no SMS actually sent.
+      // Signs in (or creates) a stable account keyed by phone number.
+      await Backend.instance.verifyFakeOtp(widget.phoneNumber);
+      final hasProfile = await Backend.instance.hasProfile();
+      if (!mounted) return;
+
+      Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => const RegistrationScreen()),
+        MaterialPageRoute(
+          builder: (context) => hasProfile
+              ? const MainNavigationScreen()
+              : RegistrationScreen(phoneNumber: widget.phoneNumber),
+        ),
+        (route) => false,
       );
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _isVerifying = false;
+        _errorMessage = 'Verification failed. Please try again.';
+      });
     }
   }
 
@@ -192,8 +216,14 @@ class _OtpScreenState extends State<OtpScreen> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: _handleVerify,
-                  child: const Text('Verify'),
+                  onPressed: _isVerifying ? null : _handleVerify,
+                  child: _isVerifying
+                      ? const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.whiteTextOnPrimary),
+                        )
+                      : const Text('Verify'),
                 ),
               ),
             ],
