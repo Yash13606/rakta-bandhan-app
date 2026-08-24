@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../services/backend.dart';
 import '../theme/app_colors.dart';
+import '../theme/app_text_styles.dart';
+import '../widgets/avatar_badge.dart';
+import '../widgets/gradient_hero_card.dart';
+import 'donation_history_screen.dart';
 import 'login_screen.dart';
+import 'settings_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -22,9 +27,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void _showSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
   }
 
   Future<void> _logOut() async {
@@ -46,26 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.pageBackground,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(
-            LucideIcons.arrowLeft,
-            color: AppColors.textPrimary,
-          ),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Text(
-          'Profile',
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-              ),
-        ),
-        centerTitle: true,
-      ),
+      backgroundColor: AppColors.warmPageBackground,
       body: SafeArea(
         child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
           stream: Backend.instance.myDonorDocStream(),
@@ -80,237 +64,158 @@ class _ProfileScreenState extends State<ProfileScreen> {
             final isAvailable = data['is_available'] as bool? ?? false;
 
             return SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
+              padding: const EdgeInsets.only(bottom: 24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SizedBox(height: 12),
-
-                  // 1. Centered Circular Avatar
-                  Center(
-                    child: Container(
-                      width: 80,
-                      height: 80,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: AppColors.primaryLightTint,
-                      ),
-                      alignment: Alignment.center,
-                      child: Text(
-                        _initials(name),
-                        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                              color: AppColors.primary,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 28,
-                            ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-
-                  // 2. Centered Name
-                  Text(
-                    name,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
+                  GradientHeroCard(
+                    startColor: AppColors.gradientHeaderStart,
+                    endColor: AppColors.gradientHeaderEnd,
+                    gradientBegin: Alignment.topRight,
+                    gradientEnd: Alignment.bottomLeft,
+                    padding: const EdgeInsets.fromLTRB(20, 28, 20, 46),
+                    ringLeft: -40,
+                    ringTop: -50,
+                    ringRight: null,
+                    ringBottom: null,
+                    ringSize: 160,
+                    child: Column(
+                      children: [
+                        AvatarBadge(initials: _initials(name), size: 76, fontSize: 24, translucent: true),
+                        const SizedBox(height: 14),
+                        Text(
+                          name.isEmpty ? 'Your profile' : name,
+                          textAlign: TextAlign.center,
+                          style: AppTextStyles.display(fontSize: 22, color: const Color(0xFFFFF9F5)),
                         ),
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            _translucentPill(bloodGroup, bold: true),
+                            const SizedBox(width: 6),
+                            _translucentPill(isVerified ? 'Verified' : 'Pending verification', icon: isVerified ? LucideIcons.check : null),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: 8),
-
-                  // 3. Blood Badge
-                  Center(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: AppColors.primaryLightTint,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Text(
-                        bloodGroup,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: AppColors.primary,
-                              fontWeight: FontWeight.w500,
+                  Transform.translate(
+                    offset: const Offset(0, -26),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: const [BoxShadow(color: Color.fromRGBO(43, 20, 20, 0.1), blurRadius: 24, offset: Offset(0, 10))],
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  width: 9,
+                                  height: 9,
+                                  decoration: BoxDecoration(
+                                    color: isAvailable ? AppColors.warmGreenText : AppColors.textMuted,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      isAvailable ? 'Available to donate' : 'Not available',
+                                      style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600, color: AppColors.textPrimaryWarm),
+                                    ),
+                                    const Text(
+                                      'Toggle off if you can\'t donate right now',
+                                      style: TextStyle(fontSize: 11, color: AppColors.textMuted),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
+                            Switch(
+                              value: isAvailable,
+                              activeThumbColor: AppColors.primary,
+                              activeTrackColor: AppColors.primaryLightTint,
+                              inactiveThumbColor: AppColors.textMuted,
+                              inactiveTrackColor: AppColors.border,
+                              onChanged: (val) async {
+                                await Backend.instance.setAvailability(val);
+                                _showSnackBar(val ? 'You are now available for donation' : 'You are now offline');
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16),
-
-                  // 4. Badges (Verified & Availability Dot/Label together)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (isVerified) ...[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                           decoration: BoxDecoration(
-                            color: AppColors.statusAvailableBg,
-                            borderRadius: BorderRadius.circular(6),
+                            color: Colors.white,
+                            border: Border.all(color: AppColors.cardBorderWarm),
+                            borderRadius: BorderRadius.circular(16),
+                            boxShadow: [BoxShadow(color: AppColors.shadowCard, blurRadius: 10, offset: const Offset(0, 3))],
                           ),
-                          child: const Row(
+                          clipBehavior: Clip.antiAlias,
+                          child: Column(
                             children: [
-                              Icon(
-                                LucideIcons.check,
-                                color: AppColors.statusAvailableText,
-                                size: 12,
+                              _menuRow(
+                                icon: LucideIcons.user,
+                                label: 'Personal information',
+                                onTap: () => _showSnackBar('$name · $bloodGroup · ${data['phone'] ?? ''}'),
+                                showDivider: true,
                               ),
-                              SizedBox(width: 4),
-                              Text(
-                                'Verified',
-                                style: TextStyle(
-                                  color: AppColors.statusAvailableText,
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                              _menuRow(
+                                icon: LucideIcons.history,
+                                label: 'Donation history',
+                                iconBg: AppColors.primaryLightTint,
+                                iconColor: AppColors.primary,
+                                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const DonationHistoryScreen())),
+                                showDivider: true,
+                              ),
+                              _menuRow(
+                                icon: LucideIcons.phone,
+                                label: 'Emergency contact',
+                                onTap: () => _showSnackBar('Opening Emergency contact...'),
+                                showDivider: true,
+                              ),
+                              _menuRow(
+                                icon: LucideIcons.sliders,
+                                label: 'Settings',
+                                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsScreen())),
+                                showDivider: false,
                               ),
                             ],
                           ),
                         ),
-                        const SizedBox(width: 8),
-                      ],
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: isAvailable ? AppColors.statusAvailableBg : AppColors.border,
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 6,
-                              height: 6,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: isAvailable
-                                    ? AppColors.statusAvailableText
-                                    : AppColors.textMuted,
-                              ),
+                        GestureDetector(
+                          onTap: _logOut,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 4),
+                            child: Row(
+                              children: [
+                                const Icon(LucideIcons.logOut, color: AppColors.textMuted, size: 17),
+                                const SizedBox(width: 10),
+                                Text('Log out', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: AppColors.textMuted)),
+                              ],
                             ),
-                            const SizedBox(width: 6),
-                            Text(
-                              isAvailable ? 'Available now' : 'Unavailable',
-                              style: TextStyle(
-                                color: isAvailable
-                                    ? AppColors.statusAvailableText
-                                    : AppColors.textSecondary,
-                                fontSize: 11,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 24),
-
-                  const Divider(color: AppColors.border, height: 1),
-                  const SizedBox(height: 16),
-
-                  // 6. Menu Rows
-                  _buildMenuRow(
-                    context,
-                    icon: LucideIcons.user,
-                    label: 'Personal information',
-                    onTap: () => _showSnackBar('$name · $bloodGroup · ${data['phone'] ?? ''}'),
-                  ),
-                  _buildMenuRow(
-                    context,
-                    icon: LucideIcons.history,
-                    label: 'Donation history',
-                    onTap: () async {
-                      final count = await Backend.instance.myDonationCount();
-                      if (!mounted) return;
-                      _showSnackBar('$count donation(s) so far. Thank you.');
-                    },
-                  ),
-                  _buildMenuRow(
-                    context,
-                    icon: LucideIcons.phone,
-                    label: 'Emergency contact',
-                    onTap: () => _showSnackBar('Opening Emergency contact...'),
-                  ),
-                  _buildMenuRow(
-                    context,
-                    icon: LucideIcons.settings,
-                    label: 'Settings',
-                    onTap: () => _showSnackBar('Opening Settings...'),
-                  ),
-
-                  const SizedBox(height: 8),
-                  const Divider(color: AppColors.border, height: 1),
-                  const SizedBox(height: 8),
-
-                  // 8. Availability Row
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            const Icon(
-                              LucideIcons.activity,
-                              color: AppColors.textSecondary,
-                              size: 20,
-                            ),
-                            const SizedBox(width: 12),
-                            Text(
-                              'Availability',
-                              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                    color: AppColors.textPrimary,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                            ),
-                          ],
-                        ),
-                        Switch(
-                          value: isAvailable,
-                          activeThumbColor: AppColors.primary,
-                          activeTrackColor: AppColors.primaryLightTint,
-                          inactiveThumbColor: AppColors.textMuted,
-                          inactiveTrackColor: AppColors.border,
-                          onChanged: (val) async {
-                            await Backend.instance.setAvailability(val);
-                            _showSnackBar(
-                              val ? 'You are now available for donation' : 'You are now offline',
-                            );
-                          },
+                          ),
                         ),
                       ],
                     ),
                   ),
-
-                  const SizedBox(height: 8),
-                  const Divider(color: AppColors.border, height: 1),
-                  const SizedBox(height: 16),
-
-                  // 10. Log Out row
-                  GestureDetector(
-                    onTap: _logOut,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 4.0),
-                      child: Row(
-                        children: [
-                          const Icon(
-                            LucideIcons.logOut,
-                            color: AppColors.textSecondary,
-                            size: 20,
-                          ),
-                          const SizedBox(width: 12),
-                          Text(
-                            'Log out',
-                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                  color: AppColors.textSecondary,
-                                ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
                 ],
               ),
             );
@@ -320,39 +225,58 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildMenuRow(
-    BuildContext context, {
+  Widget _translucentPill(String label, {bool bold = false, IconData? icon}) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: bold ? 11 : 10, vertical: 4),
+      decoration: BoxDecoration(
+        color: AppColors.whiteTextOnPrimary.withValues(alpha: 0.16),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (icon != null) ...[
+            Icon(icon, size: 11, color: AppColors.whiteTextOnPrimary),
+            const SizedBox(width: 4),
+          ],
+          Text(
+            label,
+            style: TextStyle(fontSize: bold ? 12.5 : 11, fontWeight: bold ? FontWeight.w700 : FontWeight.w600, color: AppColors.whiteTextOnPrimary),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _menuRow({
     required IconData icon,
     required String label,
     required VoidCallback onTap,
+    required bool showDivider,
+    Color iconBg = AppColors.dividerWarm,
+    Color iconColor = AppColors.textSecondary,
   }) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(10),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 4.0),
+      child: Container(
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          border: showDivider ? const Border(bottom: BorderSide(color: AppColors.dividerWarm)) : null,
+        ),
         child: Row(
           children: [
-            Icon(
-              icon,
-              color: AppColors.textSecondary,
-              size: 20,
+            Container(
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(color: iconBg, borderRadius: BorderRadius.circular(10)),
+              alignment: Alignment.center,
+              child: Icon(icon, size: 16, color: iconColor),
             ),
             const SizedBox(width: 12),
             Expanded(
-              child: Text(
-                label,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: AppColors.textPrimary,
-                      fontWeight: FontWeight.w500,
-                    ),
-              ),
+              child: Text(label, style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600, color: AppColors.textPrimaryWarm)),
             ),
-            const Icon(
-              LucideIcons.chevronRight,
-              color: AppColors.textMuted,
-              size: 20,
-            ),
+            const Icon(LucideIcons.chevronRight, size: 16, color: AppColors.chevronMuted),
           ],
         ),
       ),

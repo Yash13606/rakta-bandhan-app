@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<![CDATA[
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,72,500;0,72,600;0,72,700;1,72,500&display=swap">
+<style>
+  body{margin:0}
+  @keyframes rb-spin{to{transform:rotate(360deg)}}
+  @keyframes rb-pulse{0%{transform:scale(1);opacity:.5}70%{transform:scale(2.4);opacity:0}100%{transform:scale(2.4);opacity:0}}
+  @keyframes rb-pulse-ring{0%{transform:scale(.85);opacity:.9}100%{transform:scale(1.6);opacity:0}}
+  @keyframes rb-fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes rb-rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</helmet>
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+<symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-map-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1 1 16 0z" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.75" fill="none"/></symbol>
+<symbol id="i-droplet" viewBox="0 0 24 24"><path d="M12 2.5c4 5.2 7 8.7 7 12.3a7 7 0 1 1-14 0c0-3.6 3-7.1 7-12.3z" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="1.9" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.75" fill="none"/><path d="M8.3 12.3l2.5 2.5 5-5.6" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="i-x-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.75" fill="none"/><path d="M9 9l6 6M15 9l-6 6" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.75" fill="none"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4c0-1 1-2 2-2h2l2 5-2 2c1.4 3 3.6 5.2 6.6 6.6l2-2 5 2v2c0 1-1 2-2 2C10 22 2 14 2 6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-message" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-4 4V5z" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.75" fill="none"/><path d="M4 20c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M2.8 19c0-3 2.8-5 6.2-5s6.2 2 6.2 5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/><circle cx="17" cy="9" r="2.4" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M14.8 14.2c3-.3 5.4 1.6 5.6 4.6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.75" fill="none"/><path d="M12 7v5l3.5 2" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h13M21 18h0" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/><circle cx="13" cy="6" r="2" stroke="currentColor" stroke-width="1.6" fill="none"/><circle cx="7" cy="12" r="2" stroke="currentColor" stroke-width="1.6" fill="none"/><circle cx="17" cy="18" r="2" stroke="currentColor" stroke-width="1.6" fill="none"/></symbol>
+<symbol id="i-activity" viewBox="0 0 24 24"><path d="M3 12h4l2 7 4-14 2 7h6" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-log-out" viewBox="0 0 24 24"><path d="M9 21H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3M16 17l5-5-5-5M21 12H9" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 4 1.6 5.2 1.6 6.5H4.4C4.4 13.2 6 12 6 8z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 19a2 2 0 0 0 4 0" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="i-bell-off" viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 11.3-2.7M18 14.5c0-1.3-.4-2.3-.9-3.3M6 8c0 4-1.6 5.2-1.6 6.5h13.2" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 19a2 2 0 0 0 4 0" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M3 3l18 18" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="i-shield-check" viewBox="0 0 24 24"><path d="M12 2.5l7.5 3.4v5.6c0 5-3.3 8.4-7.5 9.9-4.2-1.5-7.5-4.9-7.5-9.9V5.9L12 2.5z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.7 12l2.3 2.3 4.3-4.8" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-building" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="1.5" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M9 10h2M13 10h2M9 14h2M13 14h2M12 21v-4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="i-megaphone" viewBox="0 0 24 24"><path d="M3 10v4h3l8 5V5L6 10H3z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 9a4 4 0 0 1 0 6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="i-list" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="1.5" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M8.5 9h7M8.5 13h7M8.5 17h4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="i-wifi-off" viewBox="0 0 24 24"><path d="M2 8.5a16 16 0 0 1 8.7-4.4M13.3 4.1A16 16 0 0 1 22 8.5M5 12a10.5 10.5 0 0 1 4.4-2.4M14.6 9.6A10.5 10.5 0 0 1 19 12M8.5 15.5a5.3 5.3 0 0 1 3.3-1.2c1 0 2 .3 2.9.9" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/><circle cx="12" cy="19" r="1.1" fill="currentColor" stroke="none"/><path d="M2 2l20 20" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="i-alert-triangle" viewBox="0 0 24 24"><path d="M12 3.5l9 15.5H3l9-15.5z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 9.5v4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/><circle cx="12" cy="16.3" r="0.6" fill="currentColor" stroke="none"/></symbol>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1v-9z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M8 11V8a4 4 0 1 1 8 0v3" stroke="currentColor" stroke-width="1.6" fill="none"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M3 7l9 6 9-6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 5h16l-6 7v6l-4 2v-8L4 5z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="6" y="4" width="12" height="17" rx="2" stroke="currentColor" stroke-width="1.6" fill="none"/><rect x="9" y="2.2" width="6" height="3" rx="1" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M9 11h6M9 15h6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 2.5c1 3 4 4.5 4 8.5a4 4 0 1 1-8 0c0-1 .3-1.8.8-2.5.2 1 .9 1.6 1.7 1.6.9 0 1.3-.8 1-1.6-.7-1.8-1-3.5.5-6z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-hourglass" viewBox="0 0 24 24"><path d="M6 3h12M6 21h12M7 3c0 5 4 6 5 8-1 2-5 3-5 8M17 3c0 5-4 6-5 8 1 2 5 3 5 8" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-trend-up" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M15 7h6v6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M17.5 6L15 8.5M6 18l2.5-2.5M17.5 18L15 15.5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/></symbol>
+<symbol id="i-handshake" viewBox="0 0 24 24"><path d="M2 12l4-4 4 3-3 3M22 12l-4-4-4 3 3 3M6 11l4 4 2-2M18 11l-4 4-2-2" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-send" viewBox="0 0 24 24"><path d="M4 4l16 8-16 8 3-8-3-8z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+<div style="min-height:100vh;background:#EDEBE4;display:flex;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#1A1A1A">
+
+  <div style="width:272px;flex:0 0 272px;background:#FFFFFF;border-right:1px solid #E5E3DD;height:100vh;position:sticky;top:0;overflow-y:auto;box-sizing:border-box;padding:22px 16px 40px">
+    <div style="display:flex;align-items:center;gap:10px;padding:0 6px 20px">
+      <svg width="22" height="22" style="color:#8C1F2B;flex:none"><use href="#i-droplet"></use></svg>
+      <div>
+        <div style="font-size:15px;font-weight:500;color:#1A1A1A;line-height:1.2">Rakta Bandhan</div>
+        <div style="font-size:11.5px;color:#9C9C98;line-height:1.2">Mobile prototype</div>
+      </div>
+    </div>
+    <sc-for list="{{ navSections }}" as="section" hint-placeholder-count="5">
+      <div style="margin-top:18px">
+        <div style="font-size:11px;font-weight:500;color:#9C9C98;text-transform:uppercase;letter-spacing:.04em;padding:0 10px 6px">{{ section.label }}</div>
+        <sc-for list="{{ section.items }}" as="item" hint-placeholder-count="6">
+          <sc-if value="{{ item.active }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ item.onClick }}" style="display:block;width:100%;text-align:left;padding:9px 10px;margin:1px 0;border-radius:9px;border:none;background:#F6DCDE;color:#8C1F2B;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit">{{ item.label }}</button>
+          </sc-if>
+          <sc-if value="{{ item.inactive }}" hint-placeholder-val="{{ true }}">
+            <button onClick="{{ item.onClick }}" style="display:block;width:100%;text-align:left;padding:9px 10px;margin:1px 0;border-radius:9px;border:none;background:transparent;color:#4a4a48;font-size:13px;font-weight:400;cursor:pointer;font-family:inherit">{{ item.label }}</button>
+          </sc-if>
+        </sc-for>
+      </div>
+    </sc-for>
+    <div style="margin-top:18px">
+      <div style="font-size:11px;font-weight:500;color:#9C9C98;text-transform:uppercase;letter-spacing:.04em;padding:0 10px 6px">Global (demo)</div>
+      <div style="display:flex;flex-wrap:wrap;gap:5px;padding:0 6px">
+        <sc-for list="{{ connChips }}" as="c" hint-placeholder-count="5">
+          <sc-if value="{{ c.active }}" hint-placeholder-val="{{ false }}"><button onClick="{{ c.onClick }}" style="border:none;background:#1A1A1A;color:#fff;border-radius:20px;padding:5px 10px;font-size:10.5px;cursor:pointer;font-family:inherit">{{ c.label }}</button></sc-if>
+          <sc-if value="{{ c.inactive }}" hint-placeholder-val="{{ true }}"><button onClick="{{ c.onClick }}" style="border:1px solid #D3D1C7;background:#fff;color:#6B6B68;border-radius:20px;padding:5px 10px;font-size:10.5px;cursor:pointer;font-family:inherit">{{ c.label }}</button></sc-if>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <div style="flex:1;display:flex;align-items:flex-start;justify-content:center;padding:36px 24px;min-height:100vh;box-sizing:border-box">
+    <div style="width:390px;flex:none;background:#111;border-radius:46px;padding:12px;box-shadow:0 30px 70px rgba(20,10,10,.28)">
+      <div style="width:100%;height:844px;background:#FBF7F1;border-radius:36px;overflow:hidden;position:relative;display:flex;flex-direction:column">
+
+        <div style="flex:0 0 46px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:13px;font-weight:500;color:#241416;background:transparent;z-index:5">
+          <span>9:41</span>
+          <span style="display:flex;align-items:center;gap:5px">
+            <span style="width:16px;height:10px;border:1.4px solid #241416;border-radius:2px;position:relative;display:inline-block"><span style="position:absolute;inset:1.5px;background:#241416;border-radius:1px"></span></span>
+          </span>
+        </div>
+
+        <sc-if value="{{ showRoleBadge }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:0 0 auto;display:flex;align-items:center;gap:7px;padding:6px 20px;background:{{ roleBandBg }};z-index:4">
+            <div style="width:20px;height:20px;border-radius:7px;background:{{ roleBandIconBg }};display:flex;align-items:center;justify-content:center;flex:none"><svg width="11" height="11" style="color:{{ roleBandText }}"><use href="{{ roleBadgeIcon }}"></use></svg></div>
+            <span style="font-size:11.5px;font-weight:600;color:{{ roleBandText }};letter-spacing:.01em">{{ roleBadgeLabel }}</span>
+            <span style="font-size:11px;color:{{ roleBandSubText }};margin-left:1px">{{ roleBandSub }}</span>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ showConnBanner }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:0 0 auto;padding:8px 16px;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:500;z-index:4">
+            <sc-if value="{{ connOffline }}" hint-placeholder-val="{{ false }}"><div style="width:100%;background:#ECEAE4;color:#6B6B68;border-radius:10px;padding:7px 12px;display:flex;align-items:center;gap:8px"><svg width="14" height="14"><use href="#i-wifi-off"></use></svg>You're offline — actions will send once reconnected</div></sc-if>
+            <sc-if value="{{ connReconnecting }}" hint-placeholder-val="{{ false }}"><div style="width:100%;background:#FAEEDA;color:#854F0B;border-radius:10px;padding:7px 12px;display:flex;align-items:center;gap:8px"><span style="width:12px;height:12px;border-radius:50%;border:2px solid rgba(133,79,11,.35);border-top-color:#854F0B;animation:rb-spin 0.8s linear infinite;display:inline-block"></span>Reconnecting…</div></sc-if>
+            <sc-if value="{{ connSyncedOk }}" hint-placeholder-val="{{ false }}"><div style="width:100%;background:#EAF3DE;color:#3B6D11;border-radius:10px;padding:7px 12px;display:flex;align-items:center;gap:8px"><svg width="14" height="14"><use href="#i-check-circle"></use></svg>Back online — your last action was saved</div></sc-if>
+            <sc-if value="{{ connSyncedFail }}" hint-placeholder-val="{{ false }}"><div style="width:100%;background:#F6DCDE;color:#8C1F2B;border-radius:10px;padding:7px 12px;display:flex;align-items:center;gap:8px"><svg width="14" height="14"><use href="#i-alert-triangle"></use></svg>Back online — your last action couldn't be saved. Please retry.</div></sc-if>
+          </div>
+        </sc-if>
+
+        <div style="flex:1;position:relative;overflow-y:auto;-ms-overflow-style:none">
+
+          <sc-if value="{{ isSplash }}" hint-placeholder-val="{{ true }}">
+            <div style="height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:0 30px;text-align:center">
+              <svg width="56" height="56" style="color:#8C1F2B"><use href="#i-droplet"></use></svg>
+              <div style="font-size:20px;font-weight:500;color:#8C1F2B">Rakta Bandhan</div>
+              <div style="font-size:13px;color:#6B6B68;max-width:230px">Every drop counts. Together, we save lives.</div>
+              <button onClick="{{ goToWelcome }}" style="margin-top:22px;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:14px;padding:12px 22px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit">Continue</button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isWelcome }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:20px;box-sizing:border-box;min-height:100%">
+              <div style="height:44px"></div>
+              <div style="text-align:center;font-size:20px;font-weight:500;color:#1A1A1A">Welcome to Rakta Bandhan</div>
+              <div style="text-align:center;font-size:14px;color:#6B6B68;margin-top:8px">Your help can save a life.</div>
+
+              <div style="display:flex;gap:6px;justify-content:center;margin-top:24px">
+                <sc-for list="{{ welcomeChips }}" as="c" hint-placeholder-count="3">
+                  <sc-if value="{{ c.active }}" hint-placeholder-val="{{ false }}"><button onClick="{{ c.onClick }}" style="border:none;background:#1A1A1A;color:#fff;border-radius:20px;padding:5px 11px;font-size:11px;cursor:pointer;font-family:inherit">{{ c.label }}</button></sc-if>
+                  <sc-if value="{{ c.inactive }}" hint-placeholder-val="{{ true }}"><button onClick="{{ c.onClick }}" style="border:1px solid #D3D1C7;background:#fff;color:#6B6B68;border-radius:20px;padding:5px 11px;font-size:11px;cursor:pointer;font-family:inherit">{{ c.label }}</button></sc-if>
+                </sc-for>
+              </div>
+
+              <sc-if value="{{ welcomeOffline }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:28px;background:#fff;border:1px solid #E5E3DD;border-radius:14px;padding:22px;text-align:center">
+                  <svg width="28" height="28" style="color:#9C9C98"><use href="#i-wifi-off"></use></svg>
+                  <div style="font-size:14px;font-weight:500;margin-top:10px;color:#1A1A1A">You're offline</div>
+                  <div style="font-size:12.5px;color:#6B6B68;margin-top:4px">Check your connection and try again.</div>
+                  <button style="margin-top:16px;width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:14px;padding:12px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit">Retry</button>
+                </div>
+              </sc-if>
+              <sc-if value="{{ welcomeOnline }}" hint-placeholder-val="{{ true }}">
+                <div style="margin-top:40px;display:flex;gap:8px;align-items:flex-start">
+                  <div style="padding:12px 14px;border:1px solid #E5E3DD;border-radius:14px;background:#fff;font-size:14px;font-weight:500">+91</div>
+                  <div style="flex:1;border:1px solid #E5E3DD;border-radius:14px;background:#fff;padding:12px 14px;font-size:14px;color:#1A1A1A">98765 43210</div>
+                </div>
+                <sc-if value="{{ welcomeInvalid }}" hint-placeholder-val="{{ false }}">
+                  <div style="color:#8C1F2B;font-size:12.5px;margin-top:8px;padding:0 4px">Please enter a valid 10-digit phone number.</div>
+                </sc-if>
+                <button onClick="{{ goToOtp }}" style="margin-top:22px;width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:14px;padding:13px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit">Continue</button>
+                <div style="text-align:center;font-size:12px;color:#9C9C98;margin-top:22px;line-height:1.5">By continuing, you consent to receive an OTP code to verify your phone number.</div>
+              </sc-if>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isOtp }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;height:100%">
+              <div style="flex:0 0 52px;display:flex;align-items:center;padding:0 8px"><button onClick="{{ goBack }}" style="width:36px;height:36px;border:none;background:none;color:#1A1A1A;cursor:pointer;display:flex;align-items:center;justify-content:center"><svg width="20" height="20"><use href="#i-arrow-left"></use></svg></button></div>
+              <div style="padding:8px 20px 20px;flex:1">
+                <div style="text-align:center;font-size:20px;font-weight:500">Verify your number</div>
+                <div style="text-align:center;font-size:14px;color:#6B6B68;margin-top:8px">We sent a 6-digit code to +91 ******3210</div>
+                <div style="display:flex;gap:6px;justify-content:center;margin-top:20px">
+                  <sc-for list="{{ otpChips }}" as="c" hint-placeholder-count="3">
+                    <sc-if value="{{ c.active }}" hint-placeholder-val="{{ false }}"><button onClick="{{ c.onClick }}" style="border:none;background:#1A1A1A;color:#fff;border-radius:20px;padding:5px 11px;font-size:11px;cursor:pointer;font-family:inherit">{{ c.label }}</button></sc-if>
+                    <sc-if value="{{ c.inactive }}" hint-placeholder-val="{{ true }}"><button onClick="{{ c.onClick }}" style="border:1px solid #D3D1C7;background:#fff;color:#6B6B68;border-radius:20px;padding:5px 11px;font-size:11px;cursor:pointer;font-family:inherit">{{ c.label }}</button></sc-if>
+                  </sc-for>
+                </div>
+
+                <div style="display:flex;justify-content:space-between;margin-top:32px">
+                  <sc-for list="{{ otpBoxes }}" as="box" hint-placeholder-count="6">
+                    <input value="{{ box.value }}" onChange="{{ box.onChange }}" maxlength="1" style="width:44px;height:48px;text-align:center;font-size:16px;font-weight:500;border-radius:14px;border:1px solid #E5E3DD;font-family:inherit;background:#fff;color:#1A1A1A" />
+                  </sc-for>
+                </div>
+
+                <sc-if value="{{ otpWrong }}" hint-placeholder-val="{{ false }}"><div style="color:#8C1F2B;font-size:12.5px;text-align:center;margin-top:12px">Incorrect code. Please try again.</div></sc-if>
+                <sc-if value="{{ otpExpired }}" hint-placeholder-val="{{ false }}"><div style="color:#8C1F2B;font-size:12.5px;text-align:center;margin-top:12px">This code has expired. Request a new one.</div></sc-if>
+
+                <div style="text-align:center;margin-top:28px;font-size:13px;color:#6B6B68">Didn't receive it? <span style="color:#8C1F2B;font-weight:500;cursor:pointer">Resend OTP</span></div>
+                <button onClick="{{ submitOtpClick }}" style="margin-top:28px;width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:14px;padding:13px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px">
+                  <sc-if value="{{ otpBusy }}" hint-placeholder-val="{{ false }}"><span style="width:15px;height:15px;border-radius:50%;border:2px solid rgba(251,230,232,.4);border-top-color:#FBE6E8;display:inline-block;animation:rb-spin 0.7s linear infinite"></span></sc-if>
+                  Verify
+                </button>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isRegistration }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;height:100%">
+              <div style="flex:0 0 52px;display:flex;align-items:center;padding:0 8px"><button onClick="{{ goBack }}" style="width:36px;height:36px;border:none;background:none;color:#1A1A1A;cursor:pointer;display:flex;align-items:center;justify-content:center"><svg width="20" height="20"><use href="#i-arrow-left"></use></svg></button></div>
+              <div style="padding:8px 20px 24px">
+                <div style="text-align:center;font-size:20px;font-weight:500">Complete registration</div>
+                <div style="text-align:center;font-size:13px;color:#6B6B68;margin-top:8px">Provide details to complete your profile.</div>
+
+                <div style="margin-top:28px;font-size:13px;font-weight:500;color:#6B6B68">Full name</div>
+                <input value="{{ regName }}" onChange="{{ onRegNameChange }}" placeholder="Enter your name" style="margin-top:8px;width:100%;box-sizing:border-box;padding:12px 14px;border-radius:14px;border:1px solid #E5E3DD;font-size:14px;font-family:inherit;color:#1A1A1A;background:#fff" />
+
+                <div style="margin-top:20px;font-size:13px;font-weight:500;color:#6B6B68">WhatsApp number</div>
+                <input value="{{ regWhatsapp }}" onChange="{{ onRegWhatsappChange }}" placeholder="Enter WhatsApp number" style="margin-top:8px;width:100%;box-sizing:border-box;padding:12px 14px;border-radius:14px;border:1px solid #E5E3DD;font-size:14px;font-family:inherit;color:#1A1A1A;background:#fff" />
+
+                <div style="margin-top:20px;font-size:13px;font-weight:500;color:#6B6B68">Location</div>
+                <div style="margin-top:8px;display:flex;align-items:center;border:1px solid #E5E3DD;border-radius:14px;background:#fff;padding:0 14px">
+                  <input value="{{ regLocation }}" onChange="{{ onRegLocationChange }}" placeholder="Search city or area" style="flex:1;border:none;outline:none;padding:12px 0;font-size:14px;font-family:inherit;color:#1A1A1A;background:transparent" />
+                  <svg width="16" height="16" style="color:#6B6B68"><use href="#i-map-pin"></use></svg>
+                </div>
+
+                <div style="margin-top:20px;font-size:13px;font-weight:500;color:#6B6B68">Blood group</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-top:8px">
+                  <sc-for list="{{ bloodGroupsReg }}" as="g" hint-placeholder-count="8">
+                    <sc-if value="{{ g.selected }}" hint-placeholder-val="{{ false }}"><button onClick="{{ g.onClick }}" style="height:44px;border-radius:14px;border:1px solid #8C1F2B;background:#8C1F2B;color:#FBE6E8;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit">{{ g.label }}</button></sc-if>
+                    <sc-if value="{{ g.unselected }}" hint-placeholder-val="{{ true }}"><button onClick="{{ g.onClick }}" style="height:44px;border-radius:14px;border:1px solid #E5E3DD;background:#fff;color:#1A1A1A;font-size:14px;font-weight:400;cursor:pointer;font-family:inherit">{{ g.label }}</button></sc-if>
+                  </sc-for>
+                </div>
+
+                <button onClick="{{ submitRegistrationClick }}" style="margin-top:32px;width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:14px;padding:13px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px">
+                  <sc-if value="{{ registrationBusy }}" hint-placeholder-val="{{ false }}"><span style="width:15px;height:15px;border-radius:50%;border:2px solid rgba(251,230,232,.4);border-top-color:#FBE6E8;display:inline-block;animation:rb-spin 0.7s linear infinite"></span></sc-if>
+                  Complete registration
+                </button>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isConsent }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;height:100%">
+              <div style="flex:0 0 52px;display:flex;align-items:center;padding:0 8px"><button onClick="{{ goBack }}" style="width:36px;height:36px;border:none;background:none;color:#1A1A1A;cursor:pointer;display:flex;align-items:center;justify-content:center"><svg width="20" height="20"><use href="#i-arrow-left"></use></svg></button></div>
+              <div style="padding:8px 20px 24px">
+                <svg width="30" height="30" style="color:#8C1F2B"><use href="#i-lock"></use></svg>
+                <div style="font-size:20px;font-weight:500;margin-top:14px">Your data, handled carefully</div>
+                <div style="font-size:13.5px;color:#6B6B68;margin-top:8px;line-height:1.5">Before you continue, here's what we do with your information.</div>
+
+                <div style="margin-top:22px;display:flex;flex-direction:column;gap:12px">
+                  <div style="background:#fff;border:1px solid #E5E3DD;border-radius:14px;padding:14px">
+                    <div style="font-size:13.5px;font-weight:500">Your phone number is never public</div>
+                    <div style="font-size:12.5px;color:#6B6B68;margin-top:4px">Only shared with a requester after you accept their request.</div>
+                  </div>
+                  <div style="background:#fff;border:1px solid #E5E3DD;border-radius:14px;padding:14px">
+                    <div style="font-size:13.5px;font-weight:500">Your location is shown approximately</div>
+                    <div style="font-size:12.5px;color:#6B6B68;margin-top:4px">Nearby donors see a distance, not your exact address.</div>
+                  </div>
+                  <div style="background:#fff;border:1px solid #E5E3DD;border-radius:14px;padding:14px">
+                    <div style="font-size:13.5px;font-weight:500">You can request deletion anytime</div>
+                    <div style="font-size:12.5px;color:#6B6B68;margin-top:4px">From Settings → Privacy, in line with the DPDP Act, 2023.</div>
+                  </div>
+                </div>
+
+                <label style="display:flex;gap:10px;align-items:flex-start;margin-top:20px;cursor:pointer">
+                  <input type="checkbox" checked="{{ consentChecked }}" onChange="{{ toggleConsent }}" style="margin-top:2px;width:16px;height:16px;accent-color:#8C1F2B" />
+                  <span style="font-size:12.5px;color:#6B6B68;line-height:1.5">I agree to the privacy policy and consent to being contacted for blood donation requests.</span>
+                </label>
+
+                <button onClick="{{ acceptConsent }}" disabled="{{ consentDisabled }}" style="margin-top:22px;width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:14px;padding:13px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;opacity:{{ consentOpacity }}">I agree, continue</button>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isVerifying }}" hint-placeholder-val="{{ false }}">
+            <div style="height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 26px;text-align:center;gap:6px">
+              <div style="width:64px;height:64px;border-radius:50%;background:#FAEEDA;display:flex;align-items:center;justify-content:center">
+                <svg width="28" height="28" style="color:#854F0B"><use href="#i-shield-check"></use></svg>
+              </div>
+              <div style="font-size:19px;font-weight:500;margin-top:14px">Verification pending</div>
+              <div style="font-size:13.5px;color:#6B6B68;line-height:1.55;max-width:260px">We're reviewing your details — usually within a few hours. You can browse and receive requests in the meantime; donating unlocks once verified.</div>
+              <button onClick="{{ finishVerifyingIntro }}" style="margin-top:22px;width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:14px;padding:13px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit">Continue to Rakta Bandhan</button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isMain }}" hint-placeholder-val="{{ false }}">
+            <div style="min-height:100%;display:flex;flex-direction:column">
+
+              <sc-if value="{{ tabHome }}" hint-placeholder-val="{{ true }}">
+                <div style="padding:18px 20px 28px;background:#FBF7F1">
+                  <div style="display:flex;align-items:flex-start;justify-content:space-between">
+                    <div style="display:flex;align-items:center;gap:12px">
+                      <div style="width:46px;height:46px;border-radius:15px;background:linear-gradient(150deg,#8C1F2B,#5C1119);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;color:#FBE6E8;flex:none;box-shadow:0 6px 14px rgba(140,31,43,.28)">AS</div>
+                      <div>
+                        <div style="font-size:11.5px;color:#9C9C98;font-weight:500;letter-spacing:.02em">Good morning</div>
+                        <div style="font-family:'Newsreader',Georgia,serif;font-size:23px;font-weight:600;color:#241416;line-height:1.15;margin-top:1px">Aditi Sharma</div>
+                      </div>
+                    </div>
+                    <button onClick="{{ goToNotifications }}" style="position:relative;width:40px;height:40px;border-radius:13px;background:#fff;border:1px solid #EEE8DF;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 6px rgba(43,20,20,.05)">
+                      <svg width="18" height="18" style="color:#241416"><use href="#i-bell"></use></svg>
+                      <span style="position:absolute;top:6px;right:7px;width:7px;height:7px;border-radius:50%;background:#8C1F2B;box-shadow:0 0 0 2px #fff"></span>
+                    </button>
+                  </div>
+
+                  <div style="display:flex;gap:8px;margin-top:16px">
+                    <sc-if value="{{ isVerifiedBadgeOn }}" hint-placeholder-val="{{ false }}">
+                      <div style="background:#fff;border:1px solid #E3EEDC;border-radius:20px;padding:6px 12px 6px 6px;display:flex;align-items:center;gap:6px;font-size:11.5px;color:#2F6B3A;font-weight:600"><span style="width:18px;height:18px;border-radius:50%;background:#E3F0DE;display:flex;align-items:center;justify-content:center"><svg width="10" height="10"><use href="#i-check"></use></svg></span>Verified</div>
+                    </sc-if>
+                    <sc-if value="{{ isVerifiedBadgeOff }}" hint-placeholder-val="{{ true }}">
+                      <div style="background:#fff;border:1px solid #F0E2C4;border-radius:20px;padding:6px 12px 6px 6px;display:flex;align-items:center;gap:6px;font-size:11.5px;color:#96590A;font-weight:600"><span style="width:18px;height:18px;border-radius:50%;background:#FBEFD9;display:flex;align-items:center;justify-content:center"><svg width="10" height="10"><use href="#i-clock"></use></svg></span>Verification pending</div>
+                    </sc-if>
+                    <sc-if value="{{ isAvailable }}" hint-placeholder-val="{{ true }}">
+                      <div style="background:#fff;border:1px solid #E3EEDC;border-radius:20px;padding:6px 12px 6px 6px;display:flex;align-items:center;gap:6px;font-size:11.5px;color:#2F6B3A;font-weight:600"><span style="width:8px;height:8px;border-radius:50%;background:#2F6B3A;margin-left:5px"></span>Available to donate</div>
+                    </sc-if>
+                    <sc-if value="{{ isUnavailable }}" hint-placeholder-val="{{ false }}">
+                      <div style="background:#fff;border:1px solid #EEE8DF;border-radius:20px;padding:6px 12px 6px 6px;display:flex;align-items:center;gap:6px;font-size:11.5px;color:#6B6B68;font-weight:600"><span style="width:8px;height:8px;border-radius:50%;background:#9C9C98;margin-left:5px"></span>Not available</div>
+                    </sc-if>
+                  </div>
+
+                  <div style="margin-top:20px;position:relative;overflow:hidden;background:linear-gradient(155deg,#7A1A24,#5C1119 78%);border-radius:22px;padding:20px;box-shadow:0 16px 30px rgba(92,17,25,.28)">
+                    <svg width="140" height="140" viewBox="0 0 140 140" style="position:absolute;right:-30px;bottom:-40px;opacity:.16" aria-hidden="true"><circle cx="70" cy="70" r="68" stroke="#FBE6E8" stroke-width="1.4" fill="none"/><circle cx="70" cy="70" r="48" stroke="#FBE6E8" stroke-width="1.4" fill="none"/></svg>
+                    <div style="display:flex;align-items:flex-start;gap:12px;position:relative;z-index:1">
+                      <div style="width:38px;height:38px;border-radius:12px;background:rgba(251,230,232,.16);display:flex;align-items:center;justify-content:center;flex:none">
+                        <svg width="19" height="19" style="color:#FBE6E8"><use href="#i-droplet"></use></svg>
+                      </div>
+                      <div>
+                        <div style="font-family:'Newsreader',Georgia,serif;font-size:19px;font-weight:600;color:#FFF9F5">Need blood, right now?</div>
+                        <div style="font-size:12.5px;color:#E9BFC4;margin-top:4px;line-height:1.5">We'll alert compatible donors within 5&nbsp;km instantly.</div>
+                      </div>
+                    </div>
+                    <button onClick="{{ goToCreateRequest }}" style="margin-top:16px;width:100%;background:#FBF7F1;color:#5C1119;border:none;border-radius:14px;padding:13px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;position:relative;z-index:1;box-shadow:0 6px 14px rgba(0,0,0,.16)">Create a blood request</button>
+                  </div>
+
+                  <div style="margin-top:26px;display:flex;align-items:center;justify-content:space-between">
+                    <div style="display:flex;align-items:center;gap:7px"><span style="width:4px;height:14px;border-radius:2px;background:#8C1F2B;display:inline-block"></span><span style="font-size:13.5px;font-weight:600;color:#241416">Nearby requests</span></div>
+                    <div style="display:flex;gap:5px">
+                      <sc-for list="{{ homeChips }}" as="c" hint-placeholder-count="2">
+                        <sc-if value="{{ c.active }}" hint-placeholder-val="{{ false }}"><button onClick="{{ c.onClick }}" style="border:none;background:#241416;color:#fff;border-radius:20px;padding:4px 9px;font-size:10px;cursor:pointer;font-family:inherit">{{ c.label }}</button></sc-if>
+                        <sc-if value="{{ c.inactive }}" hint-placeholder-val="{{ true }}"><button onClick="{{ c.onClick }}" style="border:1px solid #D3D1C7;background:#fff;color:#6B6B68;border-radius:20px;padding:4px 9px;font-size:10px;cursor:pointer;font-family:inherit">{{ c.label }}</button></sc-if>
+                      </sc-for>
+                    </div>
+                  </div>
+                  <sc-if value="{{ homeReqEmpty }}" hint-placeholder-val="{{ false }}">
+                    <div style="margin-top:12px;background:#fff;border:1px solid #EEE8DF;border-radius:18px;padding:30px 16px;text-align:center">
+                      <div style="width:40px;height:40px;border-radius:50%;background:#E3F0DE;display:flex;align-items:center;justify-content:center;margin:0 auto"><svg width="18" height="18" style="color:#2F6B3A"><use href="#i-check-circle"></use></svg></div>
+                      <div style="font-size:13px;color:#6B6B68;margin-top:10px">You're all caught up — no nearby requests right now.</div>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ homeReqHasList }}" hint-placeholder-val="{{ true }}">
+                  <div style="margin-top:12px;position:relative;background:#fff;border:1px solid #EEE8DF;border-radius:18px;padding:16px;box-shadow:0 4px 14px rgba(43,20,20,.05)">
+                    <div style="position:absolute;top:-1px;right:16px;background:#5C1119;color:#FBE6E8;border-radius:0 0 8px 8px;padding:4px 10px;font-size:10.5px;font-weight:600;letter-spacing:.02em">URGENT</div>
+                    <div style="display:flex;align-items:center;gap:10px">
+                      <div style="background:#F6DCDE;color:#8C1F2B;border-radius:10px;padding:7px 12px;font-size:16px;font-weight:700">O+</div>
+                      <div style="flex:1">
+                        <div style="font-size:14.5px;font-weight:600;color:#241416">Sneha Hospital</div>
+                        <div style="font-size:11.5px;color:#9C9C98;margin-top:1px">Koramangala · requested 12 min ago</div>
+                      </div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:14px;margin-top:14px;padding-top:12px;border-top:1px solid #F3EFE7">
+                      <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#6B6B68"><svg width="13" height="13"><use href="#i-map-pin"></use></svg>2.4 km away</div>
+                      <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#6B6B68"><svg width="13" height="13"><use href="#i-hourglass"></use></svg>2 units needed</div>
+                    </div>
+                    <sc-if value="{{ showEscalationNote }}" hint-placeholder-val="{{ true }}">
+                      <div style="margin-top:10px;font-size:11.5px;color:#96590A;background:#FBEFD9;border-radius:9px;padding:7px 10px;display:flex;align-items:center;gap:6px"><svg width="13" height="13"><use href="#i-megaphone"></use></svg>Flagged critical — also broadcast to the admin team</div>
+                    </sc-if>
+                    <button onClick="{{ goToHomeRequestDetail }}" style="margin-top:14px;width:100%;background:#241416;border:none;color:#fff;border-radius:14px;padding:12px;font-size:13.5px;font-weight:600;cursor:pointer;font-family:inherit">View request</button>
+                  </div>
+                  </sc-if>
+
+                  <div style="display:flex;align-items:center;gap:7px;margin-top:26px"><span style="width:4px;height:14px;border-radius:2px;background:#B8863B;display:inline-block"></span><span style="font-size:13.5px;font-weight:600;color:#241416">Your impact</span></div>
+                  <div style="margin-top:12px;display:flex;gap:10px">
+                    <div style="flex:1;background:#fff;border:1px solid #EEE8DF;border-radius:16px;padding:16px;box-shadow:0 2px 8px rgba(43,20,20,.04)">
+                      <div style="width:30px;height:30px;border-radius:9px;background:#F6DCDE;display:flex;align-items:center;justify-content:center"><svg width="14" height="14" style="color:#8C1F2B"><use href="#i-droplet"></use></svg></div>
+                      <div style="font-family:'Newsreader',Georgia,serif;font-size:30px;font-weight:600;color:#241416;margin-top:10px;line-height:1">{{ donationCount }}</div>
+                      <div style="font-size:12px;color:#6B6B68;margin-top:2px">Donations made</div>
+                    </div>
+                    <div style="flex:1;background:#fff;border:1px solid #EEE8DF;border-radius:16px;padding:16px;box-shadow:0 2px 8px rgba(43,20,20,.04)">
+                      <div style="width:30px;height:30px;border-radius:9px;background:#F3E8D3;display:flex;align-items:center;justify-content:center"><svg width="14" height="14" style="color:#96590A"><use href="#i-sparkle"></use></svg></div>
+                      <div style="font-family:'Newsreader',Georgia,serif;font-size:30px;font-weight:600;color:#241416;margin-top:10px;line-height:1">{{ donationCount }}</div>
+                      <div style="font-size:12px;color:#6B6B68;margin-top:2px">Lives helped</div>
+                    </div>
+                  </div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ tabRequests }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:16px 20px 24px">
+                  <div style="text-align:center;font-size:18px;font-weight:500">Blood requests</div>
+                  <div style="margin-top:16px;background:rgba(26,26,26,.06);border-radius:24px;padding:4px;display:flex">
+                    <sc-if value="{{ reqTabReceived }}" hint-placeholder-val="{{ true }}"><button onClick="{{ setReqTabReceived }}" style="flex:1;border:none;background:#8C1F2B;color:#FBE6E8;border-radius:20px;padding:8px;font-size:13.5px;font-weight:500;cursor:pointer;font-family:inherit">Received</button></sc-if>
+                    <sc-if value="{{ reqTabReceivedOff }}" hint-placeholder-val="{{ false }}"><button onClick="{{ setReqTabReceived }}" style="flex:1;border:none;background:transparent;color:#6B6B68;border-radius:20px;padding:8px;font-size:13.5px;cursor:pointer;font-family:inherit">Received</button></sc-if>
+                    <sc-if value="{{ reqTabMine }}" hint-placeholder-val="{{ false }}"><button onClick="{{ setReqTabMine }}" style="flex:1;border:none;background:#8C1F2B;color:#FBE6E8;border-radius:20px;padding:8px;font-size:13.5px;font-weight:500;cursor:pointer;font-family:inherit">My requests</button></sc-if>
+                    <sc-if value="{{ reqTabMineOff }}" hint-placeholder-val="{{ true }}"><button onClick="{{ setReqTabMine }}" style="flex:1;border:none;background:transparent;color:#6B6B68;border-radius:20px;padding:8px;font-size:13.5px;cursor:pointer;font-family:inherit">My requests</button></sc-if>
+                  </div>
+
+                  <sc-if value="{{ reqTabReceived }}" hint-placeholder-val="{{ true }}">
+                    <div style="margin-top:16px;display:flex;justify-content:flex-end;gap:5px">
+                      <sc-for list="{{ receivedChips }}" as="c" hint-placeholder-count="2">
+                        <sc-if value="{{ c.active }}" hint-placeholder-val="{{ false }}"><button onClick="{{ c.onClick }}" style="border:none;background:#1A1A1A;color:#fff;border-radius:20px;padding:4px 9px;font-size:10px;cursor:pointer;font-family:inherit">{{ c.label }}</button></sc-if>
+                        <sc-if value="{{ c.inactive }}" hint-placeholder-val="{{ true }}"><button onClick="{{ c.onClick }}" style="border:1px solid #D3D1C7;background:#fff;color:#6B6B68;border-radius:20px;padding:4px 9px;font-size:10px;cursor:pointer;font-family:inherit">{{ c.label }}</button></sc-if>
+                      </sc-for>
+                    </div>
+                    <sc-if value="{{ receivedEmpty }}" hint-placeholder-val="{{ false }}">
+                      <div style="margin-top:12px;background:#fff;border:1px solid #E5E3DD;border-radius:14px;padding:28px 16px;text-align:center;color:#9C9C98">
+                        <svg width="24" height="24" style="color:#9C9C98"><use href="#i-check-circle"></use></svg>
+                        <div style="font-size:13px;margin-top:8px">No compatible requests near you right now.</div>
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{ receivedHasList }}" hint-placeholder-val="{{ true }}">
+                    <div style="margin-top:12px;display:flex;flex-direction:column;gap:12px">
+                      <sc-for list="{{ receivedRequests }}" as="r" hint-placeholder-count="2">
+                        <div style="background:#fff;border:1px solid #E5E3DD;border-radius:14px;padding:16px">
+                          <div style="display:flex;align-items:center;gap:8px">
+                            <div style="background:#F6DCDE;color:#8C1F2B;border-radius:8px;padding:6px 10px;font-size:14px;font-weight:500">{{ r.bloodGroup }}</div>
+                            <div style="background:{{ r.badgeBg }};color:{{ r.badgeText }};border-radius:8px;padding:6px 10px;font-size:12px;font-weight:500">{{ r.statusLabel }}</div>
+                          </div>
+                          <div style="display:flex;align-items:center;gap:6px;margin-top:14px"><svg width="14" height="14" style="color:#6B6B68"><use href="#i-map-pin"></use></svg><div style="font-size:14px;font-weight:500">{{ r.location }}</div></div>
+                          <button onClick="{{ r.onAction }}" style="margin-top:14px;width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:14px;padding:11px;font-size:13.5px;font-weight:500;cursor:pointer;font-family:inherit">{{ r.actionLabel }}</button>
+                        </div>
+                      </sc-for>
+                    </div>
+                    </sc-if>
+                  </sc-if>
+                  <sc-if value="{{ reqTabMine }}" hint-placeholder-val="{{ false }}">
+                    <div style="margin-top:16px;display:flex;justify-content:flex-end;gap:5px">
+                      <sc-for list="{{ mineChips }}" as="c" hint-placeholder-count="2">
+                        <sc-if value="{{ c.active }}" hint-placeholder-val="{{ false }}"><button onClick="{{ c.onClick }}" style="border:none;background:#1A1A1A;color:#fff;border-radius:20px;padding:4px 9px;font-size:10px;cursor:pointer;font-family:inherit">{{ c.label }}</button></sc-if>
+                        <sc-if value="{{ c.inactive }}" hint-placeholder-val="{{ true }}"><button onClick="{{ c.onClick }}" style="border:1px solid #D3D1C7;background:#fff;color:#6B6B68;border-radius:20px;padding:4px 9px;font-size:10px;cursor:pointer;font-family:inherit">{{ c.label }}</button></sc-if>
+                      </sc-for>
+                    </div>
+                    <sc-if value="{{ mineEmpty }}" hint-placeholder-val="{{ false }}">
+                      <div style="margin-top:12px;background:#fff;border:1px solid #E5E3DD;border-radius:14px;padding:28px 16px;text-align:center;color:#9C9C98">
+                        <svg width="24" height="24" style="color:#9C9C98"><use href="#i-clipboard"></use></svg>
+                        <div style="font-size:13px;margin-top:8px">No requests yet.</div>
+                        <button onClick="{{ goToCreateRequest }}" style="margin-top:12px;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:14px;padding:10px 16px;font-size:12.5px;font-weight:500;cursor:pointer;font-family:inherit">Find blood donors</button>
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{ mineHasList }}" hint-placeholder-val="{{ true }}">
+                    <div style="margin-top:12px;display:flex;flex-direction:column;gap:12px">
+                      <sc-for list="{{ myRequestsView }}" as="r" hint-placeholder-count="4">
+                        <div style="background:#fff;border:1px solid #E5E3DD;border-radius:14px;padding:16px">
+                          <div style="display:flex;align-items:center;gap:8px">
+                            <div style="background:#F6DCDE;color:#8C1F2B;border-radius:8px;padding:6px 10px;font-size:14px;font-weight:500">{{ r.bloodGroup }}</div>
+                            <div style="background:{{ r.badgeBg }};color:{{ r.badgeText }};border-radius:8px;padding:6px 10px;font-size:12px;font-weight:500">{{ r.statusLabel }}</div>
+                          </div>
+                          <div style="display:flex;align-items:center;gap:6px;margin-top:14px"><svg width="14" height="14" style="color:#6B6B68"><use href="#i-map-pin"></use></svg><div style="font-size:14px;font-weight:500">{{ r.hospital }}</div></div>
+                          <sc-if value="{{ r.showContact }}" hint-placeholder-val="{{ false }}">
+                            <div style="display:flex;align-items:center;gap:6px;margin-top:10px"><svg width="14" height="14" style="color:#6B6B68"><use href="#i-phone"></use></svg><div style="font-size:13.5px;font-weight:500">{{ r.contactName }} · {{ r.contactPhone }}</div></div>
+                          </sc-if>
+                          <sc-if value="{{ r.showExpiredNote }}" hint-placeholder-val="{{ false }}">
+                            <div style="margin-top:10px;font-size:12px;color:#6B6B68;background:#F7F6F2;border-radius:8px;padding:8px 10px">No donor found in time — matching stopped. You can create a new request.</div>
+                          </sc-if>
+                          <sc-if value="{{ r.showCancelledNote }}" hint-placeholder-val="{{ false }}">
+                            <div style="margin-top:10px;font-size:12px;color:#6B6B68;background:#F7F6F2;border-radius:8px;padding:8px 10px">You cancelled this request.</div>
+                          </sc-if>
+                          <div style="display:flex;gap:8px;margin-top:14px">
+                            <button onClick="{{ r.onTrack }}" style="flex:1;background:none;border:1px solid #E5E3DD;color:#8C1F2B;border-radius:14px;padding:11px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit">Track status</button>
+                            <sc-if value="{{ r.showCancel }}" hint-placeholder-val="{{ false }}">
+                              <button onClick="{{ r.onCancel }}" style="flex:1;background:none;border:1px solid #E5E3DD;color:#6B6B68;border-radius:14px;padding:11px;font-size:13px;cursor:pointer;font-family:inherit">Cancel</button>
+                            </sc-if>
+                          </div>
+                        </div>
+                      </sc-for>
+                    </div>
+                    </sc-if>
+                  </sc-if>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ tabProfile }}" hint-placeholder-val="{{ false }}">
+                <div style="padding-bottom:24px;background:#FBF7F1">
+                  <div style="background:linear-gradient(165deg,#7A1A24,#4A0E14);padding:28px 20px 46px;text-align:center;position:relative;overflow:hidden">
+                    <svg width="160" height="160" viewBox="0 0 160 160" style="position:absolute;left:-40px;top:-50px;opacity:.14" aria-hidden="true"><circle cx="80" cy="80" r="78" stroke="#FBE6E8" stroke-width="1.4" fill="none"/></svg>
+                    <div style="width:76px;height:76px;border-radius:50%;background:rgba(251,230,232,.14);border:2px solid rgba(251,230,232,.35);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:600;color:#FBE6E8;margin:0 auto;position:relative;z-index:1">AS</div>
+                    <div style="font-family:'Newsreader',Georgia,serif;font-size:22px;font-weight:600;margin-top:14px;color:#FFF9F5;position:relative;z-index:1">Aditi Sharma</div>
+                    <div style="display:flex;justify-content:center;gap:6px;margin-top:10px;position:relative;z-index:1">
+                      <div style="background:rgba(251,230,232,.16);color:#FBE6E8;border-radius:8px;padding:4px 11px;font-size:13px;font-weight:700">O+</div>
+                      <sc-if value="{{ isVerifiedBadgeOn }}" hint-placeholder-val="{{ false }}"><div style="background:rgba(251,230,232,.16);color:#FBE6E8;border-radius:8px;padding:4px 10px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:4px"><svg width="11" height="11"><use href="#i-check"></use></svg>Verified</div></sc-if>
+                      <sc-if value="{{ isVerifiedBadgeOff }}" hint-placeholder-val="{{ true }}"><div style="background:rgba(251,230,232,.16);color:#FBE6E8;border-radius:8px;padding:4px 10px;font-size:11px;font-weight:600">Pending verification</div></sc-if>
+                    </div>
+                  </div>
+
+                  <div style="padding:0 20px;margin-top:-26px;position:relative;z-index:2">
+                    <div style="background:#fff;border-radius:16px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 10px 24px rgba(43,20,20,.1)">
+                      <div style="display:flex;align-items:center;gap:10px">
+                        <span style="width:9px;height:9px;border-radius:50%;background:{{ profileAvailDot }}"></span>
+                        <div><div style="font-size:13.5px;font-weight:600;color:#241416">{{ profileAvailLabel }}</div><div style="font-size:11px;color:#9C9C98">{{ profileAvailSub }}</div></div>
+                      </div>
+                      <button onClick="{{ toggleAvailability }}" style="width:44px;height:26px;border-radius:14px;border:none;cursor:pointer;position:relative;background:{{ availTrackBg }}">
+                        <span style="position:absolute;top:2px;left:{{ availThumbLeft }};width:22px;height:22px;border-radius:50%;background:{{ availThumbBg }};transition:left .15s;box-shadow:0 1px 3px rgba(0,0,0,.25)"></span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div style="padding:20px 20px 0">
+                    <div style="background:#fff;border:1px solid #EEE8DF;border-radius:16px;overflow:hidden;box-shadow:0 2px 8px rgba(43,20,20,.04)">
+                      <div onClick="{{ noop }}" style="display:flex;align-items:center;gap:12px;padding:14px;cursor:pointer;border-bottom:1px solid #F3EFE7"><span style="width:32px;height:32px;border-radius:10px;background:#F3EFE7;display:flex;align-items:center;justify-content:center;flex:none"><svg width="16" height="16" style="color:#6B6B68"><use href="#i-user"></use></svg></span><div style="flex:1;font-size:13.5px;font-weight:600;color:#241416">Personal information</div><svg width="16" height="16" style="color:#C9BFAF"><use href="#i-chevron-right"></use></svg></div>
+                      <div onClick="{{ goToDonationHistory }}" style="display:flex;align-items:center;gap:12px;padding:14px;cursor:pointer;border-bottom:1px solid #F3EFE7"><span style="width:32px;height:32px;border-radius:10px;background:#F6DCDE;display:flex;align-items:center;justify-content:center;flex:none"><svg width="16" height="16" style="color:#8C1F2B"><use href="#i-clock"></use></svg></span><div style="flex:1;font-size:13.5px;font-weight:600;color:#241416">Donation history</div><svg width="16" height="16" style="color:#C9BFAF"><use href="#i-chevron-right"></use></svg></div>
+                      <div onClick="{{ noop }}" style="display:flex;align-items:center;gap:12px;padding:14px;cursor:pointer;border-bottom:1px solid #F3EFE7"><span style="width:32px;height:32px;border-radius:10px;background:#F3EFE7;display:flex;align-items:center;justify-content:center;flex:none"><svg width="16" height="16" style="color:#6B6B68"><use href="#i-phone"></use></svg></span><div style="flex:1;font-size:13.5px;font-weight:600;color:#241416">Emergency contact</div><svg width="16" height="16" style="color:#C9BFAF"><use href="#i-chevron-right"></use></svg></div>
+                      <div onClick="{{ goToSettings }}" style="display:flex;align-items:center;gap:12px;padding:14px;cursor:pointer"><span style="width:32px;height:32px;border-radius:10px;background:#F3EFE7;display:flex;align-items:center;justify-content:center;flex:none"><svg width="16" height="16" style="color:#6B6B68"><use href="#i-sliders"></use></svg></span><div style="flex:1;font-size:13.5px;font-weight:600;color:#241416">Settings</div><svg width="16" height="16" style="color:#C9BFAF"><use href="#i-chevron-right"></use></svg></div>
+                    </div>
+
+                    <div onClick="{{ logOut }}" style="display:flex;align-items:center;gap:10px;padding:16px 4px 4px;cursor:pointer"><svg width="17" height="17" style="color:#9C9C98"><use href="#i-log-out"></use></svg><div style="font-size:13px;color:#9C9C98;font-weight:500">Log out</div></div>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isNotifications }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;height:100%">
+              <div style="flex:0 0 52px;display:flex;align-items:center;padding:0 8px;position:relative"><button onClick="{{ goBack }}" style="width:36px;height:36px;border:none;background:none;color:#241416;cursor:pointer;display:flex;align-items:center;justify-content:center"><svg width="20" height="20"><use href="#i-arrow-left"></use></svg></button><div style="position:absolute;left:0;right:0;text-align:center;font-size:17px;font-weight:600;color:#241416">Notifications</div></div>
+              <div style="padding:0 20px 24px;flex:1;background:#FBF7F1">
+                <div style="display:flex;gap:6px;margin:8px 0 16px">
+                  <sc-for list="{{ notifChips }}" as="c" hint-placeholder-count="3">
+                    <sc-if value="{{ c.active }}" hint-placeholder-val="{{ false }}"><button onClick="{{ c.onClick }}" style="border:none;background:#241416;color:#fff;border-radius:20px;padding:5px 11px;font-size:11px;cursor:pointer;font-family:inherit">{{ c.label }}</button></sc-if>
+                    <sc-if value="{{ c.inactive }}" hint-placeholder-val="{{ true }}"><button onClick="{{ c.onClick }}" style="border:1px solid #D3D1C7;background:#fff;color:#6B6B68;border-radius:20px;padding:5px 11px;font-size:11px;cursor:pointer;font-family:inherit">{{ c.label }}</button></sc-if>
+                  </sc-for>
+                </div>
+
+                <sc-if value="{{ notifDisabled }}" hint-placeholder-val="{{ false }}">
+                  <div style="background:#FBEFD9;border-radius:16px;padding:14px;display:flex;gap:10px;align-items:flex-start;margin-bottom:16px">
+                    <div style="width:34px;height:34px;border-radius:11px;background:#fff;display:flex;align-items:center;justify-content:center;flex:none"><svg width="17" height="17" style="color:#96590A"><use href="#i-bell-off"></use></svg></div>
+                    <div style="flex:1"><div style="font-size:13px;font-weight:600;color:#7A4A08">Notifications are off</div><div style="font-size:12px;color:#8A7350;margin-top:2px">Turn them on to hear about nearby requests instantly.</div></div>
+                  </div>
+                  <button style="width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:14px;padding:12px;font-size:13.5px;font-weight:600;cursor:pointer;font-family:inherit;margin-bottom:20px">Enable notifications</button>
+                </sc-if>
+
+                <sc-if value="{{ notifEmpty }}" hint-placeholder-val="{{ false }}">
+                  <div style="text-align:center;padding:60px 10px">
+                    <div style="width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid #EEE8DF;display:flex;align-items:center;justify-content:center;margin:0 auto"><svg width="20" height="20" style="color:#9C9C98"><use href="#i-bell"></use></svg></div>
+                    <div style="font-size:13.5px;color:#6B6B68;margin-top:12px">No notifications yet.</div>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ notifDefault }}" hint-placeholder-val="{{ true }}">
+                  <div style="display:flex;flex-direction:column;gap:10px">
+                    <sc-for list="{{ notificationItems }}" as="n" hint-placeholder-count="5">
+                      <div style="background:#fff;border:1px solid #EEE8DF;border-radius:16px;padding:14px;display:flex;gap:12px;box-shadow:0 2px 8px rgba(43,20,20,.04)">
+                        <div style="width:38px;height:38px;border-radius:12px;background:{{ n.iconBg }};display:flex;align-items:center;justify-content:center;flex:none">
+                          <svg width="16" height="16" style="color:{{ n.iconColor }}"><use href="{{ n.icon }}"></use></svg>
+                        </div>
+                        <div style="flex:1">
+                          <div style="font-size:13.5px;font-weight:600;color:#241416">{{ n.title }}</div>
+                          <div style="font-size:12.5px;color:#6B6B68;margin-top:3px;line-height:1.4">{{ n.body }}</div>
+                          <div style="font-size:11px;color:#B0A996;margin-top:6px">{{ n.time }}</div>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isFindDonors }}" hint-placeholder-val="{{ false }}">
+            <div style="height:100%;position:relative">
+              <div style="position:absolute;inset:0;background:#E8E6E1;overflow:hidden">
+                <svg width="100%" height="100%" viewBox="0 0 390 700" preserveAspectRatio="none" style="position:absolute;inset:0">
+                  <path d="M0 100 L390 380" stroke="#DEDCD6" stroke-width="5" />
+                  <path d="M100 0 L180 700" stroke="#DEDCD6" stroke-width="5" />
+                  <path d="M0 480 Q140 400 390 520" stroke="#DEDCD6" stroke-width="5" fill="none" />
+                </svg>
+                <button onClick="{{ highlightDonor1 }}" style="position:absolute;top:148px;left:108px;background:linear-gradient(150deg,#B9303F,#7A1A24);color:#FBE6E8;border:none;border-radius:20px 20px 20px 4px;padding:7px 12px 7px 10px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:5px;box-shadow:0 6px 14px rgba(92,17,25,.35);cursor:pointer;font-family:inherit"><svg width="12" height="12"><use href="#i-droplet"></use></svg>O+ · Rohan</button>
+                <button onClick="{{ highlightDonor2 }}" style="position:absolute;top:258px;right:68px;background:linear-gradient(150deg,#B9303F,#7A1A24);color:#FBE6E8;border:none;border-radius:20px 20px 4px 20px;padding:7px 12px 7px 10px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:5px;box-shadow:0 6px 14px rgba(92,17,25,.35);cursor:pointer;font-family:inherit"><svg width="12" height="12"><use href="#i-droplet"></use></svg>A- · Priya</button>
+                <div style="position:absolute;top:198px;left:143px;width:78px;height:78px;border-radius:50%;background:rgba(140,31,43,.16);border:1px solid rgba(140,31,43,.25)"></div>
+                <div style="position:absolute;top:224px;left:169px;width:26px;height:26px;border-radius:50%;background:#8C1F2B;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.2)"></div>
+              </div>
+
+              <div style="position:absolute;top:52px;left:20px;right:20px;background:#fff;border:1px solid #EEE8DF;border-radius:15px;display:flex;align-items:center;padding:0 14px;gap:10px;box-shadow:0 6px 16px rgba(43,20,20,.08)">
+                <svg width="16" height="16" style="color:#6B6B68"><use href="#i-search"></use></svg>
+                <div style="flex:1;padding:12px 0;font-size:14px;color:#9C9C98">Search location</div>
+              </div>
+
+              <div style="position:absolute;top:102px;left:20px;right:20px;display:flex;gap:6px;overflow-x:auto">
+                <sc-for list="{{ mapChips }}" as="c" hint-placeholder-count="6">
+                  <sc-if value="{{ c.active }}" hint-placeholder-val="{{ false }}"><button onClick="{{ c.onClick }}" style="border:none;background:#241416;color:#fff;border-radius:20px;padding:5px 10px;font-size:10.5px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;box-shadow:0 3px 8px rgba(0,0,0,.16)">{{ c.label }}</button></sc-if>
+                  <sc-if value="{{ c.inactive }}" hint-placeholder-val="{{ true }}"><button onClick="{{ c.onClick }}" style="border:none;background:#fff;color:#6B6B68;border-radius:20px;padding:5px 10px;font-size:10.5px;cursor:pointer;font-family:inherit;white-space:nowrap;box-shadow:0 2px 6px rgba(43,20,20,.06)">{{ c.label }}</button></sc-if>
+                </sc-for>
+              </div>
+
+              <sc-if value="{{ mapPermission }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute;inset:0;background:rgba(251,247,241,.98);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 30px;text-align:center;gap:6px">
+                  <div style="width:56px;height:56px;border-radius:50%;background:#F6DCDE;display:flex;align-items:center;justify-content:center"><svg width="24" height="24" style="color:#8C1F2B"><use href="#i-map-pin"></use></svg></div>
+                  <div style="font-size:16px;font-weight:600;margin-top:12px;color:#241416">Allow location access</div>
+                  <div style="font-size:13px;color:#6B6B68;line-height:1.5">We use your location to find compatible donors and requests nearby.</div>
+                  <button onClick="{{ mapAllow }}" style="margin-top:16px;width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:14px;padding:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;box-shadow:0 8px 18px rgba(140,31,43,.22)">Allow</button>
+                  <div onClick="{{ mapDeny }}" style="margin-top:10px;font-size:13px;color:#6B6B68;cursor:pointer;font-weight:500">Not now</div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ mapDenied }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute;inset:0;background:rgba(251,247,241,.98);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 30px;text-align:center;gap:6px">
+                  <div style="width:56px;height:56px;border-radius:50%;background:#FBEFD9;display:flex;align-items:center;justify-content:center"><svg width="24" height="24" style="color:#96590A"><use href="#i-alert-triangle"></use></svg></div>
+                  <div style="font-size:16px;font-weight:600;margin-top:12px;color:#241416">Location access denied</div>
+                  <div style="font-size:13px;color:#6B6B68;line-height:1.5">Enable location for Rakta Bandhan in your phone's settings to find nearby donors.</div>
+                  <button style="margin-top:16px;width:100%;background:none;border:1px solid #E5D9C6;color:#96590A;border-radius:14px;padding:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit">Open settings</button>
+                </div>
+              </sc-if>
+              <sc-if value="{{ mapLoading }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute;inset:0;background:rgba(251,247,241,.9);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px">
+                  <div style="width:32px;height:32px;border-radius:50%;border:3px solid #F0E7E8;border-top-color:#8C1F2B;animation:rb-spin 0.8s linear infinite"></div>
+                  <div style="font-size:13px;color:#6B6B68;font-weight:500">Finding donors near you…</div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ mapErrorState }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute;inset:0;background:rgba(251,247,241,.98);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 30px;text-align:center;gap:6px">
+                  <div style="width:56px;height:56px;border-radius:50%;background:#F6DCDE;display:flex;align-items:center;justify-content:center"><svg width="24" height="24" style="color:#8C1F2B"><use href="#i-wifi-off"></use></svg></div>
+                  <div style="font-size:16px;font-weight:600;margin-top:12px;color:#241416">Couldn't load donors</div>
+                  <div style="font-size:13px;color:#6B6B68">Check your connection and try again.</div>
+                  <button style="margin-top:16px;width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:14px;padding:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit">Retry</button>
+                </div>
+              </sc-if>
+
+              <div style="position:absolute;left:0;right:0;bottom:0;height:368px;background:#fff;border-radius:22px 22px 0 0;box-shadow:0 -8px 24px rgba(43,20,20,.12);display:flex;flex-direction:column">
+                <div style="width:36px;height:4px;background:#E9E2D8;border-radius:2px;margin:10px auto"></div>
+                <div style="padding:0 20px 10px;display:flex;align-items:baseline;gap:6px"><span style="font-size:14px;font-weight:600;color:#241416">Nearby donors</span><span style="font-size:12px;color:#9C9C98">· 3 within range</span></div>
+                <div style="flex:1;overflow-y:auto;padding:0 20px 16px;display:flex;flex-direction:column;gap:12px">
+                  <sc-if value="{{ mapEmpty }}" hint-placeholder-val="{{ false }}">
+                    <div style="text-align:center;color:#9C9C98;font-size:13px;padding:40px 10px">No available donors nearby yet. Try expanding your search radius.</div>
+                  </sc-if>
+                  <sc-if value="{{ mapHasList }}" hint-placeholder-val="{{ true }}">
+                    <sc-for list="{{ nearbyDonorsList }}" as="d" hint-placeholder-count="3">
+                      <div style="background:#fff;border:2px solid {{ d.borderColor }};border-radius:14px;padding:12px;transition:border-color .15s">
+                        <div style="display:flex;align-items:center;gap:12px">
+                          <div style="width:40px;height:40px;border-radius:50%;background:#F6DCDE;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:#8C1F2B;flex:none">{{ d.initials }}</div>
+                          <div style="flex:1">
+                            <div style="display:flex;align-items:center;gap:8px"><div style="font-size:14px;font-weight:500">{{ d.name }}</div><div style="background:#F6DCDE;color:#8C1F2B;border-radius:6px;padding:3px 8px;font-size:11px;font-weight:500">{{ d.bloodGroup }}</div></div>
+                            <div style="font-size:12px;color:#6B6B68;margin-top:5px">{{ d.distance }} · {{ d.availabilityLabel }}</div>
+                          </div>
+                        </div>
+                        <div style="display:flex;gap:8px;margin-top:12px">
+                          <button onClick="{{ d.onView }}" style="flex:1;background:none;border:1px solid #E5E3DD;color:#8C1F2B;border-radius:14px;padding:10px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit">View</button>
+                          <button onClick="{{ d.onRequest }}" style="flex:1;background:none;border:1px solid #E5E3DD;color:#8C1F2B;border-radius:14px;padding:10px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit">Request</button>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </sc-if>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isDonorDetails }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;height:100%">
+              <div style="flex:0 0 52px;display:flex;align-items:center;padding:0 8px;position:relative"><button onClick="{{ goBack }}" style="width:36px;height:36px;border:none;background:none;color:#1A1A1A;cursor:pointer;display:flex;align-items:center;justify-content:center"><svg width="20" height="20"><use href="#i-arrow-left"></use></svg></button><div style="position:absolute;left:0;right:0;text-align:center;font-size:18px;font-weight:500">Donor profile</div></div>
+              <div style="padding:8px 0 28px;background:#FBF7F1">
+                <div style="background:linear-gradient(165deg,#7A1A24,#4A0E14);padding:20px 20px 40px;text-align:center;position:relative;overflow:hidden">
+                  <svg width="150" height="150" viewBox="0 0 150 150" style="position:absolute;right:-40px;top:-40px;opacity:.14" aria-hidden="true"><circle cx="75" cy="75" r="72" stroke="#FBE6E8" stroke-width="1.4" fill="none"/></svg>
+                  <div style="width:72px;height:72px;border-radius:50%;background:rgba(251,230,232,.14);border:2px solid rgba(251,230,232,.35);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:600;color:#FBE6E8;margin:0 auto;position:relative">{{ selectedDonor.initials }}</div>
+                  <div style="font-family:'Newsreader',Georgia,serif;font-size:20px;font-weight:600;margin-top:12px;color:#FFF9F5;position:relative">{{ selectedDonor.name }}</div>
+                  <div style="display:flex;justify-content:center;gap:6px;margin-top:8px;position:relative">
+                    <div style="background:rgba(251,230,232,.16);color:#FBE6E8;border-radius:8px;padding:4px 11px;font-size:12.5px;font-weight:700">{{ selectedDonor.bloodGroup }}</div>
+                    <div style="background:rgba(251,230,232,.16);color:#FBE6E8;border-radius:8px;padding:4px 10px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:4px"><svg width="10" height="10"><use href="#i-check"></use></svg>Verified</div>
+                  </div>
+                </div>
+                <div style="padding:0 20px;margin-top:-22px;position:relative;z-index:1">
+                  <div style="background:#fff;border-radius:16px;padding:14px 16px;box-shadow:0 10px 24px rgba(43,20,20,.1)">
+                    <div style="display:flex;align-items:center;gap:6px;font-size:12.5px;color:#6B6B68"><svg width="13" height="13"><use href="#i-map-pin"></use></svg>{{ selectedDonor.distance }} · {{ selectedDonor.city }}</div>
+                    <div style="height:1px;background:#F3EFE7;margin:12px 0"></div>
+                    <div style="display:flex;justify-content:space-between;font-size:13.5px"><div style="color:#6B6B68">Blood group</div><div style="font-weight:600;color:#241416">{{ selectedDonor.bloodGroup }}</div></div>
+                    <div style="display:flex;justify-content:space-between;font-size:13.5px;margin-top:12px"><div style="color:#6B6B68">Availability</div><div style="font-weight:600;color:#2F6B3A">Available now</div></div>
+                  </div>
+                </div>
+                <div style="padding:0 20px;margin-top:18px">
+                  <button onClick="{{ requestSpecificDonor }}" style="width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:14px;padding:13px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;box-shadow:0 8px 18px rgba(140,31,43,.22)">Request donor</button>
+                  <div style="text-align:center;font-size:11.5px;color:#9C9C98;margin-top:8px">Contact details unlock once {{ selectedDonor.firstName }} accepts your request.</div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isRequestDetail }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;height:100%">
+              <div style="flex:0 0 52px;display:flex;align-items:center;padding:0 8px;position:relative"><button onClick="{{ goBack }}" style="width:36px;height:36px;border:none;background:none;color:#241416;cursor:pointer;display:flex;align-items:center;justify-content:center"><svg width="20" height="20"><use href="#i-arrow-left"></use></svg></button><div style="position:absolute;left:0;right:0;text-align:center;font-size:17px;font-weight:600;color:#241416">Request details</div></div>
+              <div style="padding:8px 20px 28px;background:#FBF7F1">
+                <div style="background:#fff;border:1px solid #EEE8DF;border-radius:18px;padding:17px;box-shadow:0 4px 14px rgba(43,20,20,.05)">
+                  <div style="display:flex;gap:8px"><div style="background:#F6DCDE;color:#8C1F2B;border-radius:9px;padding:7px 12px;font-size:17px;font-weight:700">{{ selectedRequest.bloodGroup }}</div><div style="background:#5C1119;color:#FBE6E8;border-radius:9px;padding:7px 12px;font-size:11.5px;font-weight:600;align-self:center">{{ selectedRequest.urgencyLabel }}</div></div>
+                  <div style="margin-top:16px;font-size:16px;font-weight:600;color:#241416">{{ selectedRequest.hospital }}</div>
+                  <div style="display:flex;gap:14px;margin-top:10px">
+                    <div style="font-size:12px;color:#6B6B68;display:flex;align-items:center;gap:5px"><svg width="13" height="13"><use href="#i-map-pin"></use></svg>{{ selectedRequest.distance }}</div>
+                    <div style="font-size:12px;color:#6B6B68;display:flex;align-items:center;gap:5px"><svg width="13" height="13"><use href="#i-hourglass"></use></svg>{{ selectedRequest.units }} unit(s)</div>
+                    <div style="font-size:12px;color:#6B6B68;display:flex;align-items:center;gap:5px"><svg width="13" height="13"><use href="#i-clock"></use></svg>{{ selectedRequest.timeAgo }}</div>
+                  </div>
+                </div>
+
+                <sc-if value="{{ blocked }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:16px;background:#FBEFD9;border-radius:14px;padding:13px;font-size:12.5px;color:#7A4A08;line-height:1.5;display:flex;gap:9px"><svg width="16" height="16" style="flex:none;margin-top:1px"><use href="#i-alert-triangle"></use></svg>You already have an active match — finish or cancel it before accepting another request.</div>
+                </sc-if>
+
+                <button onClick="{{ acceptClick }}" disabled="{{ blocked }}" style="margin-top:18px;width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:14px;padding:14px;font-size:14.5px;font-weight:600;cursor:pointer;font-family:inherit;opacity:{{ acceptOpacity }};display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 8px 18px rgba(140,31,43,.22)">
+                  <sc-if value="{{ acceptBusy }}" hint-placeholder-val="{{ false }}"><span style="width:15px;height:15px;border-radius:50%;border:2px solid rgba(251,230,232,.4);border-top-color:#FBE6E8;display:inline-block;animation:rb-spin 0.7s linear infinite"></span></sc-if>
+                  Accept &amp; help
+                </button>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isAcceptResult }}" hint-placeholder-val="{{ false }}">
+            <div style="height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 30px;text-align:center">
+              <sc-if value="{{ acceptSuccess }}" hint-placeholder-val="{{ true }}">
+                <div style="width:64px;height:64px;border-radius:50%;background:#EAF3DE;display:flex;align-items:center;justify-content:center"><svg width="28" height="28" style="color:#3B6D11"><use href="#i-check-circle"></use></svg></div>
+                <div style="font-size:19px;font-weight:500;margin-top:16px">You've accepted this request</div>
+                <div style="font-size:13.5px;color:#6B6B68;margin-top:8px;line-height:1.5">Contact details are ready below. Please reach out and confirm a time.</div>
+                <button onClick="{{ goMatchContact }}" style="margin-top:22px;width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:14px;padding:13px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit">View contact details</button>
+              </sc-if>
+              <sc-if value="{{ acceptClaimed }}" hint-placeholder-val="{{ false }}">
+                <div style="width:64px;height:64px;border-radius:50%;background:#F6DCDE;display:flex;align-items:center;justify-content:center"><svg width="28" height="28" style="color:#8C1F2B"><use href="#i-x-circle"></use></svg></div>
+                <div style="font-size:19px;font-weight:500;margin-top:16px">Already accepted</div>
+                <div style="font-size:13.5px;color:#6B6B68;margin-top:8px;line-height:1.5">Someone else got there first. Thank you for being ready to help — there'll be another request soon.</div>
+                <button onClick="{{ goHome }}" style="margin-top:22px;width:100%;background:none;border:1px solid #E5E3DD;color:#8C1F2B;border-radius:14px;padding:13px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit">Back to home</button>
+              </sc-if>
+              <sc-if value="{{ acceptBlocked }}" hint-placeholder-val="{{ false }}">
+                <div style="width:64px;height:64px;border-radius:50%;background:#FAEEDA;display:flex;align-items:center;justify-content:center"><svg width="28" height="28" style="color:#854F0B"><use href="#i-alert-triangle"></use></svg></div>
+                <div style="font-size:19px;font-weight:500;margin-top:16px">You already have an active match</div>
+                <div style="font-size:13.5px;color:#6B6B68;margin-top:8px;line-height:1.5">You can only hold one active match at a time. Finish or cancel your current match before accepting a new request.</div>
+                <button onClick="{{ goMatchContact }}" style="margin-top:22px;width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:14px;padding:13px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit">View my active match</button>
+                <button onClick="{{ goHome }}" style="margin-top:10px;width:100%;background:none;border:1px solid #E5E3DD;color:#1A1A1A;border-radius:14px;padding:12px;font-size:13.5px;cursor:pointer;font-family:inherit">Back to home</button>
+              </sc-if>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isMatchContact }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;height:100%">
+              <div style="flex:0 0 52px;display:flex;align-items:center;padding:0 8px;position:relative"><button onClick="{{ goBack }}" style="width:36px;height:36px;border:none;background:none;color:#1A1A1A;cursor:pointer;display:flex;align-items:center;justify-content:center"><svg width="20" height="20"><use href="#i-arrow-left"></use></svg></button><div style="position:absolute;left:0;right:0;text-align:center;font-size:18px;font-weight:500">Matched</div></div>
+              <div style="padding:8px 20px 24px">
+                <div style="background:#fff;border:1px solid #E5E3DD;border-radius:16px;padding:18px;text-align:center">
+                  <div style="width:56px;height:56px;border-radius:50%;background:#F6DCDE;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:500;color:#8C1F2B;margin:0 auto">{{ selectedRequest.requesterInitials }}</div>
+                  <div style="font-size:16px;font-weight:500;margin-top:12px">{{ selectedRequest.requesterName }} · Requester</div>
+                  <div style="font-size:13px;color:#6B6B68;margin-top:2px">{{ selectedRequest.bloodGroup }} · {{ selectedRequest.units }} units · {{ selectedRequest.hospital }}</div>
+                  <div style="display:flex;gap:8px;margin-top:16px">
+                    <div style="flex:1;background:#F7F6F2;border-radius:12px;padding:10px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:13px;font-weight:500"><svg width="14" height="14" style="color:#8C1F2B"><use href="#i-phone"></use></svg>{{ selectedRequest.requesterPhone }}</div>
+                  </div>
+                  <div style="display:flex;gap:8px;margin-top:10px">
+                    <button style="flex:1;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:14px;padding:12px;font-size:13.5px;font-weight:500;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px"><svg width="15" height="15"><use href="#i-phone"></use></svg>Call</button>
+                    <button style="flex:1;background:none;border:1px solid #E5E3DD;color:#8C1F2B;border-radius:14px;padding:12px;font-size:13.5px;font-weight:500;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px"><svg width="15" height="15"><use href="#i-message"></use></svg>WhatsApp</button>
+                  </div>
+                </div>
+                <button onClick="{{ confirmDonation }}" style="margin-top:20px;width:100%;background:none;border:1px solid #E5E3DD;color:#1A1A1A;border-radius:14px;padding:13px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit">Mark as donated</button>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isDonationConfirm }}" hint-placeholder-val="{{ false }}">
+            <div style="height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 30px;text-align:center">
+              <div style="width:64px;height:64px;border-radius:50%;background:#EAF3DE;display:flex;align-items:center;justify-content:center"><svg width="28" height="28" style="color:#3B6D11"><use href="#i-droplet"></use></svg></div>
+              <div style="font-size:19px;font-weight:500;margin-top:16px">Thank you for donating!</div>
+              <div style="font-size:13.5px;color:#6B6B68;margin-top:8px;line-height:1.5">You've just helped save a life. You're now on a 90-day cooldown before you can donate again.</div>
+              <button onClick="{{ goCooldown }}" style="margin-top:22px;width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:14px;padding:13px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit">Done</button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isCooldown }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;height:100%">
+              <div style="flex:0 0 52px;display:flex;align-items:center;padding:0 8px"><button onClick="{{ goBack }}" style="width:36px;height:36px;border:none;background:none;color:#1A1A1A;cursor:pointer;display:flex;align-items:center;justify-content:center"><svg width="20" height="20"><use href="#i-arrow-left"></use></svg></button></div>
+              <div style="padding:8px 20px 24px;text-align:center">
+                <svg width="30" height="30" style="color:#854F0B"><use href="#i-clock"></use></svg>
+                <div style="font-size:19px;font-weight:500;margin-top:12px">On cooldown</div>
+                <div style="font-size:13.5px;color:#6B6B68;margin-top:8px;line-height:1.5">Your body needs time to recover. You'll be marked available again automatically.</div>
+                <div style="margin-top:24px;background:#fff;border:1px solid #E5E3DD;border-radius:16px;padding:20px">
+                  <div style="font-size:32px;font-weight:500;color:#8C1F2B">83 days</div>
+                  <div style="font-size:12.5px;color:#6B6B68;margin-top:4px">until you're eligible again</div>
+                </div>
+                <div style="margin-top:16px;height:8px;background:#E5E3DD;border-radius:4px;overflow:hidden"><div style="width:8%;height:100%;background:#8C1F2B"></div></div>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isDonationHistory }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;height:100%">
+              <div style="flex:0 0 52px;display:flex;align-items:center;padding:0 8px;position:relative"><button onClick="{{ goBack }}" style="width:36px;height:36px;border:none;background:none;color:#1A1A1A;cursor:pointer;display:flex;align-items:center;justify-content:center"><svg width="20" height="20"><use href="#i-arrow-left"></use></svg></button><div style="position:absolute;left:0;right:0;text-align:center;font-size:18px;font-weight:500">Donation history</div></div>
+              <div style="padding:8px 20px 24px">
+                <div style="background:#ECEAE4;border-radius:14px;padding:16px;display:flex;margin-bottom:16px">
+                  <div style="flex:1;text-align:center"><div style="font-size:22px;font-weight:500">3</div><div style="font-size:12px;color:#6B6B68;margin-top:2px">Total donations</div></div>
+                  <div style="width:1px;background:#E5E3DD"></div>
+                  <div style="flex:1;text-align:center"><div style="font-size:22px;font-weight:500">3</div><div style="font-size:12px;color:#6B6B68;margin-top:2px">Lives helped</div></div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:10px">
+                  <div style="background:#fff;border:1px solid #E5E3DD;border-radius:14px;padding:14px;display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:13.5px;font-weight:500">Fortis Hospital, Cunningham Rd</div><div style="font-size:12px;color:#6B6B68;margin-top:3px">14 May 2026 · O+</div></div><div style="background:#EAF3DE;color:#3B6D11;border-radius:6px;padding:4px 8px;font-size:11px;font-weight:500">Completed</div></div>
+                  <div style="background:#fff;border:1px solid #E5E3DD;border-radius:14px;padding:14px;display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:13.5px;font-weight:500">St. John's Medical College</div><div style="font-size:12px;color:#6B6B68;margin-top:3px">2 Feb 2026 · O+</div></div><div style="background:#EAF3DE;color:#3B6D11;border-radius:6px;padding:4px 8px;font-size:11px;font-weight:500">Completed</div></div>
+                  <div style="background:#fff;border:1px solid #E5E3DD;border-radius:14px;padding:14px;display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:13.5px;font-weight:500">Apollo Hospital, Bannerghatta</div><div style="font-size:12px;color:#6B6B68;margin-top:3px">9 Nov 2025 · O+</div></div><div style="background:#EAF3DE;color:#3B6D11;border-radius:6px;padding:4px 8px;font-size:11px;font-weight:500">Completed</div></div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isSettings }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;height:100%">
+              <div style="flex:0 0 52px;display:flex;align-items:center;padding:0 8px;position:relative"><button onClick="{{ goBack }}" style="width:36px;height:36px;border:none;background:none;color:#1A1A1A;cursor:pointer;display:flex;align-items:center;justify-content:center"><svg width="20" height="20"><use href="#i-arrow-left"></use></svg></button><div style="position:absolute;left:0;right:0;text-align:center;font-size:18px;font-weight:500">Settings</div></div>
+              <div style="padding:8px 20px 24px">
+                <div style="font-size:12px;font-weight:500;color:#9C9C98;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px">Privacy</div>
+                <div style="background:#fff;border:1px solid #E5E3DD;border-radius:14px;overflow:hidden">
+                  <div style="padding:14px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #E5E3DD"><div style="font-size:14px">Show exact address to matched donors</div><button onClick="{{ toggleShowExactAddress }}" style="width:38px;height:22px;border-radius:12px;border:none;cursor:pointer;position:relative;background:{{ addrTrackBg }}"><span style="position:absolute;top:2px;left:{{ addrThumbLeft }};width:18px;height:18px;border-radius:50%;background:#fff;transition:left .15s"></span></button></div>
+                  <div style="padding:14px;font-size:14px;color:#8C1F2B">Download my data</div>
+                </div>
+                <div style="font-size:12px;font-weight:500;color:#9C9C98;text-transform:uppercase;letter-spacing:.04em;margin:20px 0 8px">Account</div>
+                <div style="background:#fff;border:1px solid #E5E3DD;border-radius:14px;overflow:hidden">
+                  <div style="padding:14px;font-size:14px;color:#8C1F2B;border-bottom:1px solid #E5E3DD">Request data deletion</div>
+                  <div style="padding:14px;font-size:14px;color:#8C1F2B">Log out of all devices</div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isCreateRequest }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;height:100%">
+              <div style="flex:0 0 52px;display:flex;align-items:center;padding:0 8px;position:relative"><button onClick="{{ goBack }}" style="width:36px;height:36px;border:none;background:none;color:#1A1A1A;cursor:pointer;display:flex;align-items:center;justify-content:center"><svg width="20" height="20"><use href="#i-arrow-left"></use></svg></button><div style="position:absolute;left:0;right:0;text-align:center;font-size:18px;font-weight:500">Create request</div></div>
+              <div style="padding:8px 20px 28px;background:#FBF7F1">
+                <div style="background:#fff;border:1px solid #EEE8DF;border-radius:18px;padding:16px;box-shadow:0 2px 10px rgba(43,20,20,.04)">
+                  <div style="display:flex;align-items:center;gap:7px"><span style="width:4px;height:14px;border-radius:2px;background:#8C1F2B;display:inline-block"></span><span style="font-size:13px;font-weight:600;color:#241416">Blood group needed</span></div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-top:12px">
+                    <sc-for list="{{ bloodGroupsReq }}" as="g" hint-placeholder-count="8">
+                      <sc-if value="{{ g.selected }}" hint-placeholder-val="{{ false }}"><button onClick="{{ g.onClick }}" style="height:46px;border-radius:13px;border:none;background:#8C1F2B;color:#FBE6E8;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 4px 10px rgba(140,31,43,.28)">{{ g.label }}</button></sc-if>
+                      <sc-if value="{{ g.unselected }}" hint-placeholder-val="{{ true }}"><button onClick="{{ g.onClick }}" style="height:46px;border-radius:13px;border:1px solid #EEE8DF;background:#FBF7F1;color:#241416;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit">{{ g.label }}</button></sc-if>
+                    </sc-for>
+                  </div>
+                </div>
+
+                <div style="background:#fff;border:1px solid #EEE8DF;border-radius:18px;padding:16px;margin-top:14px;box-shadow:0 2px 10px rgba(43,20,20,.04)">
+                  <div style="display:flex;justify-content:space-between;align-items:center">
+                    <div style="display:flex;align-items:center;gap:7px"><span style="width:4px;height:14px;border-radius:2px;background:#8C1F2B;display:inline-block"></span><span style="font-size:13px;font-weight:600;color:#241416">Units needed</span></div>
+                    <div style="display:flex;align-items:center;gap:14px">
+                      <button onClick="{{ decUnits }}" style="width:30px;height:30px;border-radius:10px;border:1px solid #EEE8DF;background:#FBF7F1;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#241416"><svg width="13" height="13"><use href="#i-minus"></use></svg></button>
+                      <div style="font-size:16px;font-weight:700;min-width:14px;text-align:center;color:#241416">{{ reqUnits }}</div>
+                      <button onClick="{{ incUnits }}" style="width:30px;height:30px;border-radius:10px;border:1px solid #EEE8DF;background:#FBF7F1;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#241416"><svg width="13" height="13"><use href="#i-plus"></use></svg></button>
+                    </div>
+                  </div>
+
+                  <div style="display:flex;align-items:center;gap:7px;margin-top:18px"><span style="width:4px;height:14px;border-radius:2px;background:#8C1F2B;display:inline-block"></span><span style="font-size:13px;font-weight:600;color:#241416">Urgency</span></div>
+                  <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px">
+                    <sc-for list="{{ urgencyOptions }}" as="u" hint-placeholder-count="3">
+                      <sc-if value="{{ u.selected }}" hint-placeholder-val="{{ false }}">
+                        <button onClick="{{ u.onClick }}" style="display:flex;align-items:center;gap:10px;text-align:left;padding:11px 14px;border-radius:13px;border:none;background:#8C1F2B;color:#FBE6E8;cursor:pointer;font-family:inherit">
+                          <span style="width:28px;height:28px;border-radius:9px;background:rgba(251,230,232,.18);display:flex;align-items:center;justify-content:center;flex:none"><svg width="14" height="14"><use href="{{ u.icon }}"></use></svg></span>
+                          <span><span style="display:block;font-size:13.5px;font-weight:600">{{ u.label }}</span><span style="display:block;font-size:11px;color:#E9BFC4;margin-top:1px">{{ u.desc }}</span></span>
+                        </button>
+                      </sc-if>
+                      <sc-if value="{{ u.unselected }}" hint-placeholder-val="{{ true }}">
+                        <button onClick="{{ u.onClick }}" style="display:flex;align-items:center;gap:10px;text-align:left;padding:11px 14px;border-radius:13px;border:1px solid #EEE8DF;background:#FBF7F1;color:#241416;cursor:pointer;font-family:inherit">
+                          <span style="width:28px;height:28px;border-radius:9px;background:#fff;display:flex;align-items:center;justify-content:center;flex:none;color:#6B6B68"><svg width="14" height="14"><use href="{{ u.icon }}"></use></svg></span>
+                          <span><span style="display:block;font-size:13.5px;font-weight:500">{{ u.label }}</span><span style="display:block;font-size:11px;color:#9C9C98;margin-top:1px">{{ u.desc }}</span></span>
+                        </button>
+                      </sc-if>
+                    </sc-for>
+                  </div>
+                </div>
+
+                <div style="background:#fff;border:1px solid #EEE8DF;border-radius:18px;padding:16px;margin-top:14px;box-shadow:0 2px 10px rgba(43,20,20,.04)">
+                <div style="display:flex;align-items:center;justify-content:space-between">
+                  <div style="display:flex;align-items:center;gap:7px"><span style="width:4px;height:14px;border-radius:2px;background:#8C1F2B;display:inline-block"></span><span style="font-size:13px;font-weight:600;color:#241416">Location</span></div>
+                  <div style="display:flex;gap:5px">
+                    <sc-for list="{{ reqLocChips }}" as="c" hint-placeholder-count="4">
+                      <sc-if value="{{ c.active }}" hint-placeholder-val="{{ false }}"><button onClick="{{ c.onClick }}" style="border:none;background:#1A1A1A;color:#fff;border-radius:20px;padding:4px 9px;font-size:10px;cursor:pointer;font-family:inherit">{{ c.label }}</button></sc-if>
+                      <sc-if value="{{ c.inactive }}" hint-placeholder-val="{{ true }}"><button onClick="{{ c.onClick }}" style="border:1px solid #D3D1C7;background:#fff;color:#6B6B68;border-radius:20px;padding:4px 9px;font-size:10px;cursor:pointer;font-family:inherit">{{ c.label }}</button></sc-if>
+                    </sc-for>
+                  </div>
+                </div>
+
+                <sc-if value="{{ reqLocPermission }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:8px;background:#F7F6F2;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px">
+                    <div style="font-size:12.5px;color:#6B6B68;line-height:1.4">Allow location access to auto-fill your area.</div>
+                    <div style="display:flex;gap:8px">
+                      <button onClick="{{ allowReqLocation }}" style="flex:1;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:10px;padding:9px;font-size:12.5px;font-weight:500;cursor:pointer;font-family:inherit">Allow</button>
+                      <button onClick="{{ denyReqLocation }}" style="flex:1;background:none;border:1px solid #E5E3DD;color:#6B6B68;border-radius:10px;padding:9px;font-size:12.5px;cursor:pointer;font-family:inherit">Not now</button>
+                    </div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ reqLocDenied }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:8px;background:#FAEEDA;border-radius:12px;padding:10px 12px;font-size:12px;color:#854F0B;display:flex;align-items:center;gap:8px"><svg width="14" height="14"><use href="#i-alert-triangle"></use></svg>Couldn't detect your location — enter it manually below.</div>
+                </sc-if>
+                <sc-if value="{{ reqLocError }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:8px;background:#F6DCDE;border-radius:12px;padding:10px 12px;font-size:12px;color:#8C1F2B;display:flex;align-items:center;gap:8px"><svg width="14" height="14"><use href="#i-wifi-off"></use></svg>Location lookup failed — check your connection.</div>
+                </sc-if>
+
+                <div style="margin-top:8px;display:flex;align-items:center;border:1px solid #E5E3DD;border-radius:14px;background:#fff;padding:0 14px">
+                  <input value="{{ reqLocation }}" onChange="{{ onReqLocationChange }}" placeholder="Search city or area" style="flex:1;border:none;outline:none;padding:12px 0;font-size:14px;font-family:inherit;color:#1A1A1A;background:transparent" />
+                  <svg width="16" height="16" style="color:#6B6B68"><use href="#i-map-pin"></use></svg>
+                </div>
+                <button onClick="{{ useCurrentLocationReq }}" style="margin-top:8px;display:flex;align-items:center;gap:6px;background:none;border:none;color:#8C1F2B;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;padding:2px"><svg width="13" height="13"><use href="#i-map-pin"></use></svg>Use current location</button>
+                </div>
+
+                <div style="margin-top:16px;background:#FBF3E2;border:1px solid #F0E2C4;border-radius:16px;padding:14px;display:flex;align-items:center;gap:10px">
+                  <div style="width:32px;height:32px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" style="color:#96590A"><use href="#i-sparkle"></use></svg></div>
+                  <div style="font-size:12.5px;color:#7A5A26;line-height:1.5"><span style="font-weight:700">{{ reqBloodGroup }}</span> · {{ reqUnits }} unit(s) · <span style="font-weight:700">{{ reqUrgencyLabel }}</span> · {{ reqLocation }}</div>
+                </div>
+
+                <button onClick="{{ submitCreateRequestClick }}" style="margin-top:16px;width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:14px;padding:14px;font-size:14.5px;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 8px 18px rgba(140,31,43,.24)">
+                  <sc-if value="{{ createRequestBusy }}" hint-placeholder-val="{{ false }}"><span style="width:15px;height:15px;border-radius:50%;border:2px solid rgba(251,230,232,.4);border-top-color:#FBE6E8;display:inline-block;animation:rb-spin 0.7s linear infinite"></span></sc-if>
+                  Send request
+                </button>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isMatching }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;height:100%;background:linear-gradient(190deg,#3A0F14,#1A0A0C 60%)">
+              <div style="flex:0 0 auto;display:flex;justify-content:center;gap:5px;padding:14px 20px 0">
+                <sc-for list="{{ matchOutcomeChips }}" as="c" hint-placeholder-count="3">
+                  <sc-if value="{{ c.active }}" hint-placeholder-val="{{ false }}"><button onClick="{{ c.onClick }}" style="border:none;background:rgba(255,255,255,.92);color:#3A0F14;border-radius:20px;padding:5px 10px;font-size:10px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap">{{ c.label }}</button></sc-if>
+                  <sc-if value="{{ c.inactive }}" hint-placeholder-val="{{ true }}"><button onClick="{{ c.onClick }}" style="border:1px solid rgba(255,255,255,.22);background:transparent;color:rgba(255,255,255,.65);border-radius:20px;padding:5px 10px;font-size:10px;cursor:pointer;font-family:inherit;white-space:nowrap">{{ c.label }}</button></sc-if>
+                </sc-for>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:14px 26px;text-align:center;overflow-y:auto">
+                <div style="position:relative;width:172px;height:172px;display:flex;align-items:center;justify-content:center;flex:none;margin-top:6px">
+                  <div style="position:absolute;inset:0;border-radius:50%;border:1px dashed rgba(255,255,255,.16)"></div>
+                  <div style="position:absolute;inset:24px;border-radius:50%;border:1px dashed rgba(255,255,255,.26)"></div>
+                  <span style="position:absolute;width:60px;height:60px;border-radius:50%;background:#8C1F2B;animation:rb-pulse-ring 2.2s ease-out infinite"></span>
+                  <div style="width:60px;height:60px;border-radius:50%;background:linear-gradient(150deg,#B9303F,#8C1F2B);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;z-index:2;box-shadow:0 8px 20px rgba(0,0,0,.4)">
+                    <div style="font-size:14px;font-weight:700;color:#FBE6E8;font-family:'Newsreader',Georgia,serif">{{ matchRadiusLabel }}</div>
+                  </div>
+                </div>
+                <div style="font-size:16px;font-weight:600;margin-top:22px;color:#FFF9F5;line-height:1.35;max-width:260px">{{ matchingHeadlineCurrent }}</div>
+                <div style="font-size:11.5px;color:rgba(255,255,255,.5);margin-top:8px">Runs automatically · {{ matchNotifiedCount }} donors notified so far</div>
+
+                <div style="width:100%;margin-top:22px;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:6px 14px">
+                  <sc-for list="{{ matchStagesView }}" as="st" hint-placeholder-count="5">
+                    <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06)">
+                      <sc-if value="{{ st.done }}" hint-placeholder-val="{{ false }}"><div style="width:22px;height:22px;border-radius:50%;background:rgba(90,180,110,.2);display:flex;align-items:center;justify-content:center;flex:none"><svg width="12" height="12" style="color:#7FCB8E"><use href="#i-check"></use></svg></div></sc-if>
+                      <sc-if value="{{ st.current }}" hint-placeholder-val="{{ false }}"><div style="width:22px;height:22px;border-radius:50%;border:2px solid rgba(255,255,255,.18);border-top-color:#EDA5AC;flex:none;animation:rb-spin 0.9s linear infinite"></div></sc-if>
+                      <sc-if value="{{ st.pending }}" hint-placeholder-val="{{ true }}"><div style="width:22px;height:22px;border-radius:50%;border:2px solid rgba(255,255,255,.14);flex:none"></div></sc-if>
+                      <div style="font-size:13px;color:rgba(255,255,255,.85)">{{ st.label }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="flex:0 0 auto;padding:0 20px 20px">
+                <button onClick="{{ cancelRequestFlow }}" style="width:100%;background:none;border:none;color:rgba(255,255,255,.55);padding:10px;font-size:13px;cursor:pointer;font-family:inherit">Cancel this request</button>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isDonorFoundRequester }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;height:100%">
+              <div style="flex:0 0 52px;display:flex;align-items:center;padding:0 8px"><button onClick="{{ goBack }}" style="width:36px;height:36px;border:none;background:none;color:#1A1A1A;cursor:pointer;display:flex;align-items:center;justify-content:center"><svg width="20" height="20"><use href="#i-arrow-left"></use></svg></button></div>
+              <div style="padding:8px 20px 24px;text-align:center">
+                <div style="width:56px;height:56px;border-radius:50%;background:#EAF3DE;display:flex;align-items:center;justify-content:center;margin:0 auto"><svg width="24" height="24" style="color:#3B6D11"><use href="#i-check-circle"></use></svg></div>
+                <div style="font-size:18px;font-weight:500;margin-top:14px">{{ matchedDonor.name }} accepted your request</div>
+                <div style="font-size:13px;color:#6B6B68;margin-top:6px">{{ matchedDonor.bloodGroup }} · 2.1 km away · verified donor</div>
+
+                <div style="background:#fff;border:1px solid #E5E3DD;border-radius:16px;padding:18px;margin-top:20px;text-align:left">
+                  <div style="display:flex;align-items:center;gap:12px">
+                    <div style="width:44px;height:44px;border-radius:50%;background:#F6DCDE;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500;color:#8C1F2B">{{ matchedDonor.initials }}</div>
+                    <div><div style="font-size:14.5px;font-weight:500">{{ matchedDonor.name }}</div><div style="font-size:12px;color:#6B6B68;margin-top:2px">{{ matchedDonor.bloodGroup }} · Available now</div></div>
+                  </div>
+                  <div style="display:flex;gap:8px;margin-top:16px">
+                    <button style="flex:1;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:14px;padding:11px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px"><svg width="14" height="14"><use href="#i-phone"></use></svg>Call</button>
+                    <button style="flex:1;background:none;border:1px solid #E5E3DD;color:#8C1F2B;border-radius:14px;padding:11px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px"><svg width="14" height="14"><use href="#i-message"></use></svg>WhatsApp</button>
+                  </div>
+                </div>
+                <button onClick="{{ goHome }}" style="margin-top:20px;width:100%;background:none;border:1px solid #E5E3DD;color:#1A1A1A;border-radius:14px;padding:13px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit">Back to home</button>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isNoDonorFound }}" hint-placeholder-val="{{ false }}">
+            <div style="height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 30px;text-align:center">
+              <div style="width:64px;height:64px;border-radius:50%;background:#FAEEDA;display:flex;align-items:center;justify-content:center"><svg width="28" height="28" style="color:#854F0B"><use href="#i-alert-triangle"></use></svg></div>
+              <div style="font-size:18px;font-weight:500;margin-top:16px">No donor found within 15 km</div>
+              <div style="font-size:13.5px;color:#6B6B68;margin-top:8px;line-height:1.5">We expanded your search but couldn't find a match yet. This critical request has been escalated to our admin team for manual broadcast.</div>
+              <button onClick="{{ goHome }}" style="margin-top:22px;width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:14px;padding:13px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit">Keep waiting — I'll be notified</button>
+              <button onClick="{{ cancelRequestFlow }}" style="margin-top:10px;width:100%;background:none;border:none;color:#6B6B68;padding:10px;font-size:13px;cursor:pointer;font-family:inherit">Cancel this request</button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isCancelConfirm }}" hint-placeholder-val="{{ false }}">
+            <div style="height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 30px;text-align:center">
+              <div style="width:56px;height:56px;border-radius:50%;background:#F6DCDE;display:flex;align-items:center;justify-content:center"><svg width="24" height="24" style="color:#8C1F2B"><use href="#i-x-circle"></use></svg></div>
+              <div style="font-size:18px;font-weight:500;margin-top:16px">Request cancelled</div>
+              <div style="font-size:13.5px;color:#6B6B68;margin-top:8px;line-height:1.5">Donors who were already notified will see this request marked as cancelled.</div>
+              <button onClick="{{ goHome }}" style="margin-top:22px;width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:14px;padding:13px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit">Back to home</button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isTracking }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;height:100%">
+              <div style="flex:0 0 52px;display:flex;align-items:center;padding:0 8px;position:relative"><button onClick="{{ goBack }}" style="width:36px;height:36px;border:none;background:none;color:#1A1A1A;cursor:pointer;display:flex;align-items:center;justify-content:center"><svg width="20" height="20"><use href="#i-arrow-left"></use></svg></button><div style="position:absolute;left:0;right:0;text-align:center;font-size:18px;font-weight:500">Request tracking</div></div>
+              <div style="padding:8px 20px 28px;background:#FBF7F1">
+                <div style="background:linear-gradient(150deg,#7A1A24,#5C1119);border-radius:20px;padding:16px;box-shadow:0 12px 24px rgba(92,17,25,.24)">
+                  <div style="display:flex;align-items:center;gap:10px"><div style="background:rgba(251,230,232,.16);color:#FBE6E8;border-radius:9px;padding:6px 11px;font-size:15px;font-weight:700">{{ trackingReq.bloodGroup }}</div><div style="flex:1;font-size:14px;font-weight:600;color:#FFF9F5">{{ trackingReq.hospital }}</div></div>
+                </div>
+
+                <div style="margin-top:22px;background:#fff;border:1px solid #EEE8DF;border-radius:18px;padding:18px 16px;box-shadow:0 2px 10px rgba(43,20,20,.04)">
+                  <sc-for list="{{ trackingSteps }}" as="st" hint-placeholder-count="4">
+                    <div style="display:flex;gap:12px">
+                      <div style="display:flex;flex-direction:column;align-items:center;flex:none">
+                        <sc-if value="{{ st.done }}" hint-placeholder-val="{{ false }}"><div style="width:30px;height:30px;border-radius:50%;background:#2F6B3A;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 8px rgba(47,107,58,.3)"><svg width="14" height="14" style="color:#fff"><use href="#i-check"></use></svg></div></sc-if>
+                        <sc-if value="{{ st.current }}" hint-placeholder-val="{{ false }}"><div style="width:30px;height:30px;border-radius:50%;background:#F6DCDE;border:2px solid #8C1F2B;display:flex;align-items:center;justify-content:center"><svg width="13" height="13" style="color:#8C1F2B"><use href="{{ st.icon }}"></use></svg></div></sc-if>
+                        <sc-if value="{{ st.pending }}" hint-placeholder-val="{{ true }}"><div style="width:30px;height:30px;border-radius:50%;border:2px solid #EEE8DF;display:flex;align-items:center;justify-content:center"><svg width="13" height="13" style="color:#D3C9BC"><use href="{{ st.icon }}"></use></svg></div></sc-if>
+                        <sc-if value="{{ st.showLine }}" hint-placeholder-val="{{ true }}"><div style="width:2px;flex:1;background:{{ st.lineColor }};margin:2px 0;min-height:28px"></div></sc-if>
+                      </div>
+                      <div style="padding-bottom:26px;padding-top:4px">
+                        <div style="font-size:14px;font-weight:600;color:#241416">{{ st.label }}</div>
+                        <div style="font-size:11.5px;color:#9C9C98;margin-top:2px">{{ st.sub }}</div>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+
+                <sc-if value="{{ trackingShowTerminal }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:14px;background:#fff;border:1px solid #EEE8DF;border-radius:16px;padding:14px;display:flex;gap:10px;align-items:flex-start">
+                    <div style="width:32px;height:32px;border-radius:10px;background:#F3EFE7;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" style="color:#6B6B68"><use href="#i-alert-triangle"></use></svg></div>
+                    <div style="font-size:12.5px;color:#6B6B68;line-height:1.5;margin-top:4px">{{ trackingTerminalNote }}</div>
+                  </div>
+                  <button onClick="{{ trackingCreateNew }}" style="margin-top:14px;width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:14px;padding:13px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;box-shadow:0 8px 18px rgba(140,31,43,.22)">Create a new request</button>
+                </sc-if>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isAdminLogin }}" hint-placeholder-val="{{ false }}">
+            <div style="height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 26px;text-align:center">
+              <svg width="30" height="30" style="color:#8C1F2B"><use href="#i-shield-check"></use></svg>
+              <div style="font-size:19px;font-weight:500;margin-top:14px">Admin console</div>
+              <div style="font-size:12.5px;color:#6B6B68;margin-top:6px;line-height:1.5">Invite-only. Accounts are provisioned by a super-admin — there is no public sign-up.</div>
+
+              <div style="width:100%;margin-top:22px;text-align:left">
+                <div style="font-size:12.5px;font-weight:500;color:#6B6B68">Work email</div>
+                <div style="margin-top:6px;display:flex;align-items:center;gap:10px;border:1px solid #E5E3DD;border-radius:14px;background:#fff;padding:12px 14px"><svg width="15" height="15" style="color:#6B6B68"><use href="#i-mail"></use></svg><div style="font-size:14px;color:#1A1A1A">admin@raktabandhan.org</div></div>
+                <div style="font-size:12.5px;font-weight:500;color:#6B6B68;margin-top:14px">Password</div>
+                <div style="margin-top:6px;display:flex;align-items:center;gap:10px;border:1px solid #E5E3DD;border-radius:14px;background:#fff;padding:12px 14px"><svg width="15" height="15" style="color:#6B6B68"><use href="#i-lock"></use></svg><div style="font-size:14px;color:#1A1A1A">••••••••••</div></div>
+              </div>
+              <button onClick="{{ adminLoginSubmit }}" style="margin-top:20px;width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:14px;padding:13px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit">Sign in</button>
+              <div style="font-size:11.5px;color:#9C9C98;margin-top:16px;line-height:1.5">Protected by two-factor authentication and device attestation (App Check).</div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;height:100%;background:#FBF7F1">
+              <div style="flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 20px 8px">
+                <div style="display:flex;align-items:center;gap:8px"><div style="width:26px;height:26px;border-radius:8px;background:#241416;display:flex;align-items:center;justify-content:center"><svg width="13" height="13" style="color:#fff"><use href="#i-shield-check"></use></svg></div><span style="font-family:'Newsreader',Georgia,serif;font-size:19px;font-weight:600;color:#241416">Admin console</span></div>
+                <button onClick="{{ goToAdminLogin }}" style="border:none;background:none;color:#9C9C98;cursor:pointer;display:flex;align-items:center"><svg width="18" height="18"><use href="#i-log-out"></use></svg></button>
+              </div>
+              <div style="display:flex;gap:6px;padding:8px 20px 12px;overflow-x:auto">
+                <sc-for list="{{ adminTabs }}" as="t" hint-placeholder-count="5">
+                  <sc-if value="{{ t.active }}" hint-placeholder-val="{{ false }}"><button onClick="{{ t.onClick }}" style="white-space:nowrap;border:none;background:#241416;color:#fff;border-radius:20px;padding:7px 13px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit">{{ t.label }}</button></sc-if>
+                  <sc-if value="{{ t.inactive }}" hint-placeholder-val="{{ true }}"><button onClick="{{ t.onClick }}" style="white-space:nowrap;border:1px solid #E5E3DD;background:#fff;color:#6B6B68;border-radius:20px;padding:7px 13px;font-size:12.5px;cursor:pointer;font-family:inherit">{{ t.label }}</button></sc-if>
+                </sc-for>
+              </div>
+
+              <div style="flex:1;overflow-y:auto;padding:0 20px 24px">
+
+                <sc-if value="{{ adminTabDashboard }}" hint-placeholder-val="{{ true }}">
+                  <div style="font-size:11px;color:#9C9C98;padding:2px 2px 14px;line-height:1.5">Companion view for on-the-go staff · full analytics &amp; bulk actions live on the desktop console</div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                    <div style="background:#fff;border:1px solid #EEE8DF;border-radius:16px;padding:15px;box-shadow:0 2px 8px rgba(43,20,20,.04)">
+                      <div style="display:flex;align-items:center;justify-content:space-between"><svg width="15" height="15" style="color:#9C9C98"><use href="#i-users"></use></svg><span style="font-size:10.5px;color:#2F6B3A;font-weight:600;display:flex;align-items:center;gap:2px"><svg width="10" height="10"><use href="#i-trend-up"></use></svg>4.2%</span></div>
+                      <div style="font-family:'Newsreader',Georgia,serif;font-size:26px;font-weight:600;color:#241416;margin-top:8px">1,842</div>
+                      <div style="font-size:11.5px;color:#6B6B68;margin-top:1px">Registered donors</div>
+                    </div>
+                    <div style="background:#fff;border:1px solid #EEE8DF;border-radius:16px;padding:15px;box-shadow:0 2px 8px rgba(43,20,20,.04)">
+                      <svg width="15" height="15" style="color:#8C1F2B"><use href="#i-droplet"></use></svg>
+                      <div style="font-family:'Newsreader',Georgia,serif;font-size:26px;font-weight:600;color:#8C1F2B;margin-top:8px">6</div>
+                      <div style="font-size:11.5px;color:#6B6B68;margin-top:1px">Open requests</div>
+                    </div>
+                    <div style="background:#fff;border:1px solid #EEE8DF;border-radius:16px;padding:15px;box-shadow:0 2px 8px rgba(43,20,20,.04)">
+                      <svg width="15" height="15" style="color:#96590A"><use href="#i-clock"></use></svg>
+                      <div style="font-family:'Newsreader',Georgia,serif;font-size:26px;font-weight:600;color:#96590A;margin-top:8px">4</div>
+                      <div style="font-size:11.5px;color:#6B6B68;margin-top:1px">Pending verifications</div>
+                    </div>
+                    <div style="background:#fff;border:1px solid #EEE8DF;border-radius:16px;padding:15px;box-shadow:0 2px 8px rgba(43,20,20,.04)">
+                      <svg width="15" height="15" style="color:#2F6B3A"><use href="#i-check-circle"></use></svg>
+                      <div style="font-family:'Newsreader',Georgia,serif;font-size:26px;font-weight:600;color:#2F6B3A;margin-top:8px">96%</div>
+                      <div style="font-size:11.5px;color:#6B6B68;margin-top:1px">Fulfilled (30d)</div>
+                    </div>
+                  </div>
+
+                  <div style="margin-top:18px;background:#fff;border:1px solid #EEE8DF;border-radius:16px;padding:15px;box-shadow:0 2px 8px rgba(43,20,20,.04)">
+                    <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:12px;font-weight:600;color:#241416">Fulfilment, last 7 days</span><span style="font-size:11px;color:#9C9C98">avg 91%</span></div>
+                    <div style="display:flex;align-items:flex-end;gap:6px;margin-top:12px;height:46px">
+                      <div style="flex:1;height:60%;background:#F0E7E8;border-radius:4px"></div>
+                      <div style="flex:1;height:75%;background:#F0E7E8;border-radius:4px"></div>
+                      <div style="flex:1;height:55%;background:#F0E7E8;border-radius:4px"></div>
+                      <div style="flex:1;height:88%;background:#EBC9CD;border-radius:4px"></div>
+                      <div style="flex:1;height:70%;background:#F0E7E8;border-radius:4px"></div>
+                      <div style="flex:1;height:95%;background:#EBC9CD;border-radius:4px"></div>
+                      <div style="flex:1;height:100%;background:#8C1F2B;border-radius:4px"></div>
+                    </div>
+                  </div>
+
+                  <div style="margin-top:18px;display:flex;align-items:center;gap:7px"><span style="width:4px;height:14px;border-radius:2px;background:#8C1F2B;display:inline-block"></span><span style="font-size:12.5px;font-weight:600;color:#241416">Needs attention</span></div>
+                  <div style="margin-top:10px;background:#3A0F14;border-radius:16px;padding:15px;display:flex;gap:10px;align-items:flex-start;box-shadow:0 8px 18px rgba(58,15,20,.24)">
+                    <div style="width:32px;height:32px;border-radius:10px;background:rgba(251,230,232,.14);display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" style="color:#F0B4BA"><use href="#i-alert-triangle"></use></svg></div>
+                    <div><div style="font-size:13px;font-weight:600;color:#FFF9F5">Critical AB- request, no donor after 15km</div><div style="font-size:11.5px;color:#D9A5AA;margin-top:3px">Whitefield · escalated 6 min ago — ready for manual broadcast</div></div>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ adminTabDonors }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;gap:6px;margin-bottom:12px">
+                    <sc-for list="{{ adminDonorFilters }}" as="f" hint-placeholder-count="4">
+                      <sc-if value="{{ f.active }}" hint-placeholder-val="{{ false }}"><button onClick="{{ f.onClick }}" style="border:none;background:#1A1A1A;color:#fff;border-radius:20px;padding:5px 11px;font-size:11.5px;cursor:pointer;font-family:inherit">{{ f.label }}</button></sc-if>
+                      <sc-if value="{{ f.inactive }}" hint-placeholder-val="{{ true }}"><button onClick="{{ f.onClick }}" style="border:1px solid #D3D1C7;background:#fff;color:#6B6B68;border-radius:20px;padding:5px 11px;font-size:11.5px;cursor:pointer;font-family:inherit">{{ f.label }}</button></sc-if>
+                    </sc-for>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:10px">
+                    <sc-for list="{{ filteredAdminDonors }}" as="d" hint-placeholder-count="3">
+                      <div style="background:#fff;border:1px solid #E5E3DD;border-radius:14px;padding:14px">
+                        <div style="display:flex;align-items:center;gap:10px">
+                          <div style="font-size:13.5px;font-weight:500;flex:1">{{ d.name }}</div>
+                          <div style="background:#F6DCDE;color:#8C1F2B;border-radius:6px;padding:3px 8px;font-size:11px;font-weight:500">{{ d.bloodGroup }}</div>
+                          <div style="background:{{ d.badgeBg }};color:{{ d.badgeText }};border-radius:6px;padding:3px 8px;font-size:11px;font-weight:500">{{ d.statusLabel }}</div>
+                        </div>
+                        <div style="font-size:12px;color:#6B6B68;margin-top:6px">{{ d.phone }}</div>
+                        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px solid #F0EEE9">
+                          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#6B6B68"><span style="width:6px;height:6px;border-radius:50%;background:{{ d.availDotColor }};display:inline-block"></span>{{ d.availabilityLabel }}</div>
+                          <button onClick="{{ d.onToggleAvailability }}" style="width:38px;height:22px;border-radius:12px;border:none;cursor:pointer;position:relative;background:{{ d.availToggleBg }}"><span style="position:absolute;top:2px;left:{{ d.availToggleLeft }};width:18px;height:18px;border-radius:50%;background:#fff;transition:left .15s"></span></button>
+                        </div>
+                        <div style="display:flex;gap:8px;margin-top:10px">
+                          <sc-if value="{{ d.showVerify }}" hint-placeholder-val="{{ false }}"><button onClick="{{ d.onVerify }}" style="flex:1;background:#EAF3DE;border:none;color:#3B6D11;border-radius:12px;padding:9px;font-size:12.5px;font-weight:500;cursor:pointer;font-family:inherit">Verify</button></sc-if>
+                          <sc-if value="{{ d.showBan }}" hint-placeholder-val="{{ false }}"><button onClick="{{ d.onBan }}" style="flex:1;background:none;border:1px solid #E5E3DD;color:#8C1F2B;border-radius:12px;padding:9px;font-size:12.5px;font-weight:500;cursor:pointer;font-family:inherit">Ban</button></sc-if>
+                          <sc-if value="{{ d.showUnban }}" hint-placeholder-val="{{ false }}"><button onClick="{{ d.onUnban }}" style="flex:1;background:none;border:1px solid #E5E3DD;color:#3B6D11;border-radius:12px;padding:9px;font-size:12.5px;font-weight:500;cursor:pointer;font-family:inherit">Unban</button></sc-if>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ adminTabRequests }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-direction:column;gap:10px">
+                    <sc-for list="{{ adminRequestsList }}" as="r" hint-placeholder-count="4">
+                      <div style="background:#fff;border:1px solid #E5E3DD;border-radius:14px;padding:14px">
+                        <div style="display:flex;align-items:center;gap:8px"><div style="background:#F6DCDE;color:#8C1F2B;border-radius:6px;padding:3px 8px;font-size:11px;font-weight:500">{{ r.bloodGroup }}</div><div style="background:{{ r.badgeBg }};color:{{ r.badgeText }};border-radius:6px;padding:3px 8px;font-size:11px;font-weight:500">{{ r.statusLabel }}</div><div style="flex:1;text-align:right;font-size:11.5px;color:#9C9C98">{{ r.time }}</div></div>
+                        <div style="font-size:13.5px;font-weight:500;margin-top:8px">{{ r.location }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ adminTabHospitals }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-direction:column;gap:10px">
+                    <sc-for list="{{ hospitalsList }}" as="h" hint-placeholder-count="3">
+                      <div style="background:#fff;border:1px solid #E5E3DD;border-radius:14px;padding:14px;display:flex;gap:12px;align-items:flex-start">
+                        <svg width="18" height="18" style="color:#8C1F2B;flex:none;margin-top:2px"><use href="#i-building"></use></svg>
+                        <div><div style="font-size:13.5px;font-weight:500">{{ h.name }}</div><div style="font-size:12px;color:#6B6B68;margin-top:2px">{{ h.address }}</div></div>
+                      </div>
+                    </sc-for>
+                    <button style="width:100%;background:none;border:1px dashed #D3D1C7;color:#6B6B68;border-radius:14px;padding:12px;font-size:13px;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px"><svg width="14" height="14"><use href="#i-plus"></use></svg>Add hospital</button>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ adminTabActivity }}" hint-placeholder-val="{{ false }}">
+                  <div style="font-size:12px;font-weight:500;color:#6B6B68;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px">Broadcast</div>
+                  <div style="background:#fff;border:1px solid #E5E3DD;border-radius:14px;padding:14px">
+                    <textarea value="{{ broadcastMessage }}" onChange="{{ onBroadcastChange }}" placeholder="Message to all available donors in an area…" style="width:100%;box-sizing:border-box;border:1px solid #E5E3DD;border-radius:10px;padding:10px;font-size:13px;font-family:inherit;min-height:64px;resize:none;color:#1A1A1A"></textarea>
+                    <div style="font-size:11px;color:#9C9C98;margin-top:8px">Rate-limited to one broadcast per area every 30 minutes.</div>
+                    <button onClick="{{ sendBroadcast }}" style="margin-top:10px;width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:12px;padding:11px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px"><svg width="14" height="14"><use href="#i-megaphone"></use></svg>Send broadcast</button>
+                    <sc-if value="{{ broadcastSent }}" hint-placeholder-val="{{ false }}"><div style="margin-top:8px;font-size:12px;color:#3B6D11;font-weight:500">Broadcast sent and logged to the audit trail.</div></sc-if>
+                  </div>
+
+                  <div style="font-size:12px;font-weight:500;color:#6B6B68;text-transform:uppercase;letter-spacing:.04em;margin:20px 0 8px">Audit log</div>
+                  <div style="display:flex;flex-direction:column;gap:8px">
+                    <sc-for list="{{ auditLog }}" as="a" hint-placeholder-count="3">
+                      <div style="background:#fff;border:1px solid #E5E3DD;border-radius:12px;padding:12px"><div style="font-size:12.5px;font-weight:500">{{ a.text }}</div><div style="font-size:11px;color:#9C9C98;margin-top:3px">{{ a.time }}</div></div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+              </div>
+            </div>
+          </sc-if>
+
+        </div>
+
+        <sc-if value="{{ showTabBar }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:0 0 64px;display:flex;align-items:center;background:#fff;box-shadow:0 -6px 16px rgba(43,20,20,.05);padding:0 10px;gap:6px">
+            <button onClick="{{ setTabHome }}" style="flex:1;border:none;background:{{ tabHomeBg }};border-radius:14px;padding:8px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;color:{{ tabHomeColor }};font-family:inherit"><svg width="18" height="18"><use href="#i-home"></use></svg><span style="font-size:10.5px;font-weight:{{ tabHomeWeight }}">Home</span></button>
+            <button onClick="{{ setTabRequests }}" style="flex:1;border:none;background:{{ tabRequestsBg }};border-radius:14px;padding:8px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;color:{{ tabRequestsColor }};font-family:inherit"><svg width="18" height="18"><use href="#i-clipboard"></use></svg><span style="font-size:10.5px;font-weight:{{ tabRequestsWeight }}">Requests</span></button>
+            <button onClick="{{ setTabProfile }}" style="flex:1;border:none;background:{{ tabProfileBg }};border-radius:14px;padding:8px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;color:{{ tabProfileColor }};font-family:inherit"><svg width="18" height="18"><use href="#i-user"></use></svg><span style="font-size:10.5px;font-weight:{{ tabProfileWeight }}">Profile</span></button>
+          </div>
+        </sc-if>
+
+        <div style="flex:0 0 20px;display:flex;align-items:center;justify-content:center"><div style="width:120px;height:4px;background:#1A1A1A;border-radius:2px;opacity:.75"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400,&quot;height&quot;:940},&quot;donorExclusivity&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;single&quot;,&quot;options&quot;:[&quot;single&quot;,&quot;multi&quot;],&quot;tsType&quot;:&quot;'single'|'multi'&quot;,&quot;section&quot;:&quot;Matching policy&quot;},&quot;showEscalation&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Matching policy&quot;},&quot;adminRole&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;admin&quot;,&quot;options&quot;:[&quot;admin&quot;,&quot;verifier&quot;],&quot;tsType&quot;:&quot;'admin'|'verifier'&quot;,&quot;section&quot;:&quot;Admin access&quot;}}">
+class Component extends DCLogic {
+  state = {
+    screen: 'splash',
+    variant: {},
+    activeTab: 'home',
+    reqTab: 'received',
+    adminTab: 'dashboard',
+    adminDonorFilter: 'pending',
+    otp: ['', '', '', '', '', ''],
+    regName: 'Aditi Sharma',
+    regWhatsapp: '98765 43210',
+    regLocation: 'Koramangala, Bengaluru',
+    regBloodGroup: 'O+',
+    consentChecked: false,
+    isAvailable: true,
+    isVerified: false,
+    hasActiveMatch: false,
+    donationCount: 3,
+    reqBloodGroup: 'O+',
+    reqUnits: 2,
+    reqUrgency: 'urgent',
+    reqLocation: 'Koramangala, Bengaluru',
+    matchStage: 'initial5',
+    matchOutcomeChoice: 'auto',
+    matchRunId: 0,
+    busyAction: '',
+    connState: 'online',
+    highlightedDonorId: null,
+    showExactAddress: false,
+    acceptOutcome: 'success',
+    selectedRequest: {
+      bloodGroup: 'O+', urgencyLabel: 'Urgent', hospital: 'Sneha Hospital, Koramangala',
+      units: 2, distance: '2.4 km away', timeAgo: '12 min ago',
+      requesterName: 'Sneha Hospital', requesterInitials: 'SH', requesterPhone: '98765 22110', resultOnAccept: 'success',
+    },
+    selectedDonor: { initials: 'RM', name: 'Rohan Mehta', bloodGroup: 'O+', distance: '2.4 km away', city: 'Koramangala', verified: true, available: true },
+    myRequests: [
+      { id: 'r1', bloodGroup: 'O+', status: 'matched', hospital: 'Sneha Hospital, Koramangala', contactName: 'Karthik Iyer', contactPhone: '98765 22110' },
+      { id: 'r2', bloodGroup: 'A-', status: 'open', hospital: 'Indiranagar Clinic' },
+      { id: 'r3', bloodGroup: 'B+', status: 'fulfilled', hospital: 'Apollo Hospital, Bannerghatta' },
+      { id: 'r4', bloodGroup: 'AB-', status: 'expired', hospital: 'Whitefield Diagnostics' },
+    ],
+    trackingRequestId: 'r1',
+    broadcastMessage: '',
+    broadcastSent: false,
+    adminDonors: [
+      { id: 'd1', name: 'Rohan Mehta', bloodGroup: 'O+', phone: '98765 43210', status: 'pending', available: true, cooldownUntil: null },
+      { id: 'd2', name: 'Priya Nair', bloodGroup: 'A-', phone: '91234 56789', status: 'verified', available: false, cooldownUntil: '14 Nov 2026' },
+      { id: 'd3', name: 'Karthik Iyer', bloodGroup: 'B+', phone: '99887 66554', status: 'verified', available: true, cooldownUntil: null },
+      { id: 'd4', name: 'Sana Sheikh', bloodGroup: 'AB+', phone: '90000 11122', status: 'banned', available: false, cooldownUntil: null },
+    ],
+    auditLog: [
+      { id: 'a1', text: 'Verified donor Priya Nair', time: '2 hours ago' },
+      { id: 'a2', text: "Banned donor Sana Sheikh — fraudulent profile reports", time: '1 day ago' },
+    ],
+  };
+
+  goTo(id) { this.setState({ screen: id }); }
+  goBack() {
+    const backMap = {
+      otp:'welcome', registration:'otp', consent:'registration', verifying:'consent',
+      notifications:'main', findDonors:'main', donorDetails:'findDonors', requestDetail:'main',
+      acceptResult:'requestDetail', matchContact:'acceptResult', donationConfirm:'matchContact',
+      cooldown:'main', donationHistory:'main', settings:'main', createRequest:'main',
+      matching:'createRequest', donorFoundRequester:'matching', noDonorFound:'matching',
+      cancelConfirm:'main', admin:'adminLogin', welcome:'splash', tracking:'main',
+    };
+    this.setState(s => ({ screen: backMap[s.screen] || 'main' }));
+  }
+  goHome() { this.setState(s => ({ screen: 'main', activeTab: 'home', matchRunId: (s.matchRunId || 0) + 1 })); }
+  setTab(tab) { this.setState({ screen: 'main', activeTab: tab }); }
+  setVariant(key, val) { this.setState(s => ({ variant: { ...s.variant, [key]: val } })); }
+  setConnState(v) { this.setState({ connState: v }); }
+
+  setBusy(key, fn, delay) {
+    this.setState({ busyAction: key });
+    setTimeout(() => { this.setState({ busyAction: '' }); fn(); }, delay || 750);
+  }
+
+  handleOtpChange(i, val) {
+    val = (val || '').replace(/[^0-9]/g, '').slice(-1);
+    const otp = [...this.state.otp]; otp[i] = val; this.setState({ otp });
+    if (val && i < 5) { const el = document.getElementById('otp-' + (i + 1)); if (el) el.focus(); }
+  }
+  submitOtpClick() { this.setBusy('otp', () => this.goTo('registration'), 700); }
+
+  selectBloodGroupReg(g) { this.setState({ regBloodGroup: g }); }
+  selectBloodGroupReq(g) { this.setState({ reqBloodGroup: g }); }
+  incUnits() { this.setState(s => ({ reqUnits: Math.min(10, s.reqUnits + 1) })); }
+  decUnits() { this.setState(s => ({ reqUnits: Math.max(1, s.reqUnits - 1) })); }
+  setUrgency(u) { this.setState({ reqUrgency: u }); }
+  useCurrentLocationReq() { this.setVariant('reqloc', 'default'); this.setState({ reqLocation: 'Current location — Koramangala, Bengaluru' }); }
+  allowReqLocation() { this.setVariant('reqloc', 'default'); }
+  denyReqLocation() { this.setVariant('reqloc', 'denied'); }
+
+  submitRegistrationClick() { this.setBusy('registration', () => this.setState({ screen: 'consent' }), 700); }
+  toggleConsent() { this.setState(s => ({ consentChecked: !s.consentChecked })); }
+  acceptConsent() { if (!this.state.consentChecked) return; this.setState({ screen: 'verifying' }); }
+  finishVerifyingIntro() { this.setState({ screen: 'main', activeTab: 'home' }); }
+
+  toggleAvailability() { this.setState(s => ({ isAvailable: !s.isAvailable })); }
+  toggleShowExactAddress() { this.setState(s => ({ showExactAddress: !s.showExactAddress })); }
+  logOut() { this.setState({ screen: 'splash' }); }
+
+  setReqTab(tab) { this.setState({ reqTab: tab }); }
+  selectRequestAndGo(req) { this.setState({ selectedRequest: req, screen: 'requestDetail' }); }
+  selectDonorAndGo(donor) { this.setState({ selectedDonor: donor, screen: 'donorDetails' }); }
+  highlightDonor(id) { this.setState({ highlightedDonorId: id }); }
+  requestSpecificDonor() { this.setState(s => ({ reqBloodGroup: s.selectedDonor.bloodGroup })); this.startCreateRequest(); }
+  openTracking(id) { this.setState({ screen: 'tracking', trackingRequestId: id }); }
+
+  doAccept() {
+    const single = (this.props.donorExclusivity ?? 'single') === 'single';
+    if (single && this.state.hasActiveMatch) { this.setState({ screen: 'acceptResult', acceptOutcome: 'blocked' }); return; }
+    const outcome = (this.state.selectedRequest && this.state.selectedRequest.resultOnAccept) || 'success';
+    if (outcome === 'claimed') { this.setState({ screen: 'acceptResult', acceptOutcome: 'claimed' }); return; }
+    this.setState({ screen: 'acceptResult', acceptOutcome: 'success', hasActiveMatch: true });
+  }
+  acceptClick() { this.setBusy('accept', () => this.doAccept(), 700); }
+  goMatchContact() { this.setState({ screen: 'matchContact' }); }
+  confirmDonation() { this.setState({ screen: 'donationConfirm' }); }
+  goCooldown() { this.setState(s => ({ screen: 'cooldown', isAvailable: false, hasActiveMatch: false, donationCount: s.donationCount + 1 })); }
+
+  submitCreateRequestClick() { this.setBusy('createRequest', () => this.startCreateRequest(), 700); }
+  startCreateRequest() {
+    const runId = (this.state.matchRunId || 0) + 1;
+    this.setState({ screen: 'matching', matchStage: 'initial5', matchRunId: runId });
+    this.runLadderStep(runId, 0);
+  }
+  runLadderStep(runId, i) {
+    if (this.state.screen !== 'matching' || this.state.matchRunId !== runId) return;
+    const notfound = this.state.matchOutcomeChoice === 'notfound';
+    const critical = this.state.reqUrgency === 'critical';
+    const seq = notfound
+      ? (critical ? ['initial5','expanded15','retry15m','retry45m','escalate','expired'] : ['initial5','expanded15','retry15m','retry45m','expired'])
+      : ['initial5','expanded15'];
+    if (i >= seq.length) { this.setState({ screen: notfound ? 'noDonorFound' : 'donorFoundRequester' }); return; }
+    this.setState({ matchStage: seq[i] });
+    setTimeout(() => this.runLadderStep(runId, i + 1), 1100);
+  }
+  setMatchOutcomeChoice(choice) {
+    const runId = (this.state.matchRunId || 0) + 1;
+    this.setState({ matchOutcomeChoice: choice, matchRunId: runId, matchStage: 'initial5' });
+    this.runLadderStep(runId, 0);
+  }
+  cancelRequestFlow(id) {
+    this.setState(s => ({
+      myRequests: id ? s.myRequests.map(r => r.id === id ? { ...r, status: 'cancelled' } : r) : s.myRequests,
+      screen: 'cancelConfirm',
+      matchRunId: (s.matchRunId || 0) + 1,
+    }));
+  }
+
+  adminLoginSubmit() { this.setState({ screen: 'admin', adminTab: 'dashboard' }); }
+  setAdminTab(t) { this.setState({ adminTab: t }); }
+  setAdminFilter(f) { this.setState({ adminDonorFilter: f }); }
+  verifyDonor(id) { this.setState(s => ({ adminDonors: s.adminDonors.map(d => d.id === id ? { ...d, status: 'verified' } : d) })); }
+  banDonor(id) { this.setState(s => ({ adminDonors: s.adminDonors.map(d => d.id === id ? { ...d, status: 'banned' } : d) })); }
+  unbanDonor(id) { this.setState(s => ({ adminDonors: s.adminDonors.map(d => d.id === id ? { ...d, status: 'verified' } : d) })); }
+  adminToggleAvailability(id) { this.setState(s => ({ adminDonors: s.adminDonors.map(d => d.id === id ? { ...d, available: !d.available } : d) })); }
+  onBroadcastChange(e) { this.setState({ broadcastMessage: e.target.value }); }
+  sendBroadcast() {
+    if (!this.state.broadcastMessage.trim()) return;
+    const msg = this.state.broadcastMessage;
+    this.setState(s => ({
+      broadcastSent: true,
+      auditLog: [{ id: 'a' + Date.now(), text: 'Broadcast sent: "' + msg.slice(0, 42) + (msg.length > 42 ? '…' : '') + '"', time: 'just now' }, ...s.auditLog],
+    }));
+  }
+
+  renderVals() {
+    const s = this.state;
+    const screen = s.screen;
+    const v = (key, fallback) => (s.variant[key] || fallback);
+    const noop = () => {};
+
+    const navItem = (id, label) => ({ id, label, active: screen === id, inactive: screen !== id, onClick: () => this.goTo(id) });
+    const navItemTab = (id, label, tab) => {
+      const isActive = screen === id && s.activeTab === tab;
+      return { id, label, active: isActive, inactive: !isActive, onClick: () => this.setTab(tab) };
+    };
+    const navItemAdminTab = (id, label, tab) => {
+      const isActive = screen === id && s.adminTab === tab;
+      return { id, label, active: isActive, inactive: !isActive, onClick: () => this.setState({ screen: id, adminTab: tab }) };
+    };
+
+    const navSections = [
+      { label: 'Auth', items: [
+        navItem('splash', 'Splash'),
+        navItem('welcome', 'Welcome / login'),
+        navItem('otp', 'OTP verification'),
+        navItem('registration', 'Registration'),
+        navItem('consent', 'Consent & privacy'),
+        navItem('verifying', 'Verification pending'),
+      ]},
+      { label: 'Donor app', items: [
+        navItemTab('main', 'Home', 'home'),
+        navItemTab('main', 'Requests', 'requests'),
+        navItem('notifications', 'Notifications'),
+        navItemTab('main', 'Profile', 'profile'),
+        navItem('settings', 'Settings'),
+        navItem('donationHistory', 'Donation history'),
+        navItem('cooldown', 'Cooldown'),
+      ]},
+      { label: 'Find & accept', items: [
+        navItem('findDonors', 'Map / find donors'),
+        navItem('donorDetails', 'Donor profile'),
+        navItem('requestDetail', 'Request details'),
+        navItem('acceptResult', 'Accept result'),
+        navItem('matchContact', 'Match — contact'),
+        navItem('donationConfirm', 'Confirm donation'),
+      ]},
+      { label: 'Requester flow', items: [
+        navItem('createRequest', 'Create request'),
+        navItem('matching', 'Matching in progress'),
+        navItem('donorFoundRequester', 'Donor found'),
+        navItem('noDonorFound', 'No donor found'),
+        navItem('tracking', 'Request tracking'),
+        navItem('cancelConfirm', 'Cancel request'),
+      ]},
+      { label: 'Admin', items: [
+        navItem('adminLogin', 'Admin login'),
+        navItemAdminTab('admin', 'Dashboard', 'dashboard'),
+        navItemAdminTab('admin', 'Donor management', 'donors'),
+        navItemAdminTab('admin', 'Requests monitor', 'requests'),
+        navItemAdminTab('admin', 'Hospitals', 'hospitals'),
+        navItemAdminTab('admin', 'Broadcast & audit', 'activity'),
+      ]},
+    ];
+
+    const chip = (screenKey, key, label, fallback) => ({ label, active: v(screenKey, fallback) === key, inactive: v(screenKey, fallback) !== key, onClick: () => this.setVariant(screenKey, key) });
+
+    const welcomeVariant = v('welcome', 'default');
+    const welcomeChips = [chip('welcome', 'default', 'Default', 'default'), chip('welcome', 'invalid', 'Invalid number', 'default'), chip('welcome', 'offline', 'Offline', 'default')];
+
+    const otpVariant = v('otp', 'default');
+    const otpChips = [chip('otp', 'default', 'Default', 'default'), chip('otp', 'wrong', 'Wrong code', 'default'), chip('otp', 'expired', 'Expired', 'default')];
+
+    const mapVariant = v('map', 'default');
+    const mapChips = [
+      chip('map', 'default', 'Results', 'default'), chip('map', 'permission', 'Permission', 'default'),
+      chip('map', 'denied', 'Denied', 'default'), chip('map', 'loading', 'Loading', 'default'),
+      chip('map', 'empty', 'Empty', 'default'), chip('map', 'error', 'Error', 'default'),
+    ];
+
+    const notifVariant = v('notif', 'default');
+    const notifChips = [chip('notif', 'default', 'Default', 'default'), chip('notif', 'empty', 'Empty', 'default'), chip('notif', 'disabled', 'Disabled', 'default')];
+
+    const BLOOD_GROUPS = ['A+','A-','B+','B-','O+','O-','AB+','AB-'];
+    const bloodGroupsReg = BLOOD_GROUPS.map(g => ({ label: g, selected: s.regBloodGroup === g, unselected: s.regBloodGroup !== g, onClick: () => this.selectBloodGroupReg(g) }));
+    const bloodGroupsReq = BLOOD_GROUPS.map(g => ({ label: g, selected: s.reqBloodGroup === g, unselected: s.reqBloodGroup !== g, onClick: () => this.selectBloodGroupReq(g) }));
+
+    const urgencyDefs = [
+      ['normal', 'Normal', '#i-droplet', 'Within a day or two'],
+      ['urgent', 'Urgent', '#i-flame', 'Needed within hours'],
+      ['critical', 'Critical', '#i-alert-triangle', 'Life-threatening — notify fastest'],
+    ];
+    const urgencyOptions = urgencyDefs.map(([key, label, icon, desc]) => ({ label, icon, desc, selected: s.reqUrgency === key, unselected: s.reqUrgency !== key, onClick: () => this.setUrgency(key) }));
+    const reqUrgencyLabel = (urgencyDefs.find(u => u[0] === s.reqUrgency) || urgencyDefs[0])[1];
+
+    const otpBoxes = s.otp.map((val, i) => ({ id: 'otp-' + i, value: val, onChange: (e) => this.handleOtpChange(i, e.target.value) }));
+
+    const homeRequestDetail = { bloodGroup: 'O+', urgencyLabel: 'Urgent', hospital: 'Sneha Hospital, Koramangala', units: 2, distance: '2.4 km away', timeAgo: '12 min ago', requesterName: 'Sneha Hospital', requesterInitials: 'SH', requesterPhone: '98765 22110', resultOnAccept: 'success' };
+    const receivedDetailA = { bloodGroup: 'B+', urgencyLabel: 'Urgent', hospital: 'Fortis Hospital, Cunningham Rd', units: 1, distance: '1.8 km away', timeAgo: '4 min ago', requesterName: 'Fortis Hospital', requesterInitials: 'FH', requesterPhone: '91234 11223', resultOnAccept: 'success' };
+    const receivedDetailB = { bloodGroup: 'O-', urgencyLabel: 'Urgent', hospital: "St. John's Medical College", units: 1, distance: '3.6 km away', timeAgo: '9 min ago', requesterName: "St. John's Medical College", requesterInitials: 'SJ', requesterPhone: '90011 22334', resultOnAccept: 'claimed' };
+    const receivedRequests = [
+      { bloodGroup: 'B+', badgeBg: '#F6DCDE', badgeText: '#8C1F2B', statusLabel: 'Open', location: 'Fortis Hospital, Cunningham Rd', actionLabel: 'Accept & help', onAction: () => this.selectRequestAndGo(receivedDetailA) },
+      { bloodGroup: 'O-', badgeBg: '#F6DCDE', badgeText: '#8C1F2B', statusLabel: 'Open', location: "St. John's Medical College", actionLabel: 'Accept & help', onAction: () => this.selectRequestAndGo(receivedDetailB) },
+    ];
+
+    const STATUS_META = { open: ['#F6DCDE','#8C1F2B','Open'], matched: ['#FAEEDA','#854F0B','Matched'], fulfilled: ['#EAF3DE','#3B6D11','Completed'], cancelled: ['#E5E3DD','#6B6B68','Cancelled'], expired: ['#E5E3DD','#6B6B68','Expired'] };
+    const myRequestsView = s.myRequests.map(r => {
+      const [bg, txt, label] = STATUS_META[r.status];
+      return { ...r, badgeBg: bg, badgeText: txt, statusLabel: label,
+        showContact: r.status === 'matched', showCancel: r.status === 'open',
+        showExpiredNote: r.status === 'expired', showCancelledNote: r.status === 'cancelled',
+        onTrack: () => this.openTracking(r.id), onCancel: () => this.cancelRequestFlow(r.id) };
+    });
+
+    const homeChips = [chip('homeReq', 'default', 'Default', 'default'), chip('homeReq', 'empty', 'Empty', 'default')];
+    const homeReqEmpty = v('homeReq', 'default') === 'empty';
+    const homeReqHasList = !homeReqEmpty;
+    const receivedChips = [chip('received', 'default', 'Default', 'default'), chip('received', 'empty', 'Empty', 'default')];
+    const receivedEmpty = v('received', 'default') === 'empty';
+    const receivedHasList = !receivedEmpty;
+    const mineChips = [chip('mine', 'default', 'Default', 'default'), chip('mine', 'empty', 'Empty', 'default')];
+    const mineEmpty = v('mine', 'default') === 'empty';
+    const mineHasList = !mineEmpty;
+
+    const reqLocVariant = v('reqloc', 'default');
+    const reqLocChips = [chip('reqloc', 'default', 'Default', 'default'), chip('reqloc', 'permission', 'Permission', 'default'), chip('reqloc', 'denied', 'Unavailable', 'default'), chip('reqloc', 'error', 'Error', 'default')];
+
+    const DONORS_RAW = [
+      { id: 'd1', initials: 'RM', name: 'Rohan Mehta', bloodGroup: 'O+', distance: '2.4 km away', city: 'Koramangala', availabilityLabel: 'Available', verified: true, available: true },
+      { id: 'd2', initials: 'PN', name: 'Priya Nair', bloodGroup: 'A-', distance: '3.1 km away', city: 'Indiranagar', availabilityLabel: 'Available', verified: true, available: true },
+      { id: 'd3', initials: 'KI', name: 'Karthik Iyer', bloodGroup: 'B+', distance: '4.6 km away', city: 'HSR Layout', availabilityLabel: 'Unavailable', verified: true, available: false },
+    ];
+    const nearbyDonorsList = DONORS_RAW.map(d => ({ ...d, borderColor: s.highlightedDonorId === d.id ? '#8C1F2B' : '#E5E3DD', onView: () => this.selectDonorAndGo({ ...d, firstName: d.name.split(' ')[0] }), onRequest: () => this.selectDonorAndGo({ ...d, firstName: d.name.split(' ')[0] }) }));
+
+    const DONOR_POOL = [
+      { name: 'Karthik Iyer', initials: 'KI', bloodGroup: 'O+' },
+      { name: 'Priya Nair', initials: 'PN', bloodGroup: 'A-' },
+      { name: 'Rohan Mehta', initials: 'RM', bloodGroup: 'B+' },
+      { name: 'Sana Sheikh', initials: 'SS', bloodGroup: 'AB+' },
+    ];
+    const matchedDonor = DONOR_POOL.find(d => d.bloodGroup === s.reqBloodGroup) || DONOR_POOL[0];
+
+    const MATCH_STAGE_DEFS = [
+      ['initial5', 'Searching within 5 km'], ['expanded15', 'Expanding to 15 km'],
+      ['retry15m', 'Retrying in 15 minutes'], ['retry45m', 'Retrying in 45 minutes'],
+      ['escalate', 'Escalated to admin for manual broadcast'], ['expired', 'No response — request will expire at 6 hours'],
+    ];
+    const matchStageOrder = MATCH_STAGE_DEFS.map(d => d[0]);
+    const currentStageIdx = matchStageOrder.indexOf(s.matchStage);
+    const showEscalateRow = s.reqUrgency === 'critical';
+    const matchStagesView = MATCH_STAGE_DEFS.filter(([key]) => key !== 'escalate' || showEscalateRow).map(([key, label]) => {
+      const idx = matchStageOrder.indexOf(key);
+      return { label, done: idx < currentStageIdx, current: idx === currentStageIdx, pending: idx > currentStageIdx };
+    });
+    const matchOutcomeChips = [
+      { label: 'Auto', active: s.matchOutcomeChoice === 'auto', inactive: s.matchOutcomeChoice !== 'auto', onClick: () => this.setMatchOutcomeChoice('auto') },
+      { label: 'Preview: donor found', active: s.matchOutcomeChoice === 'found', inactive: s.matchOutcomeChoice !== 'found', onClick: () => this.setMatchOutcomeChoice('found') },
+      { label: 'Preview: no donor found', active: s.matchOutcomeChoice === 'notfound', inactive: s.matchOutcomeChoice !== 'notfound', onClick: () => this.setMatchOutcomeChoice('notfound') },
+    ];
+    const matchingHeadlineCurrent = (matchStagesView.find(m => m.current) || matchStagesView[0]).label;
+    const RADIUS_BY_STAGE = { initial5: '5 km', expanded15: '15 km', retry15m: '15 km', retry45m: '15 km', escalate: '15 km', expired: '15 km' };
+    const NOTIFIED_BY_STAGE = { initial5: '6', expanded15: '14', retry15m: '14', retry45m: '19', escalate: '19', expired: '19' };
+    const matchRadiusLabel = RADIUS_BY_STAGE[s.matchStage] || '5 km';
+    const matchNotifiedCount = NOTIFIED_BY_STAGE[s.matchStage] || '6';
+
+    const trackingReq = s.myRequests.find(r => r.id === s.trackingRequestId) || s.myRequests[0];
+    const trackingMetaArr = STATUS_META[trackingReq.status];
+    const TIMELINE_STEPS = [['Request submitted', '#i-send', 'Sent to nearby compatible donors'], ['Finding a donor', '#i-target', 'Searching an expanding radius'], ['Donor matched', '#i-handshake', 'A donor has accepted'], ['Donation fulfilled', '#i-droplet', 'Life saved — thank you']];
+    const STATUS_STEP = { open: 1, matched: 2, fulfilled: 4, cancelled: 1, expired: 1 };
+    const doneUpTo = STATUS_STEP[trackingReq.status];
+    const trackingIsTerminalBad = trackingReq.status === 'cancelled' || trackingReq.status === 'expired';
+    const trackingSteps = TIMELINE_STEPS.map(([label, icon, sub], idx) => {
+      const done = idx < doneUpTo;
+      const current = idx === doneUpTo && doneUpTo < 4 && !trackingIsTerminalBad;
+      return { label, icon, sub, done, current, pending: !done && !current, showLine: idx < TIMELINE_STEPS.length - 1, lineColor: done ? '#2F6B3A' : '#EEE8DF' };
+    });
+    const trackingTerminalNote = trackingReq.status === 'cancelled' ? 'You cancelled this request.' : trackingReq.status === 'expired' ? 'No donor responded within 6 hours. Matching has stopped.' : null;
+
+    const showRoleBadge = ['findDonors','donorDetails','requestDetail','acceptResult','matchContact','donationConfirm','cooldown','createRequest','matching','donorFoundRequester','noDonorFound','cancelConfirm','tracking'].includes(screen);
+    const roleIsRequester = ['createRequest','matching','donorFoundRequester','noDonorFound','cancelConfirm','tracking'].includes(screen);
+    const roleBadgeLabel = roleIsRequester ? 'Requester mode' : 'Donor mode';
+    const roleBadgeIcon = roleIsRequester ? '#i-megaphone' : '#i-droplet';
+    const roleBandBg = roleIsRequester ? '#FBF3E2' : '#FBEAEC';
+    const roleBandIconBg = roleIsRequester ? '#B8863B' : '#8C1F2B';
+    const roleBandText = roleIsRequester ? '#7A5A26' : '#6E141E';
+    const roleBandSubText = roleIsRequester ? '#A98A54' : '#B06B75';
+    const roleBandSub = roleIsRequester ? '· sending a request for help' : '· browsing & helping nearby';
+
+    const showConnBanner = s.connState !== 'online';
+    const connChips = [
+      { label: 'Online', active: s.connState === 'online', inactive: s.connState !== 'online', onClick: () => this.setConnState('online') },
+      { label: 'Offline', active: s.connState === 'offline', inactive: s.connState !== 'offline', onClick: () => this.setConnState('offline') },
+      { label: 'Reconnecting', active: s.connState === 'reconnecting', inactive: s.connState !== 'reconnecting', onClick: () => this.setConnState('reconnecting') },
+      { label: 'Synced OK', active: s.connState === 'synced-ok', inactive: s.connState !== 'synced-ok', onClick: () => this.setConnState('synced-ok') },
+      { label: 'Sync failed', active: s.connState === 'synced-fail', inactive: s.connState !== 'synced-fail', onClick: () => this.setConnState('synced-fail') },
+    ];
+
+    const NOTIF_ICON = { request: ['#i-droplet', '#F6DCDE', '#8C1F2B'], match: ['#i-check-circle', '#EAF3DE', '#3B6D11'], cancel: ['#i-x-circle', '#F6DCDE', '#8C1F2B'], expire: ['#i-clock', '#FAEEDA', '#854F0B'], donate: ['#i-droplet', '#EAF3DE', '#3B6D11'] };
+    const notifDefs = [
+      ['request', 'New request near you', 'B+ needed at Fortis Hospital, Cunningham Rd · 1.8 km away', '4 min ago'],
+      ['match', "You've been matched", 'Sneha Hospital accepted — contact details are ready', '22 min ago'],
+      ['cancel', 'A request was cancelled', 'The O- request in Indiranagar is no longer active', '1 hour ago'],
+      ['expire', 'Request expired', 'No donor was found for the AB- request within 6 hours', '3 hours ago'],
+      ['donate', 'Thank you for donating', 'Your donation at Apollo Hospital was confirmed', 'Yesterday'],
+    ];
+    const notificationItems = notifDefs.map(([type, title, body, time]) => { const [icon, bg, color] = NOTIF_ICON[type]; return { icon, iconBg: bg, iconColor: color, title, body, time }; });
+
+    const blocked = (this.props.donorExclusivity ?? 'single') === 'single' && s.hasActiveMatch;
+
+    const ADMIN_STATUS = { pending: ['#FAEEDA', '#854F0B', 'Pending'], verified: ['#EAF3DE', '#3B6D11', 'Verified'], banned: ['#F6DCDE', '#8C1F2B', 'Banned'] };
+    const adminDonorFiltersDefs = [['pending', 'Pending'], ['verified', 'Verified'], ['banned', 'Banned'], ['all', 'All']];
+    const adminDonorFilters = adminDonorFiltersDefs.map(([key, label]) => ({ label, active: s.adminDonorFilter === key, inactive: s.adminDonorFilter !== key, onClick: () => this.setAdminFilter(key) }));
+    const filteredAdminDonors = s.adminDonors.filter(d => s.adminDonorFilter === 'all' || d.status === s.adminDonorFilter).map(d => {
+      const [bg, text, label] = ADMIN_STATUS[d.status];
+      const availabilityLabel = d.available ? 'Available' : (d.cooldownUntil ? ('On cooldown until ' + d.cooldownUntil) : 'Unavailable');
+      return { ...d, badgeBg: bg, badgeText: text, statusLabel: label, availabilityLabel,
+        availDotColor: d.available ? '#3B6D11' : '#9C9C98',
+        availToggleBg: d.available ? '#8C1F2B' : '#E5E3DD', availToggleLeft: d.available ? '20px' : '2px',
+        showVerify: d.status === 'pending', showBan: d.status === 'verified', showUnban: d.status === 'banned',
+        onVerify: () => this.verifyDonor(d.id), onBan: () => this.banDonor(d.id), onUnban: () => this.unbanDonor(d.id),
+        onToggleAvailability: () => this.adminToggleAvailability(d.id) };
+    });
+
+    const adminRequestsList = [
+      { bloodGroup: 'AB-', badgeBg: '#F6DCDE', badgeText: '#8C1F2B', statusLabel: 'Escalated', location: 'Whitefield · critical, no donor at 15km', time: '6 min ago' },
+      { bloodGroup: 'O+', badgeBg: '#FAEEDA', badgeText: '#854F0B', statusLabel: 'Matched', location: 'Koramangala', time: '18 min ago' },
+      { bloodGroup: 'B+', badgeBg: '#F6DCDE', badgeText: '#8C1F2B', statusLabel: 'Open', location: 'Cunningham Road', time: '31 min ago' },
+      { bloodGroup: 'A-', badgeBg: '#EAF3DE', badgeText: '#3B6D11', statusLabel: 'Fulfilled', location: "St. John's Medical College", time: '2 hours ago' },
+    ];
+
+    const hospitalsList = [
+      { name: 'Apollo Hospital, Bannerghatta', address: 'Bannerghatta Road, Bengaluru' },
+      { name: 'Fortis Hospital, Cunningham Road', address: 'Cunningham Rd, Bengaluru' },
+      { name: "St. John's Medical College", address: 'Sarjapur Road, Bengaluru' },
+    ];
+
+    const adminIsVerifier = (this.props.adminRole ?? 'admin') === 'verifier';
+    const adminTabDefs = [['dashboard', 'Dashboard'], ['donors', 'Donors'], ['requests', 'Requests'], ['hospitals', 'Hospitals']].concat(adminIsVerifier ? [] : [['activity', 'Broadcast & audit']]);
+    const adminTabs = adminTabDefs.map(([key, label]) => ({ label, active: s.adminTab === key, inactive: s.adminTab !== key, onClick: () => this.setAdminTab(key) }));
+
+    return {
+      noop,
+      navSections,
+      showConnBanner, connOffline: s.connState === 'offline', connReconnecting: s.connState === 'reconnecting', connSyncedOk: s.connState === 'synced-ok', connSyncedFail: s.connState === 'synced-fail', connChips,
+      showRoleBadge, roleBadgeLabel, roleBadgeIcon, roleBandBg, roleBandIconBg, roleBandText, roleBandSubText, roleBandSub,
+      isSplash: screen === 'splash', goToWelcome: () => this.goTo('welcome'),
+      isWelcome: screen === 'welcome', goToOtp: () => this.goTo('otp'), goBack: () => this.goBack(),
+      welcomeChips, welcomeOffline: welcomeVariant === 'offline', welcomeOnline: welcomeVariant !== 'offline', welcomeInvalid: welcomeVariant === 'invalid',
+      isOtp: screen === 'otp', otpChips, otpBoxes, otpWrong: otpVariant === 'wrong', otpExpired: otpVariant === 'expired',
+      submitOtpClick: () => this.submitOtpClick(), otpBusy: s.busyAction === 'otp',
+      isRegistration: screen === 'registration',
+      regName: s.regName, onRegNameChange: (e) => this.setState({ regName: e.target.value }),
+      regWhatsapp: s.regWhatsapp, onRegWhatsappChange: (e) => this.setState({ regWhatsapp: e.target.value }),
+      regLocation: s.regLocation, onRegLocationChange: (e) => this.setState({ regLocation: e.target.value }),
+      bloodGroupsReg, submitRegistrationClick: () => this.submitRegistrationClick(), registrationBusy: s.busyAction === 'registration',
+      isConsent: screen === 'consent', consentChecked: s.consentChecked, toggleConsent: () => this.toggleConsent(),
+      consentDisabled: !s.consentChecked, consentOpacity: s.consentChecked ? 1 : 0.5, acceptConsent: () => this.acceptConsent(),
+      isVerifying: screen === 'verifying', finishVerifyingIntro: () => this.finishVerifyingIntro(),
+      isMain: screen === 'main',
+      tabHome: s.activeTab === 'home', tabRequests: s.activeTab === 'requests', tabProfile: s.activeTab === 'profile',
+      donationCount: s.donationCount,
+      isVerifiedBadgeOn: s.isVerified, isVerifiedBadgeOff: !s.isVerified,
+      showEscalationNote: this.props.showEscalation ?? true,
+      goToNotifications: () => this.goTo('notifications'), goToCreateRequest: () => this.goTo('createRequest'),
+      goToHomeRequestDetail: () => this.selectRequestAndGo(homeRequestDetail),
+      homeChips, homeReqEmpty, homeReqHasList,
+      reqTabReceived: s.reqTab === 'received', reqTabReceivedOff: s.reqTab !== 'received', reqTabMine: s.reqTab === 'mine', reqTabMineOff: s.reqTab !== 'mine',
+      setReqTabReceived: () => this.setReqTab('received'), setReqTabMine: () => this.setReqTab('mine'),
+      receivedRequests, receivedChips, receivedEmpty, receivedHasList,
+      myRequestsView, mineChips, mineEmpty, mineHasList,
+      isAvailable: s.isAvailable, isUnavailable: !s.isAvailable, toggleAvailability: () => this.toggleAvailability(),
+      availTrackBg: s.isAvailable ? '#8C1F2B' : '#E5E3DD', availThumbBg: '#fff', availThumbLeft: s.isAvailable ? '20px' : '2px',
+      profileAvailDot: s.isAvailable ? '#2F6B3A' : '#9C9C98', profileAvailLabel: s.isAvailable ? 'Available to donate' : 'Not available',
+      profileAvailSub: s.isAvailable ? 'Nearby requests can reach you' : 'You won\u2019t receive new requests',
+      showExactAddress: s.showExactAddress, toggleShowExactAddress: () => this.toggleShowExactAddress(),
+      addrTrackBg: s.showExactAddress ? '#8C1F2B' : '#E5E3DD', addrThumbLeft: s.showExactAddress ? '18px' : '2px',
+      goToDonationHistory: () => this.goTo('donationHistory'), goToSettings: () => this.goTo('settings'), logOut: () => this.logOut(),
+      isNotifications: screen === 'notifications', notifChips, notifDefault: notifVariant === 'default', notifEmpty: notifVariant === 'empty', notifDisabled: notifVariant === 'disabled', notificationItems,
+      isFindDonors: screen === 'findDonors', mapChips,
+      mapPermission: mapVariant === 'permission', mapDenied: mapVariant === 'denied', mapLoading: mapVariant === 'loading', mapErrorState: mapVariant === 'error', mapEmpty: mapVariant === 'empty',
+      mapHasList: mapVariant === 'default', nearbyDonorsList,
+      mapAllow: () => this.setVariant('map', 'default'), mapDeny: () => this.setVariant('map', 'denied'),
+      highlightDonor1: () => this.highlightDonor('d1'), highlightDonor2: () => this.highlightDonor('d2'),
+      selectedDonor: { ...s.selectedDonor, firstName: (s.selectedDonor.name || '').split(' ')[0] },
+      isDonorDetails: screen === 'donorDetails', requestSpecificDonor: () => this.requestSpecificDonor(),
+      selectedRequest: s.selectedRequest,
+      isRequestDetail: screen === 'requestDetail', blocked, acceptOpacity: blocked ? 0.5 : 1,
+      acceptClick: () => this.acceptClick(), acceptBusy: s.busyAction === 'accept',
+      isAcceptResult: screen === 'acceptResult', acceptSuccess: s.acceptOutcome === 'success', acceptClaimed: s.acceptOutcome === 'claimed', acceptBlocked: s.acceptOutcome === 'blocked',
+      goMatchContact: () => this.goMatchContact(), goHome: () => this.goHome(),
+      isMatchContact: screen === 'matchContact', confirmDonation: () => this.confirmDonation(),
+      isDonationConfirm: screen === 'donationConfirm', goCooldown: () => this.goCooldown(),
+      isCooldown: screen === 'cooldown',
+      isDonationHistory: screen === 'donationHistory',
+      isSettings: screen === 'settings',
+      isCreateRequest: screen === 'createRequest', bloodGroupsReq, reqUnits: s.reqUnits, incUnits: () => this.incUnits(), decUnits: () => this.decUnits(),
+      urgencyOptions, reqUrgencyLabel, reqBloodGroup: s.reqBloodGroup,
+      reqLocation: s.reqLocation, onReqLocationChange: (e) => this.setState({ reqLocation: e.target.value }),
+      reqLocChips, reqLocPermission: reqLocVariant === 'permission', reqLocDenied: reqLocVariant === 'denied', reqLocError: reqLocVariant === 'error',
+      useCurrentLocationReq: () => this.useCurrentLocationReq(), allowReqLocation: () => this.allowReqLocation(), denyReqLocation: () => this.denyReqLocation(),
+      submitCreateRequestClick: () => this.submitCreateRequestClick(), createRequestBusy: s.busyAction === 'createRequest',
+      isMatching: screen === 'matching', matchStagesView, matchOutcomeChips, matchingHeadlineCurrent, matchRadiusLabel, matchNotifiedCount,
+      isDonorFoundRequester: screen === 'donorFoundRequester', matchedDonor,
+      isNoDonorFound: screen === 'noDonorFound',
+      isCancelConfirm: screen === 'cancelConfirm', cancelRequestFlow: () => this.cancelRequestFlow(),
+      isTracking: screen === 'tracking', trackingReq, trackingSteps, trackingShowTerminal: trackingIsTerminalBad, trackingTerminalNote,
+      trackingCreateNew: () => this.setState({ screen: 'createRequest' }),
+      isAdminLogin: screen === 'adminLogin', adminLoginSubmit: () => this.adminLoginSubmit(),
+      goToAdminLogin: () => this.setState({ screen: 'adminLogin' }),
+      isAdmin: screen === 'admin', adminTabs,
+      adminTabDashboard: s.adminTab === 'dashboard', adminTabDonors: s.adminTab === 'donors', adminTabRequests: s.adminTab === 'requests', adminTabHospitals: s.adminTab === 'hospitals', adminTabActivity: s.adminTab === 'activity' && !adminIsVerifier,
+      adminDonorFilters, filteredAdminDonors, adminRequestsList, hospitalsList,
+      broadcastMessage: s.broadcastMessage, onBroadcastChange: (e) => this.onBroadcastChange(e), sendBroadcast: () => this.sendBroadcast(), broadcastSent: s.broadcastSent, auditLog: s.auditLog,
+      showTabBar: screen === 'main',
+      setTabHome: () => this.setTab('home'), setTabRequests: () => this.setTab('requests'), setTabProfile: () => this.setTab('profile'),
+      tabHomeColor: s.activeTab === 'home' ? '#8C1F2B' : '#9C9C98', tabRequestsColor: s.activeTab === 'requests' ? '#8C1F2B' : '#9C9C98', tabProfileColor: s.activeTab === 'profile' ? '#8C1F2B' : '#9C9C98',
+      tabHomeWeight: s.activeTab === 'home' ? 600 : 400, tabRequestsWeight: s.activeTab === 'requests' ? 600 : 400, tabProfileWeight: s.activeTab === 'profile' ? 600 : 400,
+      tabHomeBg: s.activeTab === 'home' ? '#F6DCDE' : 'transparent', tabRequestsBg: s.activeTab === 'requests' ? '#F6DCDE' : 'transparent', tabProfileBg: s.activeTab === 'profile' ? '#F6DCDE' : 'transparent',
+    };
+  }
+}
+</script>
+</body>
+</html>

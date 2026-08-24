@@ -35,4 +35,43 @@ class AppColors {
 
   static const Color statusCompletedBg = Color(0xFFEAF3DE);
   static const Color statusCompletedText = Color(0xFF3B6D11);
+
+  // Gradient surfaces (Claude Design prototype's editorial hero/header treatment)
+  static const Color gradientHeroStart = Color(0xFF7A1A24);
+  static const Color gradientHeroEnd = Color(0xFF5C1119);
+  static const Color gradientHeaderStart = Color(0xFF7A1A24);
+  static const Color gradientHeaderEnd = Color(0xFF4A0E14);
+  static const Color gradientAvatarStart = Color(0xFF8C1F2B);
+  static const Color gradientAvatarEnd = Color(0xFF5C1119);
+  static const Color gradientMatchingStart = Color(0xFF3A0F14);
+  static const Color gradientMatchingEnd = Color(0xFF1A0A0C);
+  static const Color gradientMarkerStart = Color(0xFFB9303F);
+  static const Color gradientMarkerEnd = Color(0xFF7A1A24);
+
+  // Soft colored shadows used under gradient/primary surfaces
+  static const Color shadowButton = Color.fromRGBO(140, 31, 43, 0.24);
+  static const Color shadowCard = Color.fromRGBO(43, 20, 20, 0.06);
+  static const Color shadowHero = Color.fromRGBO(92, 17, 25, 0.28);
+  static const Color shadowDark = Color.fromRGBO(58, 15, 20, 0.24);
+
+  // Redesign accent tokens (Home/Profile/Notifications/Settings editorial
+  // surfaces) — deliberately separate from the flat status-color system
+  // above, which the not-yet-redesigned screens (Requests, Donor details)
+  // still use. The prototype uses distinct near-duplicate shades for these
+  // two systems on purpose; don't collapse them into one.
+  static const Color textPrimaryWarm = Color(0xFF241416);
+  static const Color warmPageBackground = Color(0xFFFBF7F1);
+  static const Color cardBorderWarm = Color(0xFFEEE8DF);
+  static const Color dividerWarm = Color(0xFFF3EFE7);
+  static const Color textMutedWarm = Color(0xFFB0A996);
+  static const Color chevronMuted = Color(0xFFC9BFAF);
+
+  static const Color warmAmberBg = Color(0xFFFBEFD9);
+  static const Color warmAmberBorder = Color(0xFFF0E2C4);
+  static const Color warmAmberText = Color(0xFF96590A);
+  static const Color warmAmberIconTint = Color(0xFFF3E8D3);
+
+  static const Color warmGreenBg = Color(0xFFE3F0DE);
+  static const Color warmGreenBorder = Color(0xFFE3EEDC);
+  static const Color warmGreenText = Color(0xFF2F6B3A);
 }

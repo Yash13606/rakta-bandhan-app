@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../services/backend.dart';
 import '../theme/app_colors.dart';
+import '../widgets/loading_button.dart';
 import 'main_navigation_screen.dart';
 import 'registration_screen.dart';
 
@@ -76,7 +77,7 @@ class _OtpScreenState extends State<OtpScreen> {
       if (!mounted) return;
       setState(() {
         _isVerifying = false;
-        _errorMessage = 'Verification failed. Please try again.';
+        _errorMessage = 'Incorrect code. Please try again.';
       });
     }
   }
@@ -213,18 +214,10 @@ class _OtpScreenState extends State<OtpScreen> {
               const SizedBox(height: 32),
 
               // Verify button
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _isVerifying ? null : _handleVerify,
-                  child: _isVerifying
-                      ? const SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.whiteTextOnPrimary),
-                        )
-                      : const Text('Verify'),
-                ),
+              LoadingButton(
+                label: 'Verify',
+                isLoading: _isVerifying,
+                onPressed: _handleVerify,
               ),
             ],
           ),

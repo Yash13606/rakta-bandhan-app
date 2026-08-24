@@ -2,7 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../services/backend.dart';
 import '../theme/app_colors.dart';
+import '../theme/app_text_styles.dart';
+import '../widgets/avatar_badge.dart';
+import '../widgets/gradient_hero_card.dart';
+import '../widgets/loading_button.dart';
 
+/// Pre-match donor discovery screen. Deliberately has no Call/WhatsApp
+/// actions — per the prototype and the "unlock on accept" caption below,
+/// contact details are only real once a request is accepted (see
+/// MatchContactScreen). Showing them here would be fabricating access to
+/// sensitive donor information the donor hasn't agreed to share yet.
 class DonorDetailsScreen extends StatefulWidget {
   final String name;
   final String initials;
@@ -73,256 +82,143 @@ class _DonorDetailsScreenState extends State<DonorDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.pageBackground,
+      backgroundColor: AppColors.warmPageBackground,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(
-            LucideIcons.arrowLeft,
-            color: AppColors.textPrimary,
-          ),
+          icon: const Icon(LucideIcons.arrowLeft, color: AppColors.textPrimary),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(
-          'Donor Profile',
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-              ),
-        ),
+        title: const Text('Donor profile', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: AppColors.textPrimary)),
         centerTitle: true,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
+          padding: const EdgeInsets.only(bottom: 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 12),
-
-              // 1. Centered Circular Avatar
-              Center(
-                child: Container(
-                  width: 80,
-                  height: 80,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.primaryLightTint,
-                  ),
-                  alignment: Alignment.center,
-                  child: Text(
-                    widget.initials,
-                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                          color: AppColors.primary,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 28,
-                        ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-
-              // 2. Centered Name
-              Text(
-                widget.name,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
-                    ),
-              ),
-              const SizedBox(height: 8),
-
-              // 3. Blood Badge Centered
-              Center(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryLightTint,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    widget.bloodGroup,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: AppColors.primary,
-                          fontWeight: FontWeight.w500,
-                        ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-
-              // 4. Badges (Verified & Availability Status together)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (widget.isVerified) ...[
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: AppColors.statusAvailableBg,
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: const Row(
-                        children: [
-                          Icon(
-                            LucideIcons.check,
-                            color: AppColors.statusAvailableText,
-                            size: 12,
-                          ),
-                          SizedBox(width: 4),
-                          Text(
-                            'Verified',
-                            style: TextStyle(
-                              color: AppColors.statusAvailableText,
-                              fontSize: 11,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                  ],
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: widget.isAvailable
-                          ? AppColors.statusAvailableBg
-                          : AppColors.border,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    child: Row(
+              GradientHeroCard(
+                startColor: AppColors.gradientHeaderStart,
+                endColor: AppColors.gradientHeaderEnd,
+                gradientBegin: Alignment.topRight,
+                gradientEnd: Alignment.bottomLeft,
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 40),
+                ringRight: -40,
+                ringTop: -40,
+                ringLeft: null,
+                ringBottom: null,
+                ringSize: 150,
+                child: Column(
+                  children: [
+                    AvatarBadge(initials: widget.initials, size: 72, fontSize: 22, translucent: true),
+                    const SizedBox(height: 12),
+                    Text(widget.name, textAlign: TextAlign.center, style: AppTextStyles.display(fontSize: 20, color: const Color(0xFFFFF9F5))),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          width: 6,
-                          height: 6,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: widget.isAvailable
-                                ? AppColors.statusAvailableText
-                                : AppColors.textMuted,
-                          ),
+                        _translucentPill(widget.bloodGroup, bold: true),
+                        if (widget.isVerified) ...[
+                          const SizedBox(width: 6),
+                          _translucentPill('Verified', icon: LucideIcons.check),
+                        ],
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Transform.translate(
+                offset: const Offset(0, -22),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: const [BoxShadow(color: Color.fromRGBO(43, 20, 20, 0.1), blurRadius: 24, offset: Offset(0, 10))],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(LucideIcons.mapPin, size: 13, color: AppColors.textSecondary),
+                            const SizedBox(width: 6),
+                            Text('${widget.distance} · ${widget.city}', style: const TextStyle(fontSize: 12.5, color: AppColors.textSecondary)),
+                          ],
                         ),
-                        const SizedBox(width: 6),
-                        Text(
-                          widget.isAvailable ? 'Available now' : 'Unavailable',
-                          style: TextStyle(
-                            color: widget.isAvailable
-                                ? AppColors.statusAvailableText
-                                : AppColors.textSecondary,
-                            fontSize: 11,
-                            fontWeight: FontWeight.w500,
-                          ),
+                        const Padding(padding: EdgeInsets.symmetric(vertical: 12), child: Divider(height: 1, color: AppColors.dividerWarm)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text('Blood group', style: TextStyle(fontSize: 13.5, color: AppColors.textSecondary)),
+                            Text(_translateBloodGroup(widget.bloodGroup), style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600, color: AppColors.textPrimaryWarm)),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text('Availability', style: TextStyle(fontSize: 13.5, color: AppColors.textSecondary)),
+                            Text(
+                              widget.isAvailable ? 'Available now' : 'Unavailable',
+                              style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600, color: widget.isAvailable ? AppColors.warmGreenText : AppColors.textMuted),
+                            ),
+                          ],
                         ),
                       ],
                     ),
                   ),
-                ],
-              ),
-              const SizedBox(height: 12),
-
-              // 5. Distance and City
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    LucideIcons.mapPin,
-                    size: 14,
-                    color: AppColors.textSecondary,
-                  ),
-                  const SizedBox(width: 6),
-                  Text(
-                    '${widget.distance} · ${widget.city}',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AppColors.textSecondary,
-                        ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
-
-              // 6. Divider line
-              const Divider(
-                color: AppColors.border,
-                height: 1,
-              ),
-              const SizedBox(height: 24),
-
-              // 7. Info Block Detail list
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Blood group',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: AppColors.textSecondary,
-                            ),
-                      ),
-                      Text(
-                        _translateBloodGroup(widget.bloodGroup),
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: AppColors.textPrimary,
-                              fontWeight: FontWeight.w500,
-                            ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Availability',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: AppColors.textSecondary,
-                            ),
-                      ),
-                      Text(
-                        widget.isAvailable ? 'Available now' : 'Unavailable',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: widget.isAvailable
-                                  ? AppColors.statusAvailableText
-                                  : AppColors.textMuted,
-                              fontWeight: FontWeight.w500,
-                            ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(height: 40),
-
-              // 8. Primary "Request donor" button
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _isSending ? null : _sendRequest,
-                  child: _isSending
-                      ? const SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.whiteTextOnPrimary),
-                        )
-                      : const Text('Request donor'),
                 ),
               ),
-              const SizedBox(height: 8),
-              Text(
-                'Contact details unlock once ${widget.name.split(' ').first} accepts your request.',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: AppColors.textMuted,
-                      fontSize: 12,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  children: [
+                    if (widget.isAvailable)
+                      LoadingButton(label: 'Request donor', isLoading: _isSending, onPressed: _sendRequest)
+                    else
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(vertical: 13),
+                        decoration: BoxDecoration(color: AppColors.border, borderRadius: BorderRadius.circular(14)),
+                        alignment: Alignment.center,
+                        child: const Text('Currently unavailable to donate', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.textMuted)),
+                      ),
+                    const SizedBox(height: 8),
+                    Text(
+                      widget.isAvailable
+                          ? 'Contact details unlock once ${widget.name.split(' ').first} accepts your request.'
+                          : '${widget.name.split(' ').first} is on a donation cooldown and cannot be requested right now.',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: 12, color: AppColors.textMuted),
                     ),
+                  ],
+                ),
               ),
-              const SizedBox(height: 20),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _translucentPill(String label, {bool bold = false, IconData? icon}) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: bold ? 11 : 10, vertical: 4),
+      decoration: BoxDecoration(color: AppColors.whiteTextOnPrimary.withValues(alpha: 0.16), borderRadius: BorderRadius.circular(8)),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (icon != null) ...[
+            Icon(icon, size: 10, color: AppColors.whiteTextOnPrimary),
+            const SizedBox(width: 4),
+          ],
+          Text(label, style: TextStyle(fontSize: bold ? 12.5 : 11, fontWeight: bold ? FontWeight.w700 : FontWeight.w600, color: AppColors.whiteTextOnPrimary)),
+        ],
       ),
     );
   }

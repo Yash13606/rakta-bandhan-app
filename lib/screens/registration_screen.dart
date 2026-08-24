@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../services/backend.dart';
 import '../theme/app_colors.dart';
-import 'main_navigation_screen.dart';
+import 'consent_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
   final String phoneNumber;
@@ -112,10 +112,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         lng: lng,
       );
       if (!mounted) return;
-      Navigator.pushAndRemoveUntil(
+      setState(() => _isSubmitting = false);
+      Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const MainNavigationScreen()),
-        (route) => false,
+        MaterialPageRoute(builder: (context) => const ConsentScreen()),
       );
     } catch (e) {
       if (!mounted) return;
