@@ -44,11 +44,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: IconButton(
-                      icon: const Icon(LucideIcons.arrowLeft, color: AppColors.textPrimary),
+                      icon: const Icon(LucideIcons.arrowLeft, color: AppColors.textPrimaryWarm),
                       onPressed: () => Navigator.pop(context),
                     ),
                   ),
-                  const Text('Settings', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: AppColors.textPrimary)),
+                  const Text('Settings', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: AppColors.textPrimaryWarm)),
                 ],
               ),
             ),
@@ -62,7 +62,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        border: Border.all(color: AppColors.border),
+                        border: Border.all(color: AppColors.cardBorderWarm),
                         borderRadius: BorderRadius.circular(14),
                       ),
                       clipBehavior: Clip.antiAlias,
@@ -70,7 +70,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         children: [
                           Container(
                             padding: const EdgeInsets.all(14),
-                            decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: AppColors.border))),
+                            decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: AppColors.cardBorderWarm))),
                             child: Row(
                               children: [
                                 const Expanded(child: Text('Show exact address to matched donors', style: TextStyle(fontSize: 14))),
@@ -100,7 +100,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        border: Border.all(color: AppColors.border),
+                        border: Border.all(color: AppColors.cardBorderWarm),
                         borderRadius: BorderRadius.circular(14),
                       ),
                       clipBehavior: Clip.antiAlias,
@@ -117,7 +117,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ),
                           ),
                           Container(
-                            decoration: const BoxDecoration(border: Border(top: BorderSide(color: AppColors.border))),
+                            decoration: const BoxDecoration(border: Border(top: BorderSide(color: AppColors.cardBorderWarm))),
                             child: InkWell(
                               onTap: _logOutEverywhere,
                               child: const Padding(
@@ -137,7 +137,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        border: Border.all(color: AppColors.border),
+                        border: Border.all(color: AppColors.cardBorderWarm),
                         borderRadius: BorderRadius.circular(14),
                       ),
                       clipBehavior: Clip.antiAlias,

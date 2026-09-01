@@ -24,8 +24,8 @@ class AdminDonorDetailScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: IconButton(icon: const Icon(LucideIcons.arrowLeft, color: AppColors.textPrimary), onPressed: () => Navigator.pop(context)),
-        title: const Text('Donor details', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: AppColors.textPrimary)),
+        leading: IconButton(icon: const Icon(LucideIcons.arrowLeft, color: AppColors.textPrimaryWarm), onPressed: () => Navigator.pop(context)),
+        title: const Text('Donor details', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: AppColors.textPrimaryWarm)),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -43,7 +43,7 @@ class AdminDonorDetailScreen extends StatelessWidget {
                 children: [
                   Center(child: AvatarBadge(initials: initials, size: 72, fontSize: 22)),
                   const SizedBox(height: 12),
-                  Text(donor.name, textAlign: TextAlign.center, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: AppColors.textPrimary)),
+                  Text(donor.name, textAlign: TextAlign.center, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: AppColors.textPrimaryWarm)),
                   const SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -56,15 +56,15 @@ class AdminDonorDetailScreen extends StatelessWidget {
                   const SizedBox(height: 24),
                   Container(
                     padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(color: Colors.white, border: Border.all(color: AppColors.border), borderRadius: BorderRadius.circular(16)),
+                    decoration: BoxDecoration(color: Colors.white, border: Border.all(color: AppColors.cardBorderWarm), borderRadius: BorderRadius.circular(16)),
                     child: Column(
                       children: [
                         _row('Phone', donor.phone),
-                        const Divider(height: 24, color: AppColors.border),
+                        const Divider(height: 24, color: AppColors.cardBorderWarm),
                         _row('Location', donor.location),
-                        const Divider(height: 24, color: AppColors.border),
+                        const Divider(height: 24, color: AppColors.cardBorderWarm),
                         _row('Joined', donor.joinedOn),
-                        const Divider(height: 24, color: AppColors.border),
+                        const Divider(height: 24, color: AppColors.cardBorderWarm),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -77,7 +77,7 @@ class AdminDonorDetailScreen extends StatelessWidget {
                                   margin: const EdgeInsets.only(right: 6),
                                   decoration: BoxDecoration(shape: BoxShape.circle, color: donor.available ? AppColors.warmGreenText : AppColors.textMuted),
                                 ),
-                                Text(donor.available ? 'Available' : 'Unavailable', style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600, color: AppColors.textPrimary)),
+                                Text(donor.available ? 'Available' : 'Unavailable', style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600, color: AppColors.textPrimaryWarm)),
                               ],
                             ),
                           ],
@@ -123,7 +123,7 @@ class AdminDonorDetailScreen extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(label, style: const TextStyle(fontSize: 13.5, color: AppColors.textSecondary)),
-        Text(value, style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600, color: AppColors.textPrimary)),
+        Text(value, style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600, color: AppColors.textPrimaryWarm)),
       ],
     );
   }

@@ -61,7 +61,7 @@ class StepTracker extends StatelessWidget {
         circle = Container(
           width: 30,
           height: 30,
-          decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: AppColors.border, width: 2)),
+          decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: AppColors.cardBorderWarm, width: 2)),
           alignment: Alignment.center,
           child: Icon(step.icon, size: 13, color: AppColors.borderStrong),
         );
@@ -79,7 +79,7 @@ class StepTracker extends StatelessWidget {
                   child: Container(
                     width: 2,
                     margin: const EdgeInsets.symmetric(vertical: 2),
-                    color: step.status == StepStatus.done ? AppColors.statusAvailableText : AppColors.border,
+                    color: step.status == StepStatus.done ? AppColors.statusAvailableText : AppColors.cardBorderWarm,
                   ),
                 ),
             ],
@@ -91,7 +91,7 @@ class StepTracker extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(step.label, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textPrimary)),
+                  Text(step.label, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textPrimaryWarm)),
                   const SizedBox(height: 2),
                   Text(step.sub, style: const TextStyle(fontSize: 11.5, color: AppColors.textMuted)),
                 ],

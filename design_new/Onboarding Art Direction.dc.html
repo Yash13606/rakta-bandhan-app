@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap">
+<style>
+  body{margin:0;background:#E8E4DC}
+  a{color:#8C1F2B}a:hover{color:#5C1119}
+</style>
+</helmet>
+
+<div style="padding:56px 64px 80px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif">
+
+  <div style="max-width:780px;margin-bottom:40px">
+    <div style="font-size:11px;font-weight:600;letter-spacing:.14em;color:#8C1F2B;text-transform:uppercase">Art direction — proposal, revision 2</div>
+    <div style="font-family:'Newsreader',Georgia,serif;font-size:38px;font-weight:600;color:#241416;letter-spacing:-.02em;line-height:1.1;margin-top:12px">Stop showing the UI. Show the idea.</div>
+    <div style="font-size:14.5px;color:#5A564F;line-height:1.65;margin-top:16px;max-width:680px">Every current hero is a miniature app screenshot — a request card, three list rows, floating pins. That is the single reason it reads as a prototype. All four are replaced with <strong style="font-weight:600;color:#241416">diagrams and typography</strong>.</div>
+    <div style="margin-top:20px;padding:16px 18px;background:#F3EFE7;border-left:2px solid #8C1F2B;max-width:680px">
+      <div style="font-size:12px;font-weight:600;color:#241416;letter-spacing:.01em">Revision 2 — the ring is now literally one object</div>
+      <div style="font-size:13px;color:#5A564F;line-height:1.62;margin-top:7px">Rev 1 drew four similar-looking ring sets and called them one. Now every frame renders the <strong style="font-weight:600;color:#241416">same three rings</strong> — base diameters <strong style="font-weight:600;color:#241416">216 / 152 / 107</strong> (fixed 1.42 ratio), fixed centre <strong style="font-weight:600;color:#241416">(252, 300)</strong>, scaled by <strong style="font-weight:600;color:#241416">1.00 → 1.24 → 1.62 → 0.90</strong>. Count, centre and ratio never change; only scale and opacity do, which is exactly what the approved motion system can produce. Mid frames sit at the interpolated scale with the ring's 0.15× parallax applied.</div>
+    </div>
+    <div style="font-size:13px;color:#8A857C;line-height:1.6;margin-top:16px;max-width:680px">Frames are 390×844. Interaction architecture unchanged — composition only.</div>
+  </div>
+
+  <div style="display:flex;gap:36px;align-items:flex-start">
+
+    <!-- ============ PAGE 1 — BRAND ============ -->
+    <div style="flex:none">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:14px">
+        <span style="font-size:11px;font-weight:600;letter-spacing:.12em;color:#8C1F2B">01</span>
+        <span style="font-size:13.5px;font-weight:600;color:#241416">Brand</span>
+        <span style="font-size:12.5px;color:#8A857C">· ring at 1.00×</span>
+      </div>
+      <div style="width:390px;height:844px;position:relative;overflow:hidden;border-radius:34px;background:linear-gradient(168deg,#7E1C26 0%,#240A0E 62%,#150809 100%);box-shadow:0 24px 56px rgba(43,20,20,.22)">
+        <div style="position:absolute;left:252px;top:300px;width:0;height:0;opacity:.5">
+          <div style="position:absolute;width:216px;height:216px;margin:-108px 0 0 -108px;border-radius:50%;border:1px solid rgba(251,230,232,.55)"></div>
+          <div style="position:absolute;width:152px;height:152px;margin:-76px 0 0 -76px;border-radius:50%;border:1px solid rgba(251,230,232,.78)"></div>
+          <div style="position:absolute;width:107px;height:107px;margin:-53.5px 0 0 -53.5px;border-radius:50%;border:1px solid rgba(251,230,232,1)"></div>
+        </div>
+
+        <div style="position:absolute;left:0;right:0;top:0;height:46px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:13px;font-weight:500;color:rgba(255,249,245,.9)">
+          <span>9:41</span>
+          <span style="width:16px;height:10px;border:1.4px solid rgba(255,249,245,.9);border-radius:2px;position:relative"><span style="position:absolute;inset:1.5px;background:rgba(255,249,245,.9);border-radius:1px"></span></span>
+        </div>
+
+        <svg width="26" height="26" viewBox="0 0 24 24" style="position:absolute;left:32px;top:128px"><path d="M12 2.5c4 5.2 7 8.7 7 12.3a7 7 0 1 1-14 0c0-3.6 3-7.1 7-12.3z" stroke="#FBE6E8" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+        <div style="position:absolute;left:32px;top:430px;right:32px">
+          <div style="font-family:'Newsreader',Georgia,serif;font-size:54px;font-weight:600;color:#FFF9F5;letter-spacing:-.028em;line-height:1.0">Rakta<br>Bandhan</div>
+          <div style="width:52px;height:1px;background:rgba(251,230,232,.34);margin:30px 0 22px"></div>
+          <div style="font-size:16px;color:#EFCDD1;line-height:1.55;max-width:250px">Every drop connects a life.</div>
+        </div>
+
+        <div style="position:absolute;left:0;right:0;bottom:20px;height:104px;display:flex;align-items:center;padding:0 24px;box-sizing:border-box">
+          <div style="width:64px;font-size:13.5px;font-weight:500;color:rgba(233,191,196,.85)">Skip</div>
+          <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px">
+            <span style="width:22px;height:6px;border-radius:3px;background:#FBE6E8"></span>
+            <span style="width:6px;height:6px;border-radius:3px;background:rgba(251,230,232,.3)"></span>
+            <span style="width:6px;height:6px;border-radius:3px;background:rgba(251,230,232,.3)"></span>
+            <span style="width:6px;height:6px;border-radius:3px;background:rgba(251,230,232,.3)"></span>
+          </div>
+          <div style="width:64px;display:flex;justify-content:flex-end">
+            <div style="width:56px;height:56px;border-radius:50%;background:#FBF7F1;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(0,0,0,.28)">
+              <svg width="21" height="21" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke="#5C1119" stroke-width="1.9" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="width:390px;font-size:12.5px;color:#6E6A62;line-height:1.6;margin-top:14px">Wordmark carries the identity at 54px; the droplet drops to a small publisher's device. The ring sits at its base size — ambient geometry above the type, not a mark to be read.</div>
+    </div>
+
+    <!-- ============ MID 1 → 2 ============ -->
+    <div style="flex:none">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:14px">
+        <span style="font-size:11px;font-weight:600;letter-spacing:.12em;color:#8A857C">MID</span>
+        <span style="font-size:13.5px;font-weight:600;color:#241416">01 → 02</span>
+        <span style="font-size:12.5px;color:#8A857C">· 1.12×, cream reveal 50%</span>
+      </div>
+      <div style="width:390px;height:844px;position:relative;overflow:hidden;border-radius:34px;background:linear-gradient(168deg,#7E1C26 0%,#240A0E 62%,#150809 100%);box-shadow:0 24px 56px rgba(43,20,20,.22)">
+        <div style="position:absolute;left:281px;top:300px;width:546px;height:546px;margin:-273px 0 0 -273px;border-radius:50%;background:#FBF7F1;border:1.4px solid rgba(251,230,232,.9)"></div>
+
+        <div style="position:absolute;left:281px;top:300px;width:0;height:0;opacity:.52">
+          <div style="position:absolute;width:242px;height:242px;margin:-121px 0 0 -121px;border-radius:50%;border:1px solid rgba(232,220,208,.55)"></div>
+          <div style="position:absolute;width:170px;height:170px;margin:-85px 0 0 -85px;border-radius:50%;border:1px solid rgba(232,220,208,.78)"></div>
+          <div style="position:absolute;width:120px;height:120px;margin:-60px 0 0 -60px;border-radius:50%;border:1px solid rgba(232,220,208,1)"></div>
+        </div>
+
+        <div style="position:absolute;left:0;right:0;top:0;height:46px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:13px;font-weight:500;color:#8A6A62">
+          <span>9:41</span>
+          <span style="width:16px;height:10px;border:1.4px solid #8A6A62;border-radius:2px;position:relative"><span style="position:absolute;inset:1.5px;background:#8A6A62;border-radius:1px"></span></span>
+        </div>
+
+        <div style="position:absolute;left:-143px;top:430px;width:326px;opacity:.74">
+          <div style="font-family:'Newsreader',Georgia,serif;font-size:54px;font-weight:600;color:#3A1418;letter-spacing:-.028em;line-height:1.0">Rakta<br>Bandhan</div>
+          <div style="width:52px;height:1px;background:rgba(58,20,24,.28);margin:30px 0 22px"></div>
+          <div style="font-size:16px;color:#7A4A50;line-height:1.55">Every drop connects a life.</div>
+        </div>
+
+        <div style="position:absolute;left:359px;top:300px;width:0;height:0">
+          <div style="position:absolute;left:-52px;top:-52px;width:104px;height:104px;border-radius:50%;background:#FBF7F1;display:flex;align-items:center;justify-content:center">
+            <span style="font-family:'Newsreader',Georgia,serif;font-size:50px;font-weight:600;color:#8C1F2B;letter-spacing:-.024em;line-height:1">O+</span>
+          </div>
+        </div>
+
+        <div style="position:absolute;left:203px;top:498px;width:300px;opacity:.74">
+          <div style="font-family:'Newsreader',Georgia,serif;font-size:29px;font-weight:600;color:#241416;letter-spacing:-.014em;line-height:1.16;max-width:280px">Find blood when it matters</div>
+        </div>
+
+        <div style="position:absolute;left:0;right:0;bottom:20px;height:104px;display:flex;align-items:center;padding:0 24px;box-sizing:border-box">
+          <div style="width:64px;font-size:13.5px;font-weight:500;color:#A08F86">Skip</div>
+          <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px">
+            <span style="width:14px;height:6px;border-radius:3px;background:#B5766F;opacity:.72"></span>
+            <span style="width:14px;height:6px;border-radius:3px;background:#B5766F;opacity:.72"></span>
+            <span style="width:6px;height:6px;border-radius:3px;background:#D3D1C7;opacity:.45"></span>
+            <span style="width:6px;height:6px;border-radius:3px;background:#D3D1C7;opacity:.45"></span>
+          </div>
+          <div style="width:64px;display:flex;justify-content:flex-end">
+            <div style="width:56px;height:56px;border-radius:50%;background:#C55B52;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(140,31,43,.26)">
+              <svg width="21" height="21" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke="#F7DDDF" stroke-width="1.9" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="width:390px;font-size:12.5px;color:#6E6A62;line-height:1.6;margin-top:14px">The cream disc grows from the ring's own centre; its rim <em>is</em> the ring. <strong style="font-weight:600;color:#241416">Fixes rev 1's cream-on-cream:</strong> outgoing type and status bar cross-fade to dark ink as the reveal passes under them, so the wordmark never vanishes.</div>
+    </div>
+
+    <!-- ============ PAGE 2 — NEED ============ -->
+    <div style="flex:none">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:14px">
+        <span style="font-size:11px;font-weight:600;letter-spacing:.12em;color:#8C1F2B">02</span>
+        <span style="font-size:13.5px;font-weight:600;color:#241416">Need</span>
+        <span style="font-size:12.5px;color:#8A857C">· ring at 1.24×</span>
+      </div>
+      <div style="width:390px;height:844px;position:relative;overflow:hidden;border-radius:34px;background:#FBF7F1;box-shadow:0 24px 56px rgba(43,20,20,.16)">
+        <div style="position:absolute;left:0;right:0;top:0;height:46px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:13px;font-weight:500;color:#241416">
+          <span>9:41</span>
+          <span style="width:16px;height:10px;border:1.4px solid #241416;border-radius:2px;position:relative"><span style="position:absolute;inset:1.5px;background:#241416;border-radius:1px"></span></span>
+        </div>
+
+        <div style="position:absolute;left:252px;top:300px;width:0;height:0;opacity:.55">
+          <div style="position:absolute;width:268px;height:268px;margin:-134px 0 0 -134px;border-radius:50%;border:1px solid rgba(200,184,160,.55)"></div>
+          <div style="position:absolute;width:188px;height:188px;margin:-94px 0 0 -94px;border-radius:50%;border:1px solid rgba(200,184,160,.78)"></div>
+          <div style="position:absolute;width:133px;height:133px;margin:-66.5px 0 0 -66.5px;border-radius:50%;border:1px solid rgba(200,184,160,1)"></div>
+        </div>
+
+        <div style="position:absolute;left:252px;top:300px;width:0;height:0">
+          <svg width="400" height="400" viewBox="0 0 400 400" style="position:absolute;margin:-200px 0 0 -200px;overflow:visible">
+            <path d="M200 66.1 A133.9 133.9 0 0 1 325.8 154.2" stroke="#C98B92" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+            <path d="M243.1 161.2 L259.4 146.5" stroke="#CBBDA8" stroke-width="1" fill="none" stroke-linecap="round"/>
+            <path d="M145.5 180.2 L124.8 172.6" stroke="#CBBDA8" stroke-width="1" fill="none" stroke-linecap="round"/>
+            <path d="M194.9 257.8 L193.0 279.7" stroke="#CBBDA8" stroke-width="1" fill="none" stroke-linecap="round"/>
+          </svg>
+
+          <div style="position:absolute;left:-52px;top:-52px;width:104px;height:104px;border-radius:50%;background:#FBF7F1;display:flex;align-items:center;justify-content:center">
+            <span style="font-family:'Newsreader',Georgia,serif;font-size:50px;font-weight:600;color:#8C1F2B;letter-spacing:-.024em;line-height:1">O+</span>
+          </div>
+          <div style="position:absolute;left:-70px;top:52px;width:140px;text-align:center;font-size:10px;font-weight:600;letter-spacing:.13em;color:#A0968A;text-transform:uppercase;white-space:nowrap">2 units · urgent</div>
+
+          <div style="position:absolute;left:56px;top:-74px;background:#FBF7F1;padding:2px 5px;font-size:14px;font-weight:700;color:#8C1F2B;letter-spacing:-.01em;white-space:nowrap">A+</div>
+          <div style="position:absolute;left:-107px;top:-43px;background:#FBF7F1;padding:2px 5px;font-size:14px;font-weight:700;color:#8C1F2B;letter-spacing:-.01em;white-space:nowrap">O&#8722;</div>
+          <div style="position:absolute;left:-22px;top:83px;background:#FBF7F1;padding:2px 5px;font-size:14px;font-weight:700;color:#8C1F2B;letter-spacing:-.01em;white-space:nowrap">B+</div>
+        </div>
+
+        <div style="position:absolute;left:28px;top:498px;right:28px">
+          <div style="font-family:'Newsreader',Georgia,serif;font-size:29px;font-weight:600;color:#241416;letter-spacing:-.014em;line-height:1.16;max-width:280px">Find blood when it matters</div>
+          <div style="width:40px;height:1px;background:#D8CFC2;margin:18px 0"></div>
+          <div style="font-size:13.5px;color:#68655F;line-height:1.62;max-width:278px">Compatible donors are alerted by blood group and distance — in minutes, not hours.</div>
+        </div>
+
+        <div style="position:absolute;left:0;right:0;bottom:20px;height:104px;display:flex;align-items:center;padding:0 24px;box-sizing:border-box">
+          <div style="width:64px;font-size:13.5px;font-weight:500;color:#8A857C">Skip</div>
+          <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px">
+            <span style="width:6px;height:6px;border-radius:3px;background:#D3D1C7;opacity:.45"></span>
+            <span style="width:22px;height:6px;border-radius:3px;background:#8C1F2B"></span>
+            <span style="width:6px;height:6px;border-radius:3px;background:#D3D1C7;opacity:.45"></span>
+            <span style="width:6px;height:6px;border-radius:3px;background:#D3D1C7;opacity:.45"></span>
+          </div>
+          <div style="width:64px;display:flex;justify-content:flex-end">
+            <div style="width:56px;height:56px;border-radius:50%;background:#8C1F2B;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(140,31,43,.26)">
+              <svg width="21" height="21" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke="#FBE6E8" stroke-width="1.9" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="width:390px;font-size:12.5px;color:#6E6A62;line-height:1.6;margin-top:14px">No card, no skeleton bars. The need is display type at the centre; three compatible groups sit on the middle ring. <strong style="font-weight:600;color:#241416">Fixed from rev 1:</strong> the urgency arc now runs exactly along the outer ring radius, and each radial tick stops short of its label — no stub ends.</div>
+    </div>
+
+    <!-- ============ MID 2 → 3 ============ -->
+    <div style="flex:none">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:14px">
+        <span style="font-size:11px;font-weight:600;letter-spacing:.12em;color:#8A857C">MID</span>
+        <span style="font-size:13.5px;font-weight:600;color:#241416">02 → 03</span>
+        <span style="font-size:12.5px;color:#8A857C">· 1.43×, widening</span>
+      </div>
+      <div style="width:390px;height:844px;position:relative;overflow:hidden;border-radius:34px;background:#FBF7F1;box-shadow:0 24px 56px rgba(43,20,20,.16)">
+        <div style="position:absolute;left:0;right:0;top:0;height:46px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:13px;font-weight:500;color:#241416">
+          <span>9:41</span>
+          <span style="width:16px;height:10px;border:1.4px solid #241416;border-radius:2px;position:relative"><span style="position:absolute;inset:1.5px;background:#241416;border-radius:1px"></span></span>
+        </div>
+
+        <div style="position:absolute;left:281px;top:300px;width:0;height:0;opacity:.52">
+          <div style="position:absolute;width:309px;height:309px;margin:-154.5px 0 0 -154.5px;border-radius:50%;border:1px solid rgba(200,184,160,.55)"></div>
+          <div style="position:absolute;width:217px;height:217px;margin:-108.5px 0 0 -108.5px;border-radius:50%;border:1px solid rgba(200,184,160,.78)"></div>
+          <div style="position:absolute;width:153px;height:153px;margin:-76.5px 0 0 -76.5px;border-radius:50%;border:1px solid rgba(200,184,160,1)"></div>
+        </div>
+
+        <div style="position:absolute;left:145px;top:300px;width:0;height:0;opacity:.5">
+          <div style="position:absolute;left:-52px;top:-46px;width:104px;text-align:center;font-family:'Newsreader',Georgia,serif;font-size:50px;font-weight:600;color:#8C1F2B;letter-spacing:-.024em;line-height:1">O+</div>
+        </div>
+
+        <div style="position:absolute;left:359px;top:300px;width:0;height:0">
+          <div style="position:absolute;left:-7px;top:-7px;width:14px;height:14px;border-radius:50%;background:#8C1F2B"></div>
+          <div style="position:absolute;left:-99px;top:-78px;width:56px;height:56px;border-radius:50%;background:#F6DCDE;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;color:#8C1F2B">RM</div>
+          <div style="position:absolute;left:40px;top:-101px;width:48px;height:48px;border-radius:50%;background:#F6DCDE;display:flex;align-items:center;justify-content:center;font-size:13.5px;font-weight:600;color:#8C1F2B">PN</div>
+        </div>
+
+        <div style="position:absolute;left:-147px;top:498px;width:300px;opacity:.5">
+          <div style="font-family:'Newsreader',Georgia,serif;font-size:29px;font-weight:600;color:#241416;letter-spacing:-.014em;line-height:1.16;max-width:280px">Find blood when it matters</div>
+        </div>
+        <div style="position:absolute;left:203px;top:498px;width:300px;opacity:.74">
+          <div style="font-family:'Newsreader',Georgia,serif;font-size:29px;font-weight:600;color:#241416;letter-spacing:-.014em;line-height:1.16;max-width:280px">Know who's available</div>
+        </div>
+
+        <div style="position:absolute;left:0;right:0;bottom:20px;height:104px;display:flex;align-items:center;padding:0 24px;box-sizing:border-box">
+          <div style="width:64px;font-size:13.5px;font-weight:500;color:#8A857C">Skip</div>
+          <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px">
+            <span style="width:6px;height:6px;border-radius:3px;background:#D3D1C7;opacity:.45"></span>
+            <span style="width:14px;height:6px;border-radius:3px;background:#B4818A;opacity:.72"></span>
+            <span style="width:14px;height:6px;border-radius:3px;background:#B4818A;opacity:.72"></span>
+            <span style="width:6px;height:6px;border-radius:3px;background:#D3D1C7;opacity:.45"></span>
+          </div>
+          <div style="width:64px;display:flex;justify-content:flex-end">
+            <div style="width:56px;height:56px;border-radius:50%;background:#8C1F2B;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(140,31,43,.26)">
+              <svg width="21" height="21" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke="#FBE6E8" stroke-width="1.9" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="width:390px;font-size:12.5px;color:#6E6A62;line-height:1.6;margin-top:14px">The same three rings at the interpolated 1.43×, shifted 29px right by the 0.15× parallax. The compatibility diagram becomes the proximity field — no ring appears, disappears, or moves house.</div>
+    </div>
+
+    <!-- ============ PAGE 3 — PEOPLE ============ -->
+    <div style="flex:none">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:14px">
+        <span style="font-size:11px;font-weight:600;letter-spacing:.12em;color:#8C1F2B">03</span>
+        <span style="font-size:13.5px;font-weight:600;color:#241416">People</span>
+        <span style="font-size:12.5px;color:#8A857C">· ring at 1.62×</span>
+      </div>
+      <div style="width:390px;height:844px;position:relative;overflow:hidden;border-radius:34px;background:#FBF7F1;box-shadow:0 24px 56px rgba(43,20,20,.16)">
+        <div style="position:absolute;left:0;right:0;top:0;height:46px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:13px;font-weight:500;color:#241416">
+          <span>9:41</span>
+          <span style="width:16px;height:10px;border:1.4px solid #241416;border-radius:2px;position:relative"><span style="position:absolute;inset:1.5px;background:#241416;border-radius:1px"></span></span>
+        </div>
+
+        <div style="position:absolute;left:252px;top:300px;width:0;height:0;opacity:.5">
+          <div style="position:absolute;width:350px;height:350px;margin:-175px 0 0 -175px;border-radius:50%;border:1px solid rgba(200,184,160,.55)"></div>
+          <div style="position:absolute;width:246px;height:246px;margin:-123px 0 0 -123px;border-radius:50%;border:1px solid rgba(200,184,160,.78)"></div>
+          <div style="position:absolute;width:173px;height:173px;margin:-86.5px 0 0 -86.5px;border-radius:50%;border:1px solid rgba(200,184,160,1)"></div>
+        </div>
+
+        <div style="position:absolute;left:252px;top:300px;width:0;height:0">
+          <div style="position:absolute;left:-7px;top:-7px;width:14px;height:14px;border-radius:50%;background:#8C1F2B;box-shadow:0 0 0 5px rgba(140,31,43,.12)"></div>
+          <div style="position:absolute;left:-40px;top:14px;width:80px;text-align:center;font-size:9.5px;font-weight:600;letter-spacing:.14em;color:#A0968A;text-transform:uppercase">You</div>
+
+          <div style="position:absolute;left:-99px;top:-78px;display:flex;align-items:center;gap:8px">
+            <div style="width:56px;height:56px;border-radius:50%;background:#F6DCDE;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;color:#8C1F2B;box-shadow:0 4px 12px rgba(140,31,43,.1);flex:none">RM</div>
+            <div>
+              <div style="font-size:12.5px;font-weight:700;color:#8C1F2B;letter-spacing:-.01em;white-space:nowrap">O+</div>
+              <div style="display:flex;align-items:center;gap:4px;margin-top:3px">
+                <span style="width:6px;height:6px;border-radius:50%;background:#2C6636;box-shadow:0 0 0 3px rgba(44,102,54,.16);flex:none"></span>
+                <span style="font-size:10px;font-weight:600;color:#2C6636;white-space:nowrap">Now</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="position:absolute;left:-4px;top:-101px;display:flex;align-items:center;gap:7px">
+            <div style="width:48px;height:48px;border-radius:50%;background:#F6DCDE;display:flex;align-items:center;justify-content:center;font-size:13.5px;font-weight:600;color:#8C1F2B;box-shadow:0 4px 12px rgba(140,31,43,.08);flex:none">PN</div>
+            <div>
+              <div style="font-size:12px;font-weight:700;color:#8C1F2B;letter-spacing:-.01em;white-space:nowrap">A&#8722;</div>
+              <div style="display:flex;align-items:center;gap:4px;margin-top:3px">
+                <span style="width:5px;height:5px;border-radius:50%;background:#2C6636;box-shadow:0 0 0 3px rgba(44,102,54,.16);flex:none"></span>
+                <span style="font-size:9.5px;font-weight:600;color:#2C6636;white-space:nowrap">Now</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="position:absolute;left:-85px;top:93px;display:flex;align-items:center;gap:7px;opacity:.82">
+            <div style="width:40px;height:40px;border-radius:50%;background:#F3E7E4;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#A85F68;flex:none">SS</div>
+            <div style="font-size:11px;font-weight:700;color:#A85F68;letter-spacing:-.01em;white-space:nowrap">AB+</div>
+          </div>
+
+          <div style="position:absolute;left:79px;top:104px;opacity:.5">
+            <div style="width:34px;height:34px;border-radius:50%;background:#EFE7DC;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#9C9488">KI</div>
+          </div>
+        </div>
+
+        <div style="position:absolute;left:28px;top:498px;right:28px">
+          <div style="font-family:'Newsreader',Georgia,serif;font-size:29px;font-weight:600;color:#241416;letter-spacing:-.014em;line-height:1.16;max-width:280px">Know who's available</div>
+          <div style="width:40px;height:1px;background:#D8CFC2;margin:18px 0"></div>
+          <div style="font-size:13.5px;color:#68655F;line-height:1.62;max-width:278px">Real people, ready right now — not a directory of everyone who ever registered.</div>
+        </div>
+
+        <div style="position:absolute;left:0;right:0;bottom:20px;height:104px;display:flex;align-items:center;padding:0 24px;box-sizing:border-box">
+          <div style="width:64px;font-size:13.5px;font-weight:500;color:#8A857C">Skip</div>
+          <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px">
+            <span style="width:6px;height:6px;border-radius:3px;background:#D3D1C7;opacity:.45"></span>
+            <span style="width:6px;height:6px;border-radius:3px;background:#D3D1C7;opacity:.45"></span>
+            <span style="width:22px;height:6px;border-radius:3px;background:#8C1F2B"></span>
+            <span style="width:6px;height:6px;border-radius:3px;background:#D3D1C7;opacity:.45"></span>
+          </div>
+          <div style="width:64px;display:flex;justify-content:flex-end">
+            <div style="width:56px;height:56px;border-radius:50%;background:#8C1F2B;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(140,31,43,.26)">
+              <svg width="21" height="21" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke="#FBE6E8" stroke-width="1.9" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="width:390px;font-size:12.5px;color:#6E6A62;line-height:1.6;margin-top:14px">You are the centre; four people sit on real ring radii. Size, opacity and warmth fall off with distance — two nearest live, the furthest a quiet grey presence. <strong style="font-weight:600;color:#241416">Fixed from rev 1:</strong> the PN cluster is pulled inboard, no label clips the frame.</div>
+    </div>
+
+    <!-- ============ MID 3 → 4 ============ -->
+    <div style="flex:none">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:14px">
+        <span style="font-size:11px;font-weight:600;letter-spacing:.12em;color:#8A857C">MID</span>
+        <span style="font-size:13.5px;font-weight:600;color:#241416">03 → 04</span>
+        <span style="font-size:12.5px;color:#8A857C">· 1.26×, closing</span>
+      </div>
+      <div style="width:390px;height:844px;position:relative;overflow:hidden;border-radius:34px;background:#FBF7F1;box-shadow:0 24px 56px rgba(43,20,20,.16)">
+        <div style="position:absolute;left:0;right:0;top:0;height:46px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:13px;font-weight:500;color:#241416">
+          <span>9:41</span>
+          <span style="width:16px;height:10px;border:1.4px solid #241416;border-radius:2px;position:relative"><span style="position:absolute;inset:1.5px;background:#241416;border-radius:1px"></span></span>
+        </div>
+
+        <div style="position:absolute;left:281px;top:300px;width:0;height:0;opacity:.68">
+          <div style="position:absolute;width:272px;height:272px;margin:-136px 0 0 -136px;border-radius:50%;border:1px solid rgba(200,184,160,.55)"></div>
+          <div style="position:absolute;width:192px;height:192px;margin:-96px 0 0 -96px;border-radius:50%;border:1px solid rgba(200,184,160,.78);background:rgba(246,220,222,.14)"></div>
+          <div style="position:absolute;width:135px;height:135px;margin:-67.5px 0 0 -67.5px;border-radius:50%;border:1px solid rgba(200,184,160,1)"></div>
+        </div>
+
+        <div style="position:absolute;left:145px;top:300px;width:0;height:0;opacity:.46">
+          <div style="position:absolute;left:-99px;top:-78px;width:56px;height:56px;border-radius:50%;background:#F6DCDE;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;color:#8C1F2B">RM</div>
+          <div style="position:absolute;left:-4px;top:-101px;width:48px;height:48px;border-radius:50%;background:#F6DCDE;display:flex;align-items:center;justify-content:center;font-size:13.5px;font-weight:600;color:#8C1F2B">PN</div>
+        </div>
+
+        <div style="position:absolute;left:359px;top:300px;width:0;height:0">
+          <div style="position:absolute;left:-38px;top:-38px;width:76px;height:76px;border-radius:50%;background:#8C1F2B;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 26px rgba(140,31,43,.28)">
+            <svg width="29" height="29" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2" stroke="#FBE6E8" stroke-width="1.6" fill="none"/><path d="M8 11V8a4 4 0 1 1 8 0v3" stroke="#FBE6E8" stroke-width="1.6" fill="none"/></svg>
+          </div>
+        </div>
+
+        <div style="position:absolute;left:-147px;top:498px;width:300px;opacity:.46">
+          <div style="font-family:'Newsreader',Georgia,serif;font-size:29px;font-weight:600;color:#241416;letter-spacing:-.014em;line-height:1.16;max-width:280px">Know who's available</div>
+        </div>
+        <div style="position:absolute;left:203px;top:498px;width:300px;opacity:.74">
+          <div style="font-family:'Newsreader',Georgia,serif;font-size:29px;font-weight:600;color:#241416;letter-spacing:-.014em;line-height:1.16;max-width:282px">Help, without exposing what shouldn't be</div>
+        </div>
+
+        <div style="position:absolute;left:0;right:0;bottom:20px;height:104px;display:flex;align-items:center;padding:0 24px;box-sizing:border-box">
+          <div style="width:64px;font-size:13.5px;font-weight:500;color:#8A857C;opacity:.5">Skip</div>
+          <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px">
+            <span style="width:6px;height:6px;border-radius:3px;background:#D3D1C7;opacity:.45"></span>
+            <span style="width:6px;height:6px;border-radius:3px;background:#D3D1C7;opacity:.45"></span>
+            <span style="width:14px;height:6px;border-radius:3px;background:#B4818A;opacity:.72"></span>
+            <span style="width:14px;height:6px;border-radius:3px;background:#B4818A;opacity:.72"></span>
+          </div>
+          <div style="width:64px;display:flex;justify-content:flex-end">
+            <div style="width:56px;height:56px;border-radius:50%;background:#8C1F2B;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(140,31,43,.26);position:relative">
+              <svg width="21" height="21" viewBox="0 0 24 24" style="position:absolute;opacity:.5;transform:rotate(-45deg)"><path d="M9 18l6-6-6-6" stroke="#FBE6E8" stroke-width="1.9" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg width="21" height="21" viewBox="0 0 24 24" style="position:absolute;opacity:.5;transform:rotate(45deg)"><path d="M5 13l4 4L19 7" stroke="#FBE6E8" stroke-width="1.9" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="width:390px;font-size:12.5px;color:#6E6A62;line-height:1.6;margin-top:14px">People recede as the lock arrives; the middle ring picks up its tint on the way in. The field is contracting toward 0.90× — the closing gesture is a scale change, nothing more.</div>
+    </div>
+
+    <!-- ============ PAGE 4 — PROTECTION ============ -->
+    <div style="flex:none">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:14px">
+        <span style="font-size:11px;font-weight:600;letter-spacing:.12em;color:#8C1F2B">04</span>
+        <span style="font-size:13.5px;font-weight:600;color:#241416">Protection</span>
+        <span style="font-size:12.5px;color:#8A857C">· ring at 0.90×, closed</span>
+      </div>
+      <div style="width:390px;height:844px;position:relative;overflow:hidden;border-radius:34px;background:#FBF7F1;box-shadow:0 24px 56px rgba(43,20,20,.16)">
+        <div style="position:absolute;left:0;right:0;top:0;height:46px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:13px;font-weight:500;color:#241416">
+          <span>9:41</span>
+          <span style="width:16px;height:10px;border:1.4px solid #241416;border-radius:2px;position:relative"><span style="position:absolute;inset:1.5px;background:#241416;border-radius:1px"></span></span>
+        </div>
+
+        <div style="position:absolute;left:252px;top:300px;width:0;height:0;opacity:.85">
+          <div style="position:absolute;width:194px;height:194px;margin:-97px 0 0 -97px;border-radius:50%;border:1px solid rgba(200,184,160,.55)"></div>
+          <div style="position:absolute;width:137px;height:137px;margin:-68.5px 0 0 -68.5px;border-radius:50%;border:1px solid rgba(200,184,160,.78);background:rgba(246,220,222,.3)"></div>
+          <div style="position:absolute;width:96px;height:96px;margin:-48px 0 0 -48px;border-radius:50%;border:1px dashed rgba(140,31,43,.3)"></div>
+        </div>
+
+        <div style="position:absolute;left:252px;top:300px;width:0;height:0">
+          <svg width="400" height="400" viewBox="0 0 400 400" style="position:absolute;margin:-200px 0 0 -200px;overflow:visible">
+            <path d="M163.6 179 L100.5 142.6" stroke="#C79A9F" stroke-width="1" fill="none" stroke-dasharray="3 3"/>
+          </svg>
+
+          <div style="position:absolute;left:-42px;top:-42px;width:84px;height:84px;border-radius:50%;background:#8C1F2B;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 30px rgba(140,31,43,.3)">
+            <svg width="32" height="32" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2" stroke="#FBE6E8" stroke-width="1.55" fill="none"/><path d="M8 11V8a4 4 0 1 1 8 0v3" stroke="#FBE6E8" stroke-width="1.55" fill="none"/></svg>
+          </div>
+
+          <div style="position:absolute;left:-164px;top:-89px;background:#fff;border:1px solid #E9E1D6;border-radius:14px;padding:9px 11px;box-shadow:0 5px 16px rgba(43,20,20,.09)">
+            <div style="display:flex;align-items:center;gap:6px">
+              <span style="width:7px;height:7px;border-radius:50%;background:#2C6636;flex:none"></span>
+              <span style="width:44px;height:7px;border-radius:4px;background:#E9E1D6"></span>
+            </div>
+            <div style="font-size:12.5px;font-weight:700;color:#241416;letter-spacing:-.01em;margin-top:7px;white-space:nowrap">1.8 km</div>
+          </div>
+
+          <div style="position:absolute;left:52px;top:-96px;background:#fff;border:1px solid #EDE6DC;border-radius:12px;padding:7px 9px;opacity:.66">
+            <div style="width:34px;height:6px;border-radius:4px;background:#EBE4D9"></div>
+            <div style="font-size:11px;font-weight:700;color:#6E6A62;margin-top:6px;white-space:nowrap">3.2 km</div>
+          </div>
+
+          <div style="position:absolute;left:-64px;top:104px;background:#fff;border:1px solid #EDE6DC;border-radius:12px;padding:7px 9px;opacity:.5">
+            <div style="width:30px;height:6px;border-radius:4px;background:#EBE4D9"></div>
+            <div style="font-size:11px;font-weight:700;color:#8A857C;margin-top:6px;white-space:nowrap">4.6 km</div>
+          </div>
+        </div>
+
+        <div style="position:absolute;left:28px;top:498px;right:28px">
+          <div style="font-family:'Newsreader',Georgia,serif;font-size:29px;font-weight:600;color:#241416;letter-spacing:-.014em;line-height:1.16;max-width:282px">Help, without exposing what shouldn't be</div>
+          <div style="width:40px;height:1px;background:#D8CFC2;margin:18px 0"></div>
+          <div style="font-size:13.5px;color:#68655F;line-height:1.62;max-width:278px">You see distance. Names and numbers stay sealed until someone accepts.</div>
+        </div>
+
+        <div style="position:absolute;left:0;right:0;bottom:20px;height:104px;display:flex;align-items:center;padding:0 24px;box-sizing:border-box">
+          <div style="width:64px"></div>
+          <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px">
+            <span style="width:6px;height:6px;border-radius:3px;background:#D3D1C7;opacity:.45"></span>
+            <span style="width:6px;height:6px;border-radius:3px;background:#D3D1C7;opacity:.45"></span>
+            <span style="width:6px;height:6px;border-radius:3px;background:#D3D1C7;opacity:.45"></span>
+            <span style="width:22px;height:6px;border-radius:3px;background:#8C1F2B"></span>
+          </div>
+          <div style="width:64px;display:flex;justify-content:flex-end">
+            <div style="width:56px;height:56px;border-radius:50%;background:#8C1F2B;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px rgba(140,31,43,.32)">
+              <svg width="22" height="22" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#FBE6E8" stroke-width="1.95" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="width:390px;font-size:12.5px;color:#6E6A62;line-height:1.6;margin-top:14px">The lock takes authority at 84px, seated inside the dashed inner ring. Markers are hierarchical — one primary with a dashed tether, two quiet secondaries — each carrying a redaction bar where a name would be. <strong style="font-weight:600;color:#241416">Fixed from rev 1:</strong> primary marker moved inboard (was 23px off-frame), all distances set nowrap so no card grows a second line.</div>
+    </div>
+
+  </div>
+
+  <div style="max-width:860px;margin-top:64px;padding-top:36px;border-top:1px solid #D3CCC0">
+    <div style="font-family:'Newsreader',Georgia,serif;font-size:24px;font-weight:600;color:#241416;letter-spacing:-.016em">The spine</div>
+    <div style="font-size:14px;color:#5A564F;line-height:1.7;margin-top:12px;max-width:700px">One ring group — three circles, 216/152/107, centred (252,300) — scaled four times. That is the whole continuity mechanism, and it is now what the frames actually draw:</div>
+
+    <div style="display:flex;gap:0;margin-top:26px;align-items:stretch">
+      <div style="flex:1;padding-right:20px;border-right:1px solid #DDD6CA">
+        <div style="font-size:10.5px;font-weight:600;letter-spacing:.13em;color:#8C1F2B;text-transform:uppercase">01 Brand</div>
+        <div style="font-family:'Newsreader',Georgia,serif;font-size:20px;color:#241416;margin-top:6px">1.00×</div>
+        <div style="font-size:13px;color:#5A564F;line-height:1.6;margin-top:6px">The mark's own geometry, ambient behind the wordmark.</div>
+      </div>
+      <div style="flex:1;padding:0 20px;border-right:1px solid #DDD6CA">
+        <div style="font-size:10.5px;font-weight:600;letter-spacing:.13em;color:#8C1F2B;text-transform:uppercase">02 Need</div>
+        <div style="font-family:'Newsreader',Georgia,serif;font-size:20px;color:#241416;margin-top:6px">1.24×</div>
+        <div style="font-size:13px;color:#5A564F;line-height:1.6;margin-top:6px">A compatibility ring — which groups can answer this.</div>
+      </div>
+      <div style="flex:1;padding:0 20px;border-right:1px solid #DDD6CA">
+        <div style="font-size:10.5px;font-weight:600;letter-spacing:.13em;color:#8C1F2B;text-transform:uppercase">03 People</div>
+        <div style="font-family:'Newsreader',Georgia,serif;font-size:20px;color:#241416;margin-top:6px">1.62×</div>
+        <div style="font-size:13px;color:#5A564F;line-height:1.6;margin-top:6px">A proximity field — people standing on real radii.</div>
+      </div>
+      <div style="flex:1;padding-left:20px">
+        <div style="font-size:10.5px;font-weight:600;letter-spacing:.13em;color:#8C1F2B;text-transform:uppercase">04 Protection</div>
+        <div style="font-family:'Newsreader',Georgia,serif;font-size:20px;color:#241416;margin-top:6px">0.90×</div>
+        <div style="font-size:13px;color:#5A564F;line-height:1.6;margin-top:6px">A boundary — closed tight around the lock.</div>
+      </div>
+    </div>
+
+    <div style="font-size:13.5px;color:#6E6A62;line-height:1.7;margin-top:32px;max-width:720px">Three composition rules hold the four pages together: the ring centre sits <strong style="font-weight:600;color:#241416">off-centre at (252, 300)</strong> so the type block has room and the layout has tension; type is <strong style="font-weight:600;color:#241416">left-aligned at x=28</strong> with the headline baseline locked at y=498; and a <strong style="font-weight:600;color:#241416">single 40px hairline rule</strong> separates headline from body. That rule does most of the editorial work.</div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

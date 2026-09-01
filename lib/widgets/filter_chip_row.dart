@@ -20,7 +20,7 @@ class FilterChipRow extends StatelessWidget {
   const FilterChipRow({
     super.key,
     required this.chips,
-    this.activeBg = AppColors.textPrimary,
+    this.activeBg = AppColors.textPrimaryWarm,
     this.activeText = Colors.white,
     this.inactiveText = AppColors.textSecondary,
   });

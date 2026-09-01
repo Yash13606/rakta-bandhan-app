@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap">
+<style>
+  body{margin:0;background:#E8E4DC}
+  a{color:#8C1F2B}a:hover{color:#5C1119}
+</style>
+</helmet>
+<svg style="position:absolute;width:0;height:0" aria-hidden="true">
+<symbol id="c-arrow" viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="c-check" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="1.9" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="c-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1 1 16 0z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/><circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.6" fill="none"/></symbol>
+<symbol id="c-chev" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="c-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="c-minus" viewBox="0 0 24 24"><path d="M5 12h14" stroke="currentColor" stroke-width="1.9" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="c-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.9" fill="none" stroke-linecap="round"/></symbol>
+</svg>
+
+<div style="padding:56px 64px 80px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif">
+
+  <div style="max-width:760px;margin-bottom:40px">
+    <div style="font-size:11px;font-weight:600;letter-spacing:.14em;color:#8C1F2B;text-transform:uppercase">Create request — approved: single-screen guided</div>
+    <div style="font-family:'Newsreader',Georgia,serif;font-size:38px;font-weight:600;color:#241416;letter-spacing:-.02em;line-height:1.1;margin-top:12px">One screen, one live question</div>
+    <div style="font-size:14.5px;color:#5A564F;line-height:1.65;margin-top:16px">Direction B approved. Below: the canonical composition, then the three location states. The three-step direction is retained at the end as a record of what was rejected.</div>
+  </div>
+
+  <div style="display:flex;gap:44px;align-items:flex-start">
+
+
+    <!-- ============ A — CANONICAL: LOCATION AVAILABLE ============ -->
+    <div style="flex:none">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px">
+        <span style="font-size:11px;font-weight:600;letter-spacing:.12em;color:#8C1F2B">A · APPROVED</span>
+        <span style="font-size:13.5px;font-weight:600;color:#241416">Location available</span>
+        <span style="font-size:12.5px;color:#5A564F">· the common case</span>
+      </div>
+      <div style="width:390px;min-height:34px;font-size:12px;color:#5A564F;line-height:1.5;margin-bottom:12px">Group answered and collapsed · urgency live · location pre-filled from GPS, collapsed.</div>
+
+      <div style="width:390px;height:844px;position:relative;overflow:hidden;border-radius:34px;background:#FBF7F1;box-shadow:0 24px 56px rgba(43,20,20,.16);display:flex;flex-direction:column">
+        <div style="flex:0 0 46px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:13px;font-weight:500;color:#241416"><span>9:41</span><span style="width:16px;height:10px;border:1.4px solid #241416;border-radius:2px;position:relative"><span style="position:absolute;inset:1.5px;background:#241416;border-radius:1px"></span></span></div>
+
+        <div style="flex:0 0 48px;display:flex;align-items:center;padding:0 18px;gap:12px">
+          <svg width="20" height="20" style="color:#241416"><use href="#c-arrow"></use></svg>
+          <span style="font-size:16px;font-weight:600;color:#241416;letter-spacing:-.005em">New request</span>
+        </div>
+
+        <div style="flex:1;padding:4px 28px 0;overflow:hidden">
+          <div style="font-family:'Newsreader',Georgia,serif;font-size:27px;font-weight:600;color:#241416;letter-spacing:-.016em;line-height:1.18;max-width:280px">Who needs blood?</div>
+
+          <!-- Q1 — answered, collapses to a summary row -->
+          <div style="margin-top:24px;display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;border-bottom:1px solid #E5DCCC">
+            <div style="display:flex;align-items:center;gap:11px">
+              <span style="width:18px;height:18px;border-radius:50%;background:#2C6636;display:flex;align-items:center;justify-content:center;flex:none"><svg width="11" height="11" style="color:#fff"><use href="#c-check"></use></svg></span>
+              <div>
+                <div style="font-size:10.5px;font-weight:600;letter-spacing:.11em;color:#6E6A62;text-transform:uppercase">Blood group</div>
+                <div style="display:flex;align-items:baseline;gap:7px;margin-top:3px">
+                  <span style="font-family:'Newsreader',Georgia,serif;font-size:25px;font-weight:600;color:#8C1F2B;letter-spacing:-.02em;line-height:1">O+</span>
+                  <span style="font-size:13px;color:#241416;font-weight:500">·</span>
+                  <span style="font-size:13px;color:#241416;font-weight:600">2 units</span>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:11px">
+              <span style="width:30px;height:30px;border-radius:10px;border:1px solid #E5DCCC;display:flex;align-items:center;justify-content:center"><svg width="13" height="13" style="color:#241416"><use href="#c-minus"></use></svg></span>
+              <span style="width:30px;height:30px;border-radius:10px;border:1px solid #E5DCCC;display:flex;align-items:center;justify-content:center"><svg width="13" height="13" style="color:#241416"><use href="#c-plus"></use></svg></span>
+            </div>
+          </div>
+
+          <!-- Q2 — the live question -->
+          <div style="margin-top:20px">
+            <div style="display:flex;align-items:center;gap:11px">
+              <span style="width:18px;height:18px;border-radius:50%;border:1.5px solid #8C1F2B;flex:none"></span>
+              <div style="font-size:10.5px;font-weight:600;letter-spacing:.11em;color:#8C1F2B;text-transform:uppercase">How urgent</div>
+            </div>
+            <div style="margin-top:12px;display:flex;flex-direction:column;gap:9px">
+              <div style="border:1px solid #E5DCCC;border-radius:15px;padding:13px 15px;display:flex;align-items:center;gap:12px">
+                <span style="width:19px;height:19px;border-radius:50%;border:1.5px solid #D3C9BC;flex:none"></span>
+                <div><div style="font-size:14px;font-weight:600;color:#241416">Normal</div><div style="font-size:11.5px;color:#6E6A62;margin-top:1px">Within a day or two</div></div>
+              </div>
+              <div style="background:#8C1F2B;border-radius:15px;padding:13px 15px;display:flex;align-items:center;gap:12px;box-shadow:0 10px 24px rgba(140,31,43,.24)">
+                <span style="width:19px;height:19px;border-radius:50%;background:#FBE6E8;flex:none;display:flex;align-items:center;justify-content:center"><svg width="11" height="11" style="color:#8C1F2B"><use href="#c-check"></use></svg></span>
+                <div><div style="font-size:14px;font-weight:600;color:#FFF9F5">Urgent</div><div style="font-size:11.5px;color:#E9BFC4;margin-top:1px">Needed within hours</div></div>
+              </div>
+              <div style="border:1px solid #E5DCCC;border-radius:15px;padding:13px 15px;display:flex;align-items:center;gap:12px">
+                <span style="width:19px;height:19px;border-radius:50%;border:1.5px solid #D3C9BC;flex:none"></span>
+                <div><div style="font-size:14px;font-weight:600;color:#241416">Critical</div><div style="font-size:11.5px;color:#6E6A62;margin-top:1px">Life-threatening — notify fastest</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Q3 — pre-filled, collapsed, editable -->
+          <div style="margin-top:22px;padding-top:16px;border-top:1px solid #E5DCCC;display:flex;align-items:center;justify-content:space-between">
+            <div style="display:flex;align-items:center;gap:11px">
+              <svg width="17" height="17" style="color:#6E6A62;flex:none"><use href="#c-pin"></use></svg>
+              <div>
+                <div style="font-size:10.5px;font-weight:600;letter-spacing:.11em;color:#6E6A62;text-transform:uppercase">Where</div>
+                <div style="font-size:13.5px;font-weight:600;color:#241416;margin-top:2px">Koramangala, Bengaluru</div>
+              </div>
+            </div>
+            <svg width="15" height="15" style="color:#6E6A62"><use href="#c-chev"></use></svg>
+          </div>
+        </div>
+
+        <div style="flex:0 0 104px;padding:0 28px;display:flex;flex-direction:column;justify-content:center;gap:9px">
+          <button style="width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:15px;padding:15px;font-size:15px;font-weight:600;font-family:inherit;cursor:pointer;box-shadow:0 10px 24px rgba(140,31,43,.24)">Alert nearby donors</button>
+          <div style="text-align:center;font-size:11.5px;color:#6E6A62">Reaches O+, O−, A+ and B+ donors within 5 km</div>
+        </div>
+        <div style="flex:0 0 20px;display:flex;align-items:center;justify-content:center"><div style="width:120px;height:4px;background:#241416;border-radius:2px;opacity:.7"></div></div>
+      </div>
+
+      <div style="width:390px;margin-top:16px">
+        <div style="font-size:11px;font-weight:600;letter-spacing:.11em;color:#8C1F2B;text-transform:uppercase">Trade-off</div>
+        <div style="font-size:12.5px;color:#5A564F;line-height:1.6;margin-top:7px"><strong style="font-weight:600;color:#241416">One screen, one tap to submit</strong> in the common case — group defaults from the profile, location from GPS, so the only required decision is urgency. Whole request visible throughout. Costs the luxury of a full-width headline per question.</div>
+      </div>
+    </div>
+
+    <!-- ============ B — PERMISSION NOT GRANTED ============ -->
+    <div style="flex:none">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px">
+        <span style="font-size:11px;font-weight:600;letter-spacing:.12em;color:#8C1F2B">B · APPROVED</span>
+        <span style="font-size:13.5px;font-weight:600;color:#241416">Permission not granted</span>
+        <span style="font-size:12.5px;color:#5A564F">· location becomes the live question</span>
+      </div>
+      <div style="width:390px;min-height:34px;font-size:12px;color:#5A564F;line-height:1.5;margin-bottom:12px">No GPS, so location cannot be pre-filled. It takes the red ring and expands.</div>
+
+      <div style="width:390px;height:844px;position:relative;overflow:hidden;border-radius:34px;background:#FBF7F1;box-shadow:0 24px 56px rgba(43,20,20,.16);display:flex;flex-direction:column">
+        <div style="flex:0 0 46px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:13px;font-weight:500;color:#241416"><span>9:41</span><span style="width:16px;height:10px;border:1.4px solid #241416;border-radius:2px;position:relative"><span style="position:absolute;inset:1.5px;background:#241416;border-radius:1px"></span></span></div>
+
+        <div style="flex:0 0 48px;display:flex;align-items:center;padding:0 18px;gap:12px">
+          <svg width="20" height="20" style="color:#241416"><use href="#c-arrow"></use></svg>
+          <span style="font-size:16px;font-weight:600;color:#241416;letter-spacing:-.005em">New request</span>
+        </div>
+
+        <div style="flex:1;padding:4px 28px 0;overflow:hidden">
+          <div style="font-family:'Newsreader',Georgia,serif;font-size:27px;font-weight:600;color:#241416;letter-spacing:-.016em;line-height:1.18;max-width:280px">Who needs blood?</div>
+          <div style="margin-top:24px;display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;border-bottom:1px solid #E5DCCC">
+            <div style="display:flex;align-items:center;gap:11px">
+              <span style="width:18px;height:18px;border-radius:50%;background:#2C6636;display:flex;align-items:center;justify-content:center;flex:none"><svg width="11" height="11" style="color:#fff"><use href="#c-check"></use></svg></span>
+              <div>
+                <div style="font-size:10.5px;font-weight:600;letter-spacing:.11em;color:#6E6A62;text-transform:uppercase">Blood group</div>
+                <div style="display:flex;align-items:baseline;gap:7px;margin-top:3px">
+                  <span style="font-family:'Newsreader',Georgia,serif;font-size:25px;font-weight:600;color:#8C1F2B;letter-spacing:-.02em;line-height:1">O+</span>
+                  <span style="font-size:13px;color:#241416;font-weight:500">·</span>
+                  <span style="font-size:13px;color:#241416;font-weight:600">2 units</span>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:11px">
+              <span style="width:30px;height:30px;border-radius:10px;border:1px solid #E5DCCC;display:flex;align-items:center;justify-content:center"><svg width="13" height="13" style="color:#241416"><use href="#c-minus"></use></svg></span>
+              <span style="width:30px;height:30px;border-radius:10px;border:1px solid #E5DCCC;display:flex;align-items:center;justify-content:center"><svg width="13" height="13" style="color:#241416"><use href="#c-plus"></use></svg></span>
+            </div>
+          </div>
+          <div style="margin-top:18px;display:flex;align-items:center;justify-content:space-between;padding-bottom:16px;border-bottom:1px solid #E5DCCC">
+            <div style="display:flex;align-items:center;gap:11px">
+              <span style="width:18px;height:18px;border-radius:50%;background:#2C6636;display:flex;align-items:center;justify-content:center;flex:none"><svg width="11" height="11" style="color:#fff"><use href="#c-check"></use></svg></span>
+              <div>
+                <div style="font-size:10.5px;font-weight:600;letter-spacing:.11em;color:#6E6A62;text-transform:uppercase">How urgent</div>
+                <div style="font-size:14px;font-weight:600;color:#241416;margin-top:3px">Urgent · needed within hours</div>
+              </div>
+            </div>
+            <svg width="15" height="15" style="color:#6E6A62"><use href="#c-chev"></use></svg>
+          </div>
+
+          <div style="margin-top:20px">
+            <div style="display:flex;align-items:center;gap:11px">
+              <span style="width:18px;height:18px;border-radius:50%;border:1.5px solid #8C1F2B;flex:none"></span>
+              <div style="font-size:10.5px;font-weight:600;letter-spacing:.11em;color:#8C1F2B;text-transform:uppercase">Where</div>
+            </div>
+            <div style="font-size:13.5px;color:#68655F;line-height:1.6;margin-top:10px;max-width:274px">We can't read your location, so tell us where the blood is needed — donors are matched by distance from here.</div>
+
+            <div style="margin-top:14px;border:1px solid #E5DCCC;border-radius:15px;padding:0 15px;display:flex;align-items:center;gap:11px;height:52px">
+              <svg width="16" height="16" style="color:#6E6A62;flex:none"><use href="#c-pin"></use></svg>
+              <span style="flex:1;font-size:14px;color:#6E6A62">Hospital, area or landmark</span>
+            </div>
+
+            <div style="margin-top:9px;display:flex;flex-direction:column;gap:1px">
+              <div style="display:flex;align-items:center;gap:10px;padding:11px 4px;border-bottom:1px solid #EBE3D5">
+                <svg width="14" height="14" style="color:#6E6A62;flex:none"><use href="#c-pin"></use></svg>
+                <div style="flex:1"><div style="font-size:13.5px;font-weight:600;color:#241416">Sneha Hospital</div><div style="font-size:11.5px;color:#6E6A62;margin-top:1px">Koramangala, Bengaluru</div></div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:11px 4px">
+                <svg width="14" height="14" style="color:#6E6A62;flex:none"><use href="#c-pin"></use></svg>
+                <div style="flex:1"><div style="font-size:13.5px;font-weight:600;color:#241416">Fortis Hospital</div><div style="font-size:11.5px;color:#6E6A62;margin-top:1px">Cunningham Road, Bengaluru</div></div>
+              </div>
+            </div>
+
+            <div style="margin-top:14px;display:flex;align-items:center;gap:7px">
+              <svg width="14" height="14" style="color:#8C1F2B"><use href="#c-pin"></use></svg>
+              <span style="font-size:13px;font-weight:600;color:#8C1F2B">Turn on location instead</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="flex:0 0 104px;padding:0 28px;display:flex;flex-direction:column;justify-content:center;gap:9px">
+          <button style="width:100%;background:#E5DCCC;color:#A0968A;border:none;border-radius:15px;padding:15px;font-size:15px;font-weight:600;font-family:inherit">Alert nearby donors</button>
+          <div style="text-align:center;font-size:11.5px;color:#6E6A62">Choose a location to continue</div>
+        </div>
+        <div style="flex:0 0 20px;display:flex;align-items:center;justify-content:center"><div style="width:120px;height:4px;background:#241416;border-radius:2px;opacity:.7"></div></div>
+      </div>
+
+      <div style="width:390px;margin-top:16px">
+        <div style="font-size:11px;font-weight:600;letter-spacing:.11em;color:#8C1F2B;text-transform:uppercase">Rule applied</div>
+        <div style="font-size:12.5px;color:#5A564F;line-height:1.6;margin-top:7px">A missing pre-fill does not become an error — it becomes <strong style="font-weight:600;color:#241416">the live question</strong>, with the same red ring and micro-label. The CTA disables rather than failing on submit, and states why. Recent hospitals cover the common answer without asking for typing.</div>
+      </div>
+    </div>
+
+    <!-- ============ C — LOOKUP FAILED ============ -->
+    <div style="flex:none">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px">
+        <span style="font-size:11px;font-weight:600;letter-spacing:.12em;color:#8C1F2B">C · APPROVED</span>
+        <span style="font-size:13.5px;font-weight:600;color:#241416">Unavailable / error</span>
+        <span style="font-size:12.5px;color:#5A564F">· recovery, not a dead end</span>
+      </div>
+      <div style="width:390px;min-height:34px;font-size:12px;color:#5A564F;line-height:1.5;margin-bottom:12px">Permission granted but the fix failed. Retry offered, manual entry still open.</div>
+
+      <div style="width:390px;height:844px;position:relative;overflow:hidden;border-radius:34px;background:#FBF7F1;box-shadow:0 24px 56px rgba(43,20,20,.16);display:flex;flex-direction:column">
+        <div style="flex:0 0 46px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:13px;font-weight:500;color:#241416"><span>9:41</span><span style="width:16px;height:10px;border:1.4px solid #241416;border-radius:2px;position:relative"><span style="position:absolute;inset:1.5px;background:#241416;border-radius:1px"></span></span></div>
+
+        <div style="flex:0 0 48px;display:flex;align-items:center;padding:0 18px;gap:12px">
+          <svg width="20" height="20" style="color:#241416"><use href="#c-arrow"></use></svg>
+          <span style="font-size:16px;font-weight:600;color:#241416;letter-spacing:-.005em">New request</span>
+        </div>
+
+        <div style="flex:1;padding:4px 28px 0;overflow:hidden">
+          <div style="font-family:'Newsreader',Georgia,serif;font-size:27px;font-weight:600;color:#241416;letter-spacing:-.016em;line-height:1.18;max-width:280px">Who needs blood?</div>
+          <div style="margin-top:24px;display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;border-bottom:1px solid #E5DCCC">
+            <div style="display:flex;align-items:center;gap:11px">
+              <span style="width:18px;height:18px;border-radius:50%;background:#2C6636;display:flex;align-items:center;justify-content:center;flex:none"><svg width="11" height="11" style="color:#fff"><use href="#c-check"></use></svg></span>
+              <div>
+                <div style="font-size:10.5px;font-weight:600;letter-spacing:.11em;color:#6E6A62;text-transform:uppercase">Blood group</div>
+                <div style="display:flex;align-items:baseline;gap:7px;margin-top:3px">
+                  <span style="font-family:'Newsreader',Georgia,serif;font-size:25px;font-weight:600;color:#8C1F2B;letter-spacing:-.02em;line-height:1">O+</span>
+                  <span style="font-size:13px;color:#241416;font-weight:500">·</span>
+                  <span style="font-size:13px;color:#241416;font-weight:600">2 units</span>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:11px">
+              <span style="width:30px;height:30px;border-radius:10px;border:1px solid #E5DCCC;display:flex;align-items:center;justify-content:center"><svg width="13" height="13" style="color:#241416"><use href="#c-minus"></use></svg></span>
+              <span style="width:30px;height:30px;border-radius:10px;border:1px solid #E5DCCC;display:flex;align-items:center;justify-content:center"><svg width="13" height="13" style="color:#241416"><use href="#c-plus"></use></svg></span>
+            </div>
+          </div>
+          <div style="margin-top:18px;display:flex;align-items:center;justify-content:space-between;padding-bottom:16px;border-bottom:1px solid #E5DCCC">
+            <div style="display:flex;align-items:center;gap:11px">
+              <span style="width:18px;height:18px;border-radius:50%;background:#2C6636;display:flex;align-items:center;justify-content:center;flex:none"><svg width="11" height="11" style="color:#fff"><use href="#c-check"></use></svg></span>
+              <div>
+                <div style="font-size:10.5px;font-weight:600;letter-spacing:.11em;color:#6E6A62;text-transform:uppercase">How urgent</div>
+                <div style="font-size:14px;font-weight:600;color:#241416;margin-top:3px">Urgent · needed within hours</div>
+              </div>
+            </div>
+            <svg width="15" height="15" style="color:#6E6A62"><use href="#c-chev"></use></svg>
+          </div>
+
+          <div style="margin-top:20px">
+            <div style="display:flex;align-items:center;gap:11px">
+              <span style="width:18px;height:18px;border-radius:50%;border:1.5px solid #8C1F2B;flex:none"></span>
+              <div style="font-size:10.5px;font-weight:600;letter-spacing:.11em;color:#8C1F2B;text-transform:uppercase">Where</div>
+            </div>
+
+            <div style="margin-top:12px;border-left:2px solid #8C1F2B;padding:2px 0 2px 14px">
+              <div style="font-size:13.5px;font-weight:600;color:#241416">Couldn't find your location</div>
+              <div style="font-size:12.5px;color:#68655F;line-height:1.55;margin-top:4px;max-width:262px">Your connection may have dropped. Try again, or enter the location yourself — the request works either way.</div>
+            </div>
+
+            <div style="margin-top:16px;display:flex;gap:9px">
+              <button style="flex:1;background:none;border:1px solid #8C1F2B;color:#8C1F2B;border-radius:14px;padding:12px;font-size:13.5px;font-weight:600;font-family:inherit;cursor:pointer">Try again</button>
+              <button style="flex:1;background:none;border:1px solid #E5DCCC;color:#241416;border-radius:14px;padding:12px;font-size:13.5px;font-weight:600;font-family:inherit;cursor:pointer">Enter manually</button>
+            </div>
+
+            <div style="margin-top:22px;padding-top:16px;border-top:1px solid #E5DCCC">
+              <div style="font-size:10.5px;font-weight:600;letter-spacing:.11em;color:#6E6A62;text-transform:uppercase">Recent</div>
+              <div style="margin-top:8px;display:flex;flex-direction:column;gap:1px">
+                <div style="display:flex;align-items:center;gap:10px;padding:11px 4px;border-bottom:1px solid #EBE3D5">
+                  <svg width="14" height="14" style="color:#6E6A62;flex:none"><use href="#c-pin"></use></svg>
+                  <div style="flex:1"><div style="font-size:13.5px;font-weight:600;color:#241416">Sneha Hospital</div><div style="font-size:11.5px;color:#6E6A62;margin-top:1px">Koramangala, Bengaluru</div></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;padding:11px 4px">
+                  <svg width="14" height="14" style="color:#6E6A62;flex:none"><use href="#c-pin"></use></svg>
+                  <div style="flex:1"><div style="font-size:13.5px;font-weight:600;color:#241416">Fortis Hospital</div><div style="font-size:11.5px;color:#6E6A62;margin-top:1px">Cunningham Road, Bengaluru</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="flex:0 0 104px;padding:0 28px;display:flex;flex-direction:column;justify-content:center;gap:9px">
+          <button style="width:100%;background:#E5DCCC;color:#A0968A;border:none;border-radius:15px;padding:15px;font-size:15px;font-weight:600;font-family:inherit">Alert nearby donors</button>
+          <div style="text-align:center;font-size:11.5px;color:#6E6A62">Choose a location to continue</div>
+        </div>
+        <div style="flex:0 0 20px;display:flex;align-items:center;justify-content:center"><div style="width:120px;height:4px;background:#241416;border-radius:2px;opacity:.7"></div></div>
+      </div>
+
+      <div style="width:390px;margin-top:16px">
+        <div style="font-size:11px;font-weight:600;letter-spacing:.11em;color:#8C1F2B;text-transform:uppercase">Rule applied</div>
+        <div style="font-size:12.5px;color:#5A564F;line-height:1.6;margin-top:7px">Errors are a <strong style="font-weight:600;color:#241416">2px red left rule</strong> plus plain type — no icon circle, no amber card, no full-screen takeover. Two equal-weight recoveries side by side, both outlined so neither reads as the only way forward. Recent locations stay visible so the error never blocks the request.</div>
+      </div>
+    </div>
+
+    <!-- ============ A — 3-STEP ============ -->
+    <div style="flex:none">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px">
+        <span style="font-size:11px;font-weight:600;letter-spacing:.12em;color:#6E6A62">REJECTED</span>
+        <span style="font-size:13.5px;font-weight:600;color:#241416">Three steps</span>
+        <span style="font-size:12.5px;color:#5A564F">· kept for the record</span>
+      </div>
+      <div style="width:390px;min-height:34px;font-size:12px;color:#5A564F;line-height:1.5;margin-bottom:12px">One question owns the screen. Step 2 of 3 shown.</div>
+
+      <div style="width:390px;height:844px;position:relative;overflow:hidden;border-radius:34px;background:#FBF7F1;box-shadow:0 24px 56px rgba(43,20,20,.16);display:flex;flex-direction:column">
+        <div style="flex:0 0 46px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:13px;font-weight:500;color:#241416"><span>9:41</span><span style="width:16px;height:10px;border:1.4px solid #241416;border-radius:2px;position:relative"><span style="position:absolute;inset:1.5px;background:#241416;border-radius:1px"></span></span></div>
+
+        <div style="flex:0 0 52px;display:flex;align-items:center;padding:0 18px;gap:14px">
+          <svg width="20" height="20" style="color:#241416"><use href="#c-arrow"></use></svg>
+          <div style="flex:1;display:flex;gap:4px">
+            <span style="flex:1;height:3px;border-radius:2px;background:#8C1F2B"></span>
+            <span style="flex:1;height:3px;border-radius:2px;background:#8C1F2B"></span>
+            <span style="flex:1;height:3px;border-radius:2px;background:#E5DCCC"></span>
+          </div>
+          <span style="font-size:11.5px;font-weight:600;color:#6E6A62">2/3</span>
+        </div>
+
+        <div style="flex:1;padding:20px 28px 0">
+          <div style="font-size:11px;font-weight:600;letter-spacing:.11em;color:#6E6A62;text-transform:uppercase">Step two</div>
+          <div style="font-family:'Newsreader',Georgia,serif;font-size:29px;font-weight:600;color:#241416;letter-spacing:-.016em;line-height:1.18;margin-top:10px;max-width:270px">How urgent is this?</div>
+          <div style="font-size:13.5px;color:#68655F;line-height:1.6;margin-top:10px;max-width:272px">Critical requests reach more donors at once and skip the alert cooldown.</div>
+
+          <div style="margin-top:28px;display:flex;flex-direction:column;gap:10px">
+            <div style="border:1px solid #E5DCCC;border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:13px">
+              <span style="width:20px;height:20px;border-radius:50%;border:1.5px solid #D3C9BC;flex:none"></span>
+              <div><div style="font-size:14.5px;font-weight:600;color:#241416">Normal</div><div style="font-size:12px;color:#6E6A62;margin-top:2px">Within a day or two</div></div>
+            </div>
+            <div style="background:#8C1F2B;border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:13px;box-shadow:0 10px 24px rgba(140,31,43,.24)">
+              <span style="width:20px;height:20px;border-radius:50%;background:#FBE6E8;flex:none;display:flex;align-items:center;justify-content:center"><svg width="12" height="12" style="color:#8C1F2B"><use href="#c-check"></use></svg></span>
+              <div><div style="font-size:14.5px;font-weight:600;color:#FFF9F5">Urgent</div><div style="font-size:12px;color:#E9BFC4;margin-top:2px">Needed within hours</div></div>
+            </div>
+            <div style="border:1px solid #E5DCCC;border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:13px">
+              <span style="width:20px;height:20px;border-radius:50%;border:1.5px solid #D3C9BC;flex:none"></span>
+              <div><div style="font-size:14.5px;font-weight:600;color:#241416">Critical</div><div style="font-size:12px;color:#6E6A62;margin-top:2px">Life-threatening — notify fastest</div></div>
+            </div>
+          </div>
+
+          <div style="height:1px;background:#E5DCCC;margin:28px 0 16px"></div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-family:'Newsreader',Georgia,serif;font-size:19px;font-weight:600;color:#8C1F2B;line-height:1">O+</span>
+            <span style="font-size:12.5px;color:#6E6A62">2 units · Koramangala</span>
+          </div>
+        </div>
+
+        <div style="flex:0 0 96px;padding:0 28px;display:flex;align-items:center">
+          <button style="width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:15px;padding:15px;font-size:15px;font-weight:600;font-family:inherit;cursor:pointer;box-shadow:0 10px 24px rgba(140,31,43,.24)">Continue</button>
+        </div>
+        <div style="flex:0 0 20px;display:flex;align-items:center;justify-content:center"><div style="width:120px;height:4px;background:#241416;border-radius:2px;opacity:.7"></div></div>
+      </div>
+
+      <div style="width:390px;margin-top:16px">
+        <div style="font-size:11px;font-weight:600;letter-spacing:.11em;color:#8C1F2B;text-transform:uppercase">Trade-off</div>
+        <div style="font-size:12.5px;color:#5A564F;line-height:1.6;margin-top:7px">Maximum clarity per moment. But <strong style="font-weight:600;color:#241416">3 screens, 2 extra taps, 2 transitions</strong> before submit — and the requester cannot see the whole request until the end. In an emergency, the sequencing itself becomes the friction.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== MECHANIC ===== -->
+  <div style="max-width:900px;margin-top:60px;padding-top:36px;border-top:1px solid #D3CCC0">
+    <div style="font-family:'Newsreader',Georgia,serif;font-size:24px;font-weight:600;color:#241416;letter-spacing:-.016em">How it stays guided rather than becoming a form</div>
+    <div style="display:flex;gap:0;margin-top:24px;align-items:stretch">
+      <div style="flex:1;padding-right:22px;border-right:1px solid #DDD6CA">
+        <div style="font-size:10.5px;font-weight:600;letter-spacing:.13em;color:#8C1F2B;text-transform:uppercase">Answered</div>
+        <div style="font-size:13px;color:#5A564F;line-height:1.6;margin-top:7px">Collapses to a one-line summary with a green check. Values stay in Newsreader so they read as facts, not fields. Editable in place — no back navigation.</div>
+      </div>
+      <div style="flex:1;padding:0 22px;border-right:1px solid #DDD6CA">
+        <div style="font-size:10.5px;font-weight:600;letter-spacing:.13em;color:#8C1F2B;text-transform:uppercase">Live</div>
+        <div style="font-size:13px;color:#5A564F;line-height:1.6;margin-top:7px">Exactly one question is expanded at a time, marked by a red ring and a red micro-label. Its options are full-size rows — the same selected-state inversion as A.</div>
+      </div>
+      <div style="flex:1;padding-left:22px">
+        <div style="font-size:10.5px;font-weight:600;letter-spacing:.13em;color:#8C1F2B;text-transform:uppercase">Pre-filled</div>
+        <div style="font-size:13px;color:#5A564F;line-height:1.6;margin-top:7px">Location arrives from GPS already correct, collapsed behind a chevron. Present and checkable, but never blocking. Answering urgency expands nothing further.</div>
+      </div>
+    </div>
+    <div style="font-size:13.5px;color:#5A564F;line-height:1.7;margin-top:28px;max-width:760px">Both directions use the identical grammar — cream ground, hairline section rules, uppercase micro-labels, bordered option rows inverting to a solid red field when selected, one fixed primary CTA, no cards anywhere. <strong style="font-weight:600;color:#241416">The approved direction differs only in that the sequence is vertical rather than temporal.</strong> Across all three location states, the composition above the live question never changes — which is what makes a permission failure feel like the next question rather than a fault.</div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

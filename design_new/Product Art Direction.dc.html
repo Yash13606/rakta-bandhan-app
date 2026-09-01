@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap">
+<style>
+  body{margin:0;background:#E8E4DC}
+  a{color:#8C1F2B}a:hover{color:#5C1119}
+</style>
+</helmet>
+<svg style="position:absolute;width:0;height:0" aria-hidden="true">
+<symbol id="p-droplet" viewBox="0 0 24 24"><path d="M12 2.5c4 5.2 7 8.7 7 12.3a7 7 0 1 1-14 0c0-3.6 3-7.1 7-12.3z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="p-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1 1 16 0z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/><circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.6" fill="none"/></symbol>
+<symbol id="p-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 4 1.6 5.2 1.6 6.5H4.4C4.4 13.2 6 12 6 8z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M10 19a2 2 0 0 0 4 0" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="p-check" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="1.9" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="p-phone" viewBox="0 0 24 24"><path d="M5 4c0-1 1-2 2-2h2l2 5-2 2c1.4 3 3.6 5.2 6.6 6.6l2-2 5 2v2c0 1-1 2-2 2C10 22 2 14 2 6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="p-msg" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-4 4V5z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="p-arrow" viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="p-chev" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="p-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M12 7v5l3.5 2" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="p-flame" viewBox="0 0 24 24"><path d="M12 2.5c1 3 4 4.5 4 8.5a4 4 0 1 1-8 0c0-1 .3-1.8.8-2.5.2 1 .9 1.6 1.7 1.6.9 0 1.3-.8 1-1.6-.7-1.8-1-3.5.5-6z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="p-home" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1v-9z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="p-clip" viewBox="0 0 24 24"><rect x="6" y="4" width="12" height="17" rx="2" stroke="currentColor" stroke-width="1.6" fill="none"/><rect x="9" y="2.2" width="6" height="3" rx="1" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M9 11h6M9 15h6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="p-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M4 20c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></symbol>
+</svg>
+
+<div style="padding:56px 64px 80px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif">
+
+  <div style="max-width:760px;margin-bottom:20px">
+    <div style="font-size:11px;font-weight:600;letter-spacing:.14em;color:#8C1F2B;text-transform:uppercase">Product art direction — exploration</div>
+    <div style="font-family:'Newsreader',Georgia,serif;font-size:38px;font-weight:600;color:#241416;letter-spacing:-.02em;line-height:1.1;margin-top:12px">Four surfaces, not one card</div>
+    <div style="font-size:14.5px;color:#5A564F;line-height:1.65;margin-top:16px">Twenty-eight screens currently share a single container. These four show the alternative — the same design language producing genuinely different compositions per product moment. Main prototype and Flutter untouched.</div>
+  </div>
+
+  <div style="display:flex;gap:26px;max-width:1000px;margin-bottom:44px;padding:18px 20px;background:#F3EFE7;border-left:2px solid #8C1F2B">
+    <div style="flex:1"><div style="font-size:10.5px;font-weight:600;letter-spacing:.12em;color:#8C1F2B;text-transform:uppercase">Ground</div><div style="font-size:12.5px;color:#5A564F;line-height:1.55;margin-top:5px">Lists, records, long text. No container at all — hairline dividers only.</div></div>
+    <div style="flex:1"><div style="font-size:10.5px;font-weight:600;letter-spacing:.12em;color:#8C1F2B;text-transform:uppercase">Inset group</div><div style="font-size:12.5px;color:#5A564F;line-height:1.55;margin-top:5px">Settings, label/value pairs. One rounded group, internal dividers, no per-row card.</div></div>
+    <div style="flex:1"><div style="font-size:10.5px;font-weight:600;letter-spacing:.12em;color:#8C1F2B;text-transform:uppercase">Raised card</div><div style="font-size:12.5px;color:#5A564F;line-height:1.55;margin-top:5px">Reserved for the <em>one</em> focal object on a screen. Scarcity is what makes it read.</div></div>
+    <div style="flex:1"><div style="font-size:10.5px;font-weight:600;letter-spacing:.12em;color:#8C1F2B;text-transform:uppercase">Sheet</div><div style="font-size:12.5px;color:#5A564F;line-height:1.55;margin-top:5px">Map, filters, confirmations. Content behind stays visible.</div></div>
+  </div>
+
+  <div style="max-width:1000px;margin-bottom:40px;padding:16px 20px;background:#F3EFE7;border-left:2px solid #241416">
+    <div style="font-size:12px;font-weight:600;color:#241416">Two corrections carried into the language</div>
+    <div style="font-size:12.5px;color:#5A564F;line-height:1.62;margin-top:7px"><strong style="font-weight:600;color:#241416">Ring geometry is one spec, product-wide:</strong> 216 / 152 / 107 at 1.42 ratio, scaled per moment — onboarding 1.00 / 1.24 / 1.62 / 0.90, Matched 0.90. <strong style="font-weight:600;color:#241416">Scale and ratio travel; the centre does not.</strong> The group centres on whatever the screen's focal point actually is — (252, 300) in onboarding because the type block is left-aligned and the offset creates tension; (196, 176) on Matched because the composition is centred on the two avatars. Every use states its scale and its centre, and where the ring appears something real must sit on one of its radii (on Matched, both avatars at r 68.5). Screens with no ring moment get no ring; it is never card decoration.</div>
+    <div style="font-size:12.5px;color:#5A564F;line-height:1.62;margin-top:9px"><strong style="font-weight:600;color:#241416">One muted text token, not a ramp:</strong> <code style="font-family:ui-monospace,monospace;font-size:11.5px;background:#E8E1D5;padding:1px 4px;border-radius:3px">#6E6A62</code> — measured <strong style="font-weight:600;color:#241416">5.04:1</strong> on the #FBF7F1 ground and <strong style="font-weight:600;color:#241416">5.38:1</strong> on white — carries every muted string under 18px: micro-labels, timestamps, secondary copy and inactive nav labels. Micro-labels separate from body copy by <em>weight and letter-spacing</em>, never by lightness. #A0968A / #B0A996 / #9C9C98 / #D3C9BC are <em>non-text only</em> — dividers, rules, inactive dots. Document chrome on the darker #E8E4DC ground uses #5A564F (5.75:1). <strong style="font-weight:600;color:#241416">On red fields</strong> the same rule applies against the gradient's <em>lightest</em> stop (#7E1C26), not its average: #E0A8AF (4.99:1) for micro-labels, #E9BFC4 (5.42:1) for body, #D9AFB4 (5.16:1) for tertiary. Control borders on dark sit at rgba(251,230,232,.55) to clear 3:1. Superseded: #B0A996 at 2.20:1, #A0968A at 2.73:1, #9C9C98 at 2.76:1 and #7D7469 at 4.30:1 all failed AA at these sizes.</div>
+  </div>
+
+  <div style="display:flex;gap:36px;align-items:flex-start">
+
+    <!-- ======== HOME ======== -->
+    <div style="flex:none">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px">
+        <span style="font-size:11px;font-weight:600;letter-spacing:.12em;color:#8C1F2B">01</span>
+        <span style="font-size:13.5px;font-weight:600;color:#241416">Home</span>
+        <span style="font-size:12.5px;color:#5A564F">· useful + human</span>
+      </div>
+      <div style="width:390px;font-size:12px;color:#5A564F;line-height:1.5;margin-bottom:12px">Was: 4 stacked cards + 2 KPI tiles. Now: one raised object (the live request), everything else on the ground.</div>
+      <div style="width:390px;height:844px;position:relative;overflow:hidden;border-radius:34px;background:#FBF7F1;box-shadow:0 24px 56px rgba(43,20,20,.16);display:flex;flex-direction:column">
+        <div style="flex:0 0 46px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:13px;font-weight:500;color:#241416"><span>9:41</span><span style="width:16px;height:10px;border:1.4px solid #241416;border-radius:2px;position:relative"><span style="position:absolute;inset:1.5px;background:#241416;border-radius:1px"></span></span></div>
+
+        <div style="flex:1;overflow:hidden;padding:8px 24px 0">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between">
+            <div>
+              <div style="font-size:11.5px;font-weight:600;letter-spacing:.1em;color:#6E6A62;text-transform:uppercase">Good morning</div>
+              <div style="font-family:'Newsreader',Georgia,serif;font-size:30px;font-weight:600;color:#241416;letter-spacing:-.02em;line-height:1.1;margin-top:5px">Aditi</div>
+            </div>
+            <div style="position:relative;padding-top:6px"><svg width="21" height="21" style="color:#241416"><use href="#p-bell"></use></svg><span style="position:absolute;top:4px;right:-2px;width:7px;height:7px;border-radius:50%;background:#8C1F2B;box-shadow:0 0 0 2px #FBF7F1"></span></div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:7px;margin-top:16px">
+            <span style="width:7px;height:7px;border-radius:50%;background:#2C6636"></span>
+            <span style="font-size:12.5px;font-weight:600;color:#2C6636">Available to donate</span>
+            <span style="font-size:12.5px;color:#6E6A62">·</span>
+            <span style="font-size:12.5px;color:#6E6A62">O+ · verified</span>
+          </div>
+
+          <div style="height:1px;background:#E5DCCC;margin:22px 0 0"></div>
+
+          <div style="margin-top:22px;font-size:11px;font-weight:600;letter-spacing:.11em;color:#6E6A62;text-transform:uppercase">Someone needs you</div>
+
+          <div style="margin-top:12px;background:#fff;border-radius:20px;padding:18px;box-shadow:0 10px 28px rgba(43,20,20,.09);position:relative;overflow:hidden">
+            <div style="display:flex;align-items:center;gap:11px;position:relative">
+              <div style="font-family:'Newsreader',Georgia,serif;font-size:34px;font-weight:600;color:#8C1F2B;letter-spacing:-.02em;line-height:1">O+</div>
+              <div style="width:1px;height:34px;background:#EFE7DC"></div>
+              <div>
+                <div style="font-size:15px;font-weight:600;color:#241416;letter-spacing:-.005em">Sneha Hospital</div>
+                <div style="font-size:12px;color:#6E6A62;margin-top:2px">Koramangala · 2.4 km</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;margin-top:14px;position:relative">
+              <svg width="13" height="13" style="color:#8C1F2B"><use href="#p-flame"></use></svg>
+              <span style="font-size:12px;font-weight:600;color:#8C1F2B">Urgent</span>
+              <span style="font-size:12px;color:#6E6A62">·</span>
+              <span style="font-size:12px;color:#6E6A62">2 units · 12 min ago</span>
+            </div>
+            <button style="margin-top:16px;width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:14px;padding:13px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;position:relative">Accept &amp; help</button>
+          </div>
+
+          <div style="margin-top:26px;font-size:11px;font-weight:600;letter-spacing:.11em;color:#6E6A62;text-transform:uppercase">Your record</div>
+          <div style="margin-top:14px;display:flex;align-items:baseline;gap:10px">
+            <span style="font-family:'Newsreader',Georgia,serif;font-size:44px;font-weight:600;color:#241416;letter-spacing:-.025em;line-height:1">3</span>
+            <span style="font-size:13.5px;color:#68655F;line-height:1.5;padding-bottom:5px">donations ·<br>three people helped</span>
+          </div>
+          <div style="display:flex;gap:5px;margin-top:16px">
+            <span style="width:26px;height:3px;border-radius:2px;background:#8C1F2B"></span>
+            <span style="width:26px;height:3px;border-radius:2px;background:#8C1F2B"></span>
+            <span style="width:26px;height:3px;border-radius:2px;background:#8C1F2B"></span>
+            <span style="width:26px;height:3px;border-radius:2px;background:#E5DCCC"></span>
+            <span style="width:26px;height:3px;border-radius:2px;background:#E5DCCC"></span>
+          </div>
+          <div style="font-size:11.5px;color:#6E6A62;margin-top:9px">Eligible again in 83 days</div>
+
+          <div style="margin-top:24px;display:flex;align-items:center;gap:7px">
+            <svg width="14" height="14" style="color:#8C1F2B"><use href="#p-droplet"></use></svg>
+            <span style="font-size:13.5px;font-weight:600;color:#8C1F2B">Need blood yourself?</span>
+            <svg width="14" height="14" style="color:#8C1F2B"><use href="#p-chev"></use></svg>
+          </div>
+        </div>
+
+        <div style="flex:0 0 64px;display:flex;align-items:center;background:#fff;box-shadow:0 -6px 16px rgba(43,20,20,.05);padding:0 10px;gap:6px">
+          <div style="flex:1;background:#F6DCDE;border-radius:14px;padding:8px 0;display:flex;flex-direction:column;align-items:center;gap:3px;color:#8C1F2B"><svg width="18" height="18"><use href="#p-home"></use></svg><span style="font-size:10.5px;font-weight:600">Home</span></div>
+          <div style="flex:1;padding:8px 0;display:flex;flex-direction:column;align-items:center;gap:3px;color:#6E6A62"><svg width="18" height="18"><use href="#p-clip"></use></svg><span style="font-size:10.5px">Requests</span></div>
+          <div style="flex:1;padding:8px 0;display:flex;flex-direction:column;align-items:center;gap:3px;color:#6E6A62"><svg width="18" height="18"><use href="#p-user"></use></svg><span style="font-size:10.5px">Profile</span></div>
+        </div>
+        <div style="flex:0 0 20px;display:flex;align-items:center;justify-content:center"><div style="width:120px;height:4px;background:#241416;border-radius:2px;opacity:.7"></div></div>
+      </div>
+      <div style="width:390px;font-size:12.5px;color:#5A564F;line-height:1.6;margin-top:14px">The gradient hero is gone — it was competing with the actual request. No ring here: it is a product-moment device, not wallpaper, and Home is not one of its moments. Status is one line of type, not two pills. The record is a serif numeral with a five-stroke cooldown gauge instead of two KPI tiles. One card on the screen, so it reads as urgent.</div>
+    </div>
+
+    <!-- ======== CREATE REQUEST ======== -->
+    <div style="flex:none">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px">
+        <span style="font-size:11px;font-weight:600;letter-spacing:.12em;color:#8C1F2B">02</span>
+        <span style="font-size:13.5px;font-weight:600;color:#241416">Create request</span>
+        <span style="font-size:12.5px;color:#5A564F">· focused / guided</span>
+      </div>
+      <div style="width:390px;font-size:12px;color:#5A564F;line-height:1.5;margin-bottom:12px">Was: 3 cards, 9 component types, everything at once. Now: one question at a time, progress visible.</div>
+      <div style="width:390px;height:844px;position:relative;overflow:hidden;border-radius:34px;background:#FBF7F1;box-shadow:0 24px 56px rgba(43,20,20,.16);display:flex;flex-direction:column">
+        <div style="flex:0 0 46px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:13px;font-weight:500;color:#241416"><span>9:41</span><span style="width:16px;height:10px;border:1.4px solid #241416;border-radius:2px;position:relative"><span style="position:absolute;inset:1.5px;background:#241416;border-radius:1px"></span></span></div>
+
+        <div style="flex:0 0 52px;display:flex;align-items:center;padding:0 18px;gap:14px">
+          <svg width="20" height="20" style="color:#241416"><use href="#p-arrow"></use></svg>
+          <div style="flex:1;display:flex;gap:4px">
+            <span style="flex:1;height:3px;border-radius:2px;background:#8C1F2B"></span>
+            <span style="flex:1;height:3px;border-radius:2px;background:#8C1F2B"></span>
+            <span style="flex:1;height:3px;border-radius:2px;background:#E5DCCC"></span>
+          </div>
+          <span style="font-size:11.5px;font-weight:600;color:#6E6A62">2/3</span>
+        </div>
+
+        <div style="flex:1;padding:20px 28px 0">
+          <div style="font-size:11px;font-weight:600;letter-spacing:.11em;color:#6E6A62;text-transform:uppercase">Step two</div>
+          <div style="font-family:'Newsreader',Georgia,serif;font-size:29px;font-weight:600;color:#241416;letter-spacing:-.016em;line-height:1.18;margin-top:10px;max-width:270px">How urgent is this?</div>
+          <div style="font-size:13.5px;color:#68655F;line-height:1.6;margin-top:10px;max-width:272px">Critical requests reach more donors at once and skip the alert cooldown.</div>
+
+          <div style="margin-top:28px;display:flex;flex-direction:column;gap:10px">
+            <div style="border:1px solid #E5DCCC;border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:13px">
+              <span style="width:20px;height:20px;border-radius:50%;border:1.5px solid #D3C9BC;flex:none"></span>
+              <div><div style="font-size:14.5px;font-weight:600;color:#241416">Normal</div><div style="font-size:12px;color:#6E6A62;margin-top:2px">Within a day or two</div></div>
+            </div>
+            <div style="background:#8C1F2B;border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:13px;box-shadow:0 10px 24px rgba(140,31,43,.24)">
+              <span style="width:20px;height:20px;border-radius:50%;background:#FBE6E8;flex:none;display:flex;align-items:center;justify-content:center"><svg width="12" height="12" style="color:#8C1F2B"><use href="#p-check"></use></svg></span>
+              <div><div style="font-size:14.5px;font-weight:600;color:#FFF9F5">Urgent</div><div style="font-size:12px;color:#E9BFC4;margin-top:2px">Needed within hours</div></div>
+            </div>
+            <div style="border:1px solid #E5DCCC;border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:13px">
+              <span style="width:20px;height:20px;border-radius:50%;border:1.5px solid #D3C9BC;flex:none"></span>
+              <div><div style="font-size:14.5px;font-weight:600;color:#241416">Critical</div><div style="font-size:12px;color:#6E6A62;margin-top:2px">Life-threatening — notify fastest</div></div>
+            </div>
+          </div>
+
+          <div style="height:1px;background:#E5DCCC;margin:28px 0 16px"></div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-family:'Newsreader',Georgia,serif;font-size:19px;font-weight:600;color:#8C1F2B;line-height:1">O+</span>
+            <span style="font-size:12.5px;color:#6E6A62">2 units · Koramangala</span>
+          </div>
+        </div>
+
+        <div style="flex:0 0 96px;padding:0 28px;display:flex;align-items:center">
+          <button style="width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:15px;padding:15px;font-size:15px;font-weight:600;font-family:inherit;cursor:pointer;box-shadow:0 10px 24px rgba(140,31,43,.24)">Continue</button>
+        </div>
+        <div style="flex:0 0 20px;display:flex;align-items:center;justify-content:center"><div style="width:120px;height:4px;background:#241416;border-radius:2px;opacity:.7"></div></div>
+      </div>
+      <div style="width:390px;font-size:12.5px;color:#5A564F;line-height:1.6;margin-top:14px">Three steps — group, urgency, place — each a single question with a real headline. The progress bar replaces the header title. What you've already answered persists as one quiet line above the CTA, so nothing is hidden but nothing competes.</div>
+    </div>
+
+    <!-- ======== MATCHED ======== -->
+    <div style="flex:none">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px">
+        <span style="font-size:11px;font-weight:600;letter-spacing:.12em;color:#8C1F2B">03</span>
+        <span style="font-size:13.5px;font-weight:600;color:#241416">Matched</span>
+        <span style="font-size:12.5px;color:#5A564F">· connection · ring at 0.90×</span>
+      </div>
+      <div style="width:390px;font-size:12px;color:#5A564F;line-height:1.5;margin-bottom:12px">Was: one of six identical icon-headline-button screens. Now: a composed moment about two people.</div>
+      <div style="width:390px;height:844px;position:relative;overflow:hidden;border-radius:34px;background:linear-gradient(172deg,#7E1C26 0%,#2A0C11 68%,#180809 100%);box-shadow:0 24px 56px rgba(43,20,20,.22);display:flex;flex-direction:column">
+        <div style="flex:0 0 46px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:13px;font-weight:500;color:rgba(255,249,245,.9)"><span>9:41</span><span style="width:16px;height:10px;border:1.4px solid rgba(255,249,245,.9);border-radius:2px;position:relative"><span style="position:absolute;inset:1.5px;background:rgba(255,249,245,.9);border-radius:1px"></span></span></div>
+
+        <div style="position:absolute;left:127.5px;top:176px;width:76px;height:76px;margin:-38px 0 0 -38px;box-sizing:border-box;border-radius:50%;background:rgba(251,230,232,.16);border:1.5px solid rgba(251,230,232,.6);display:flex;align-items:center;justify-content:center;font-size:21px;font-weight:600;color:#FFF9F5;z-index:2">AS</div>
+        <div style="position:absolute;left:165.5px;top:176px;width:61px;height:1px;background:rgba(251,230,232,.6);z-index:2"></div>
+        <div style="position:absolute;left:264.5px;top:176px;width:76px;height:76px;margin:-38px 0 0 -38px;box-sizing:border-box;border-radius:50%;background:#FBF7F1;border:1.5px solid #FBF7F1;display:flex;align-items:center;justify-content:center;font-size:21px;font-weight:600;color:#8C1F2B;box-shadow:0 10px 26px rgba(0,0,0,.3);z-index:2">KI</div>
+
+        <div style="position:absolute;left:196px;top:176px;width:0;height:0;opacity:.5">
+          <div style="position:absolute;width:194px;height:194px;margin:-97px 0 0 -97px;box-sizing:border-box;border-radius:50%;border:1px solid rgba(251,230,232,.55)"></div>
+          <div style="position:absolute;width:137px;height:137px;margin:-68.5px 0 0 -68.5px;box-sizing:border-box;border-radius:50%;border:1px solid rgba(251,230,232,.78)"></div>
+          <div style="position:absolute;width:96px;height:96px;margin:-48px 0 0 -48px;box-sizing:border-box;border-radius:50%;border:1px solid rgba(251,230,232,1)"></div>
+        </div>
+
+        <div style="flex:1;padding:0 28px;display:flex;flex-direction:column;justify-content:center;position:relative">
+
+          <div style="height:76px"></div>
+          <div style="font-size:11px;font-weight:600;letter-spacing:.13em;color:#E0A8AF;text-transform:uppercase;text-align:center">You're connected</div>
+          <div style="font-family:'Newsreader',Georgia,serif;font-size:31px;font-weight:600;color:#FFF9F5;letter-spacing:-.018em;line-height:1.2;margin-top:12px;text-align:center">Karthik is ready<br>to help you</div>
+          <div style="font-size:13.5px;color:#E9BFC4;line-height:1.6;margin-top:12px;text-align:center;max-width:280px;margin-left:auto;margin-right:auto">O+ · 2.1 km away · verified donor. Reach out and agree a time.</div>
+
+          <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:26px">
+            <svg width="15" height="15" style="color:#EFCDD1"><use href="#p-phone"></use></svg>
+            <span style="font-family:'Newsreader',Georgia,serif;font-size:22px;font-weight:500;color:#FFF9F5;letter-spacing:.01em">98765 22110</span>
+          </div>
+        </div>
+
+        <div style="flex:0 0 168px;padding:0 28px;display:flex;flex-direction:column;justify-content:center;gap:10px">
+          <button style="width:100%;background:#FBF7F1;color:#5C1119;border:none;border-radius:15px;padding:15px;font-size:15px;font-weight:600;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 10px 24px rgba(0,0,0,.24)"><svg width="16" height="16"><use href="#p-phone"></use></svg>Call Karthik</button>
+          <button style="width:100%;background:none;border:1px solid rgba(251,230,232,.55);color:#FBE6E8;border-radius:15px;padding:14px;font-size:14px;font-weight:500;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px"><svg width="15" height="15"><use href="#p-msg"></use></svg>WhatsApp</button>
+          <div style="text-align:center;font-size:12.5px;color:#D9AFB4;padding-top:4px">Mark as donated afterwards</div>
+        </div>
+        <div style="flex:0 0 20px;display:flex;align-items:center;justify-content:center"><div style="width:120px;height:4px;background:#FBE6E8;border-radius:2px;opacity:.6"></div></div>
+      </div>
+      <div style="width:390px;font-size:12.5px;color:#5A564F;line-height:1.6;margin-top:14px">Two avatars joined by a hairline — the connection drawn, not described. Red field because this is the emotional peak; the phone number is set in Newsreader because it is a human fact, not a data row. Behind them, the committed ring group at <strong style="font-weight:600;color:#241416">0.90×</strong> — same three circles, same 1.42 ratio — recentred on the connection itself at (196, 176), with both avatars on the middle-ring radius — r 68.5, so cx 127.5 and 264.5 at the same cy, in the frame's own coordinate space alongside the ring. The cluster is seated high enough that no arc enters the type block. The other five terminals each get their own composition on the same grammar.</div>
+    </div>
+
+    <!-- ======== NOTIFICATIONS ======== -->
+    <div style="flex:none">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px">
+        <span style="font-size:11px;font-weight:600;letter-spacing:.12em;color:#8C1F2B">04</span>
+        <span style="font-size:13.5px;font-weight:600;color:#241416">Notifications</span>
+        <span style="font-size:12.5px;color:#5A564F">· a feed, on the ground</span>
+      </div>
+      <div style="width:390px;font-size:12px;color:#5A564F;line-height:1.5;margin-bottom:12px">Was: 5 identical floating cards, all equal weight. Now: ground surface, hierarchy by importance.</div>
+      <div style="width:390px;height:844px;position:relative;overflow:hidden;border-radius:34px;background:#FBF7F1;box-shadow:0 24px 56px rgba(43,20,20,.16);display:flex;flex-direction:column">
+        <div style="flex:0 0 46px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:13px;font-weight:500;color:#241416"><span>9:41</span><span style="width:16px;height:10px;border:1.4px solid #241416;border-radius:2px;position:relative"><span style="position:absolute;inset:1.5px;background:#241416;border-radius:1px"></span></span></div>
+
+        <div style="flex:0 0 52px;display:flex;align-items:center;padding:0 18px;gap:14px">
+          <svg width="20" height="20" style="color:#241416"><use href="#p-arrow"></use></svg>
+          <span style="font-size:16px;font-weight:600;color:#241416;letter-spacing:-.005em">Notifications</span>
+        </div>
+
+        <div style="flex:1;padding:6px 24px 0;overflow:hidden">
+          <div style="font-size:11px;font-weight:600;letter-spacing:.11em;color:#6E6A62;text-transform:uppercase">Needs you now</div>
+
+          <div style="margin-top:12px;background:#fff;border-radius:18px;padding:16px;box-shadow:0 8px 22px rgba(43,20,20,.08)">
+            <div style="display:flex;align-items:center;gap:10px">
+              <span style="font-family:'Newsreader',Georgia,serif;font-size:24px;font-weight:600;color:#8C1F2B;line-height:1">B+</span>
+              <div style="flex:1"><div style="font-size:14px;font-weight:600;color:#241416">New request near you</div><div style="font-size:12px;color:#6E6A62;margin-top:2px">Fortis Hospital · 1.8 km · 4 min ago</div></div>
+            </div>
+            <button style="margin-top:13px;width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:13px;padding:11px;font-size:13.5px;font-weight:600;font-family:inherit;cursor:pointer">View request</button>
+          </div>
+
+          <div style="margin-top:26px;font-size:11px;font-weight:600;letter-spacing:.11em;color:#6E6A62;text-transform:uppercase">Earlier</div>
+
+          <div style="margin-top:6px">
+            <div style="display:flex;gap:13px;padding:15px 0;border-bottom:1px solid #EBE3D5">
+              <span style="width:8px;height:8px;border-radius:50%;background:#2C6636;flex:none;margin-top:6px"></span>
+              <div style="flex:1"><div style="font-size:13.5px;font-weight:600;color:#241416">You've been matched</div><div style="font-size:12.5px;color:#68655F;line-height:1.5;margin-top:3px">Sneha Hospital accepted — contact details are ready</div></div>
+              <span style="font-size:11px;color:#6E6A62;flex:none;padding-top:2px">22m</span>
+            </div>
+            <div style="display:flex;gap:13px;padding:15px 0;border-bottom:1px solid #EBE3D5">
+              <span style="width:8px;height:8px;border-radius:50%;background:#D3C9BC;flex:none;margin-top:6px"></span>
+              <div style="flex:1"><div style="font-size:13.5px;font-weight:500;color:#241416">A request was cancelled</div><div style="font-size:12.5px;color:#6E6A62;line-height:1.5;margin-top:3px">The O− request in Indiranagar is no longer active</div></div>
+              <span style="font-size:11px;color:#6E6A62;flex:none;padding-top:2px">1h</span>
+            </div>
+            <div style="display:flex;gap:13px;padding:15px 0;border-bottom:1px solid #EBE3D5">
+              <span style="width:8px;height:8px;border-radius:50%;background:#D3C9BC;flex:none;margin-top:6px"></span>
+              <div style="flex:1"><div style="font-size:13.5px;font-weight:500;color:#241416">Request expired</div><div style="font-size:12.5px;color:#6E6A62;line-height:1.5;margin-top:3px">No donor found for the AB− request within 6 hours</div></div>
+              <span style="font-size:11px;color:#6E6A62;flex:none;padding-top:2px">3h</span>
+            </div>
+            <div style="display:flex;gap:13px;padding:15px 0">
+              <span style="width:8px;height:8px;border-radius:50%;background:#D3C9BC;flex:none;margin-top:6px"></span>
+              <div style="flex:1"><div style="font-size:13.5px;font-weight:500;color:#241416">Thank you for donating</div><div style="font-size:12.5px;color:#6E6A62;line-height:1.5;margin-top:3px">Your donation at Apollo Hospital was confirmed</div></div>
+              <span style="font-size:11px;color:#6E6A62;flex:none;padding-top:2px">1d</span>
+            </div>
+          </div>
+        </div>
+        <div style="flex:0 0 20px;display:flex;align-items:center;justify-content:center"><div style="width:120px;height:4px;background:#241416;border-radius:2px;opacity:.7"></div></div>
+      </div>
+      <div style="width:390px;font-size:12.5px;color:#5A564F;line-height:1.6;margin-top:14px">One actionable item earns the only card and the only button. Everything historical sits on the ground with hairline dividers — a feed, which is what it is. Dots carry state; the five coloured icon tiles are gone.</div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

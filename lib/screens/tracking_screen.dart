@@ -24,10 +24,10 @@ class TrackingScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(LucideIcons.arrowLeft, color: AppColors.textPrimary),
+          icon: const Icon(LucideIcons.arrowLeft, color: AppColors.textPrimaryWarm),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text('Request tracking', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: AppColors.textPrimary)),
+        title: const Text('Request tracking', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: AppColors.textPrimaryWarm)),
         centerTitle: true,
       ),
       body: SafeArea(

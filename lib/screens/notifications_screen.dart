@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../services/notifications_service.dart';
 import '../theme/app_colors.dart';
+import '../widgets/blood_group_droplet.dart';
 
 class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({super.key});
@@ -58,11 +59,27 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                     final feed = snapshot.data!;
                     if (!feed.enabled) return _disabledState();
                     if (feed.items.isEmpty) return _emptyState();
-                    return ListView.separated(
+
+                    // Exactly one actionable item earns the only card and
+                    // the only button — the first request-kind notification.
+                    final actionableIndex = feed.items.indexWhere((n) => n.kind == NotificationKind.request);
+                    final actionable = actionableIndex == -1 ? null : feed.items[actionableIndex];
+                    final rest = [for (var i = 0; i < feed.items.length; i++) if (i != actionableIndex) feed.items[i]];
+
+                    return ListView(
                       padding: const EdgeInsets.symmetric(vertical: 16),
-                      itemCount: feed.items.length,
-                      separatorBuilder: (context, index) => const SizedBox(height: 10),
-                      itemBuilder: (context, index) => _notificationCard(feed.items[index]),
+                      children: [
+                        if (actionable != null) ...[
+                          const Text('NEEDS YOU NOW', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, letterSpacing: 1.3, color: AppColors.textSecondary)),
+                          const SizedBox(height: 10),
+                          _actionableCard(actionable),
+                          const SizedBox(height: 22),
+                        ],
+                        if (rest.isNotEmpty) ...[
+                          const Text('EARLIER', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, letterSpacing: 1.3, color: AppColors.textSecondary)),
+                          for (var i = 0; i < rest.length; i++) _archivalRow(rest[i], showDivider: i < rest.length - 1),
+                        ],
+                      ],
                     );
                   },
                 ),
@@ -165,32 +182,69 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     );
   }
 
-  Widget _notificationCard(AppNotification n) {
-    final (bg, color, icon) = switch (n.kind) {
-      NotificationKind.match => (AppColors.warmGreenBg, AppColors.warmGreenText, LucideIcons.checkCircle),
-      NotificationKind.request => (AppColors.primaryLightTint, AppColors.primary, LucideIcons.droplet),
-      NotificationKind.cancellation => (AppColors.primaryLightTint, AppColors.primary, LucideIcons.x),
-      NotificationKind.expiration => (AppColors.warmAmberBg, AppColors.warmAmberText, LucideIcons.hourglass),
-      NotificationKind.donationConfirmed => (AppColors.primaryLightTint, AppColors.primary, LucideIcons.droplet),
-    };
-
+  /// The one actionable item: red-edge card, group droplet, primary button.
+  Widget _actionableCard(AppNotification n) {
     return Container(
-      padding: const EdgeInsets.all(14),
+      clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border.all(color: AppColors.cardBorderWarm),
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [BoxShadow(color: AppColors.shadowCard, blurRadius: 10, offset: const Offset(0, 3))],
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: [BoxShadow(color: AppColors.shadowCard, blurRadius: 16, offset: const Offset(0, 6))],
       ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(height: 3, color: AppColors.primary),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  children: [
+                    const BloodGroupDroplet(label: '', size: 40, filled: true, color: AppColors.primary, textColor: Color(0xFFFBE6E8), centerIcon: Icon(LucideIcons.droplet, size: 16, color: Color(0xFFFBE6E8))),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(n.title, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textPrimaryWarm)),
+                          const SizedBox(height: 2),
+                          Text(n.body, style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 13),
+                ElevatedButton(
+                  onPressed: () => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Opening request — coming soon.'))),
+                  child: const Text('View request'),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Archival items sit on the ground with a hairline divider — a plain
+  /// grey dot for neutral events, a small green droplet for positive ones
+  /// (match / donation confirmed) per the approved device vocabulary.
+  Widget _archivalRow(AppNotification n, {required bool showDivider}) {
+    final isPositive = n.kind == NotificationKind.match || n.kind == NotificationKind.donationConfirmed;
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 14),
+      decoration: BoxDecoration(border: showDivider ? const Border(bottom: BorderSide(color: AppColors.dividerWarm)) : null),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 38,
-            height: 38,
-            decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(12)),
-            alignment: Alignment.center,
-            child: Icon(icon, size: 16, color: color),
+          Padding(
+            padding: const EdgeInsets.only(top: 4),
+            child: isPositive
+                ? const Icon(LucideIcons.droplet, size: 14, color: AppColors.warmGreenText)
+                : Container(width: 7, height: 7, decoration: const BoxDecoration(color: AppColors.chevronMuted, shape: BoxShape.circle)),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -200,11 +254,11 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                 Text(n.title, style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600, color: AppColors.textPrimaryWarm)),
                 const SizedBox(height: 3),
                 Text(n.body, style: const TextStyle(fontSize: 12.5, color: AppColors.textSecondary, height: 1.4)),
-                const SizedBox(height: 6),
-                Text(n.time, style: const TextStyle(fontSize: 11, color: AppColors.textMutedWarm)),
               ],
             ),
           ),
+          const SizedBox(width: 8),
+          Text(n.time, style: const TextStyle(fontSize: 11, color: AppColors.textMutedWarm)),
         ],
       ),
     );

@@ -57,7 +57,7 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
             children: [
               const Icon(LucideIcons.shieldCheck, size: 30, color: AppColors.primary),
               const SizedBox(height: 14),
-              const Text('Admin console', style: TextStyle(fontSize: 19, fontWeight: FontWeight.w500, color: AppColors.textPrimary)),
+              const Text('Admin console', style: TextStyle(fontSize: 19, fontWeight: FontWeight.w500, color: AppColors.textPrimaryWarm)),
               const SizedBox(height: 6),
               const Text(
                 'Invite-only. Accounts are provisioned by a super-admin — there is no public sign-up.',

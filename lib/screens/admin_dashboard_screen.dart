@@ -289,13 +289,13 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
       onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AdminDonorDetailScreen(donorId: donor.id))),
       child: Container(
         padding: const EdgeInsets.all(14),
-        decoration: BoxDecoration(color: Colors.white, border: Border.all(color: AppColors.border), borderRadius: BorderRadius.circular(14)),
+        decoration: BoxDecoration(color: Colors.white, border: Border.all(color: AppColors.cardBorderWarm), borderRadius: BorderRadius.circular(14)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Row(
               children: [
-                Expanded(child: Text(donor.name, style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w500, color: AppColors.textPrimary))),
+                Expanded(child: Text(donor.name, style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w500, color: AppColors.textPrimaryWarm))),
                 StatusBadge.bloodGroup(donor.bloodGroup),
                 const SizedBox(width: 6),
                 StatusBadge(label: statusLabel, background: statusBg, textColor: statusText, fontSize: 11),
@@ -303,7 +303,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             ),
             const SizedBox(height: 6),
             Text(donor.phone, style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
-            const Divider(height: 20, color: AppColors.border),
+            const Divider(height: 20, color: AppColors.cardBorderWarm),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -383,13 +383,13 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
       'open' => (AppColors.statusUrgentBg, AppColors.statusUrgentText),
       'matched' => (AppColors.statusPendingBg, AppColors.statusPendingText),
       'fulfilled' => (AppColors.statusAvailableBg, AppColors.statusAvailableText),
-      _ => (AppColors.border, AppColors.textPrimary),
+      _ => (AppColors.cardBorderWarm, AppColors.textPrimaryWarm),
     };
     return GestureDetector(
       onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AdminRequestDetailScreen(request: request))),
       child: Container(
         padding: const EdgeInsets.all(14),
-        decoration: BoxDecoration(color: Colors.white, border: Border.all(color: AppColors.border), borderRadius: BorderRadius.circular(14)),
+        decoration: BoxDecoration(color: Colors.white, border: Border.all(color: AppColors.cardBorderWarm), borderRadius: BorderRadius.circular(14)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -403,7 +403,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
               ],
             ),
             const SizedBox(height: 8),
-            Text(request.location, style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w500, color: AppColors.textPrimary), maxLines: 1, overflow: TextOverflow.ellipsis),
+            Text(request.location, style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w500, color: AppColors.textPrimaryWarm), maxLines: 1, overflow: TextOverflow.ellipsis),
             if (request.matchedDonorName != null) ...[
               const SizedBox(height: 4),
               Text('Matched: ${request.matchedDonorName}', style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
@@ -436,7 +436,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
               for (final hospital in filtered) ...[
                 Container(
                   padding: const EdgeInsets.all(14),
-                  decoration: BoxDecoration(color: Colors.white, border: Border.all(color: AppColors.border), borderRadius: BorderRadius.circular(14)),
+                  decoration: BoxDecoration(color: Colors.white, border: Border.all(color: AppColors.cardBorderWarm), borderRadius: BorderRadius.circular(14)),
                   child: Row(
                     children: [
                       const Icon(LucideIcons.building, color: AppColors.primary, size: 18),
@@ -445,7 +445,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(hospital.name, style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w500, color: AppColors.textPrimary)),
+                            Text(hospital.name, style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w500, color: AppColors.textPrimaryWarm)),
                             const SizedBox(height: 2),
                             Text(hospital.address, style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
                           ],
@@ -483,7 +483,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
         const SizedBox(height: 8),
         Container(
           padding: const EdgeInsets.all(14),
-          decoration: BoxDecoration(color: Colors.white, border: Border.all(color: AppColors.border), borderRadius: BorderRadius.circular(14)),
+          decoration: BoxDecoration(color: Colors.white, border: Border.all(color: AppColors.cardBorderWarm), borderRadius: BorderRadius.circular(14)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -534,7 +534,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
           Container(
             margin: const EdgeInsets.only(bottom: 8),
             padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(color: Colors.white, border: Border.all(color: AppColors.border), borderRadius: BorderRadius.circular(12)),
+            decoration: BoxDecoration(color: Colors.white, border: Border.all(color: AppColors.cardBorderWarm), borderRadius: BorderRadius.circular(12)),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -542,7 +542,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(entry.text, style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w500, color: AppColors.textPrimary)),
+                      Text(entry.text, style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w500, color: AppColors.textPrimaryWarm)),
                       const SizedBox(height: 3),
                       Text('${entry.actor} · ${entry.time}', style: const TextStyle(fontSize: 11, color: AppColors.textMuted)),
                     ],

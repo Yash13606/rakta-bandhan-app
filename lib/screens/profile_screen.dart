@@ -4,12 +4,16 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../services/backend.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
-import '../widgets/avatar_badge.dart';
-import '../widgets/gradient_hero_card.dart';
+import '../widgets/blood_group_droplet.dart';
+import '../widgets/pulsing_dot.dart';
 import 'donation_history_screen.dart';
 import 'login_screen.dart';
 import 'settings_screen.dart';
 
+/// Profile — rebuilt per Visual Richness Proposal #08: "the red hero band
+/// is gone... identity now comes from the avatar with its group droplet
+/// attached, the live availability pulse, and the impact trail." Donor
+/// identity, not account settings — legal/account rows stay in Settings.
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
@@ -62,90 +66,105 @@ class _ProfileScreenState extends State<ProfileScreen> {
             final bloodGroup = data['blood_group'] as String? ?? '—';
             final isVerified = data['is_verified'] as bool? ?? false;
             final isAvailable = data['is_available'] as bool? ?? false;
+            final reactivateAt = (data['reactivation_scheduled_at'] as Timestamp?)?.toDate();
 
-            return SingleChildScrollView(
-              padding: const EdgeInsets.only(bottom: 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  GradientHeroCard(
-                    startColor: AppColors.gradientHeaderStart,
-                    endColor: AppColors.gradientHeaderEnd,
-                    gradientBegin: Alignment.topRight,
-                    gradientEnd: Alignment.bottomLeft,
-                    padding: const EdgeInsets.fromLTRB(20, 28, 20, 46),
-                    ringLeft: -40,
-                    ringTop: -50,
-                    ringRight: null,
-                    ringBottom: null,
-                    ringSize: 160,
-                    child: Column(
-                      children: [
-                        AvatarBadge(initials: _initials(name), size: 76, fontSize: 24, translucent: true),
-                        const SizedBox(height: 14),
-                        Text(
-                          name.isEmpty ? 'Your profile' : name,
-                          textAlign: TextAlign.center,
-                          style: AppTextStyles.display(fontSize: 22, color: const Color(0xFFFFF9F5)),
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            _translucentPill(bloodGroup, bold: true),
-                            const SizedBox(width: 6),
-                            _translucentPill(isVerified ? 'Verified' : 'Pending verification', icon: isVerified ? LucideIcons.check : null),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Transform.translate(
-                    offset: const Offset(0, -26),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Container(
+            return FutureBuilder<int>(
+              future: Backend.instance.myDonationCount(),
+              builder: (context, donationSnap) {
+                final donationCount = donationSnap.data ?? 0;
+
+                return SingleChildScrollView(
+                  padding: const EdgeInsets.fromLTRB(24, 14, 24, 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              Container(
+                                width: 78,
+                                height: 78,
+                                decoration: const BoxDecoration(color: AppColors.primaryLightTint, shape: BoxShape.circle),
+                                alignment: Alignment.center,
+                                child: Text(_initials(name), style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: AppColors.primary)),
+                              ),
+                              if (bloodGroup != '—')
+                                Positioned(
+                                  right: -8,
+                                  bottom: -6,
+                                  child: BloodGroupDroplet(label: bloodGroup, size: 34, filled: true, color: AppColors.primary, textColor: const Color(0xFFFBE6E8), fontSize: 11),
+                                ),
+                            ],
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 6),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    name.isEmpty ? 'Your profile' : name,
+                                    style: AppTextStyles.display(fontSize: 26, color: AppColors.textPrimaryWarm, height: 1.1),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width: 16,
+                                        height: 16,
+                                        decoration: BoxDecoration(color: isVerified ? AppColors.warmGreenBg : AppColors.warmAmberBg, shape: BoxShape.circle),
+                                        alignment: Alignment.center,
+                                        child: isVerified
+                                            ? const Icon(LucideIcons.check, size: 9, color: AppColors.warmGreenText)
+                                            : const Icon(LucideIcons.clock, size: 9, color: AppColors.warmAmberText),
+                                      ),
+                                      const SizedBox(width: 6),
+                                      Text(
+                                        isVerified ? 'Verified donor' : 'Verification pending',
+                                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: isVerified ? AppColors.warmGreenText : AppColors.warmAmberText),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      Container(
                         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(16),
-                          boxShadow: const [BoxShadow(color: Color.fromRGBO(43, 20, 20, 0.1), blurRadius: 24, offset: Offset(0, 10))],
+                          boxShadow: [BoxShadow(color: AppColors.shadowCard, blurRadius: 10, offset: const Offset(0, 3))],
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
-                              children: [
-                                Container(
-                                  width: 9,
-                                  height: 9,
-                                  decoration: BoxDecoration(
-                                    color: isAvailable ? AppColors.warmGreenText : AppColors.textMuted,
-                                    shape: BoxShape.circle,
+                            PulsingDot(color: isAvailable ? AppColors.warmGreenText : AppColors.textMutedWarm, size: 9),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    isAvailable ? 'Available to donate' : 'Not available',
+                                    style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600, color: AppColors.textPrimaryWarm),
                                   ),
-                                ),
-                                const SizedBox(width: 10),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      isAvailable ? 'Available to donate' : 'Not available',
-                                      style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600, color: AppColors.textPrimaryWarm),
-                                    ),
-                                    const Text(
-                                      'Toggle off if you can\'t donate right now',
-                                      style: TextStyle(fontSize: 11, color: AppColors.textMuted),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                  const Text('Toggle off if you can\'t donate right now', style: TextStyle(fontSize: 11, color: AppColors.textMuted)),
+                                ],
+                              ),
                             ),
                             Switch(
                               value: isAvailable,
                               activeThumbColor: AppColors.primary,
                               activeTrackColor: AppColors.primaryLightTint,
                               inactiveThumbColor: AppColors.textMuted,
-                              inactiveTrackColor: AppColors.border,
+                              inactiveTrackColor: AppColors.dividerWarm,
                               onChanged: (val) async {
                                 await Backend.instance.setAvailability(val);
                                 _showSnackBar(val ? 'You are now available for donation' : 'You are now offline');
@@ -154,70 +173,105 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ],
                         ),
                       ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(color: AppColors.cardBorderWarm),
-                            borderRadius: BorderRadius.circular(16),
-                            boxShadow: [BoxShadow(color: AppColors.shadowCard, blurRadius: 10, offset: const Offset(0, 3))],
-                          ),
-                          clipBehavior: Clip.antiAlias,
-                          child: Column(
-                            children: [
-                              _menuRow(
-                                icon: LucideIcons.user,
-                                label: 'Personal information',
-                                onTap: () => _showSnackBar('$name · $bloodGroup · ${data['phone'] ?? ''}'),
-                                showDivider: true,
-                              ),
-                              _menuRow(
-                                icon: LucideIcons.history,
-                                label: 'Donation history',
-                                iconBg: AppColors.primaryLightTint,
-                                iconColor: AppColors.primary,
-                                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const DonationHistoryScreen())),
-                                showDivider: true,
-                              ),
-                              _menuRow(
-                                icon: LucideIcons.phone,
-                                label: 'Emergency contact',
-                                onTap: () => _showSnackBar('Opening Emergency contact...'),
-                                showDivider: true,
-                              ),
-                              _menuRow(
-                                icon: LucideIcons.sliders,
-                                label: 'Settings',
-                                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsScreen())),
-                                showDivider: false,
-                              ),
-                            ],
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: _logOut,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 4),
-                            child: Row(
+                      const SizedBox(height: 26),
+                      const Text('YOUR IMPACT', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, letterSpacing: 1.3, color: AppColors.textSecondary)),
+                      const SizedBox(height: 14),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text('$donationCount', style: AppTextStyles.display(fontSize: 48, color: AppColors.textPrimaryWarm, height: 0.9)),
+                          const SizedBox(width: 14),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 6),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Icon(LucideIcons.logOut, color: AppColors.textMuted, size: 17),
-                                const SizedBox(width: 10),
-                                Text('Log out', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: AppColors.textMuted)),
+                                Row(
+                                  children: [
+                                    for (var i = 0; i < 4; i++) ...[
+                                      if (i > 0) const SizedBox(width: 5),
+                                      BloodGroupDroplet(label: '', size: 18, filled: i < donationCount, color: i < donationCount ? AppColors.primary : AppColors.dividerWarm),
+                                    ],
+                                  ],
+                                ),
+                                const SizedBox(height: 6),
+                                Text('${donationCount == 1 ? '1 donation' : '$donationCount donations'} · $donationCount ${donationCount == 1 ? 'life' : 'lives'} helped', style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
                               ],
                             ),
                           ),
+                        ],
+                      ),
+                      if (reactivateAt != null && !isAvailable) ...[
+                        const SizedBox(height: 18),
+                        Row(
+                          children: [
+                            for (var i = 0; i < 11; i++) ...[
+                              if (i > 0) const SizedBox(width: 4),
+                              Expanded(child: Container(height: 3, decoration: BoxDecoration(borderRadius: BorderRadius.circular(2), color: i < 2 ? AppColors.primary : AppColors.dividerWarm))),
+                            ],
+                          ],
                         ),
+                        const SizedBox(height: 9),
+                        Text('Eligible again in ${_eligibleInDays(reactivateAt)} days', style: const TextStyle(fontSize: 11.5, color: AppColors.textSecondary)),
                       ],
-                    ),
+                      const SizedBox(height: 8),
+                      Container(height: 1, color: AppColors.dividerWarm, margin: const EdgeInsets.symmetric(vertical: 18)),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: AppColors.cardBorderWarm),
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: [BoxShadow(color: AppColors.shadowCard, blurRadius: 10, offset: const Offset(0, 3))],
+                        ),
+                        clipBehavior: Clip.antiAlias,
+                        child: Column(
+                          children: [
+                            _menuRow(
+                              icon: LucideIcons.user,
+                              label: 'Personal information',
+                              onTap: () => _showSnackBar('$name · $bloodGroup · ${data['phone'] ?? ''}'),
+                              showDivider: true,
+                            ),
+                            _menuRow(
+                              icon: LucideIcons.history,
+                              label: 'Donation history',
+                              iconBg: AppColors.primaryLightTint,
+                              iconColor: AppColors.primary,
+                              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const DonationHistoryScreen())),
+                              showDivider: true,
+                            ),
+                            _menuRow(
+                              icon: LucideIcons.phone,
+                              label: 'Emergency contact',
+                              onTap: () => _showSnackBar('Opening Emergency contact...'),
+                              showDivider: true,
+                            ),
+                            _menuRow(
+                              icon: LucideIcons.sliders,
+                              label: 'Settings',
+                              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsScreen())),
+                              showDivider: false,
+                            ),
+                          ],
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: _logOut,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 4),
+                          child: Row(
+                            children: [
+                              const Icon(LucideIcons.logOut, color: AppColors.textMuted, size: 17),
+                              const SizedBox(width: 10),
+                              Text('Log out', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: AppColors.textMuted)),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                );
+              },
             );
           },
         ),
@@ -225,27 +279,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _translucentPill(String label, {bool bold = false, IconData? icon}) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: bold ? 11 : 10, vertical: 4),
-      decoration: BoxDecoration(
-        color: AppColors.whiteTextOnPrimary.withValues(alpha: 0.16),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (icon != null) ...[
-            Icon(icon, size: 11, color: AppColors.whiteTextOnPrimary),
-            const SizedBox(width: 4),
-          ],
-          Text(
-            label,
-            style: TextStyle(fontSize: bold ? 12.5 : 11, fontWeight: bold ? FontWeight.w700 : FontWeight.w600, color: AppColors.whiteTextOnPrimary),
-          ),
-        ],
-      ),
-    );
+  int _eligibleInDays(DateTime reactivateAt) {
+    final remaining = reactivateAt.difference(DateTime.now());
+    return remaining.inDays < 0 ? 0 : remaining.inDays + 1;
   }
 
   Widget _menuRow({

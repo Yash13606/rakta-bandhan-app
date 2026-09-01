@@ -53,8 +53,8 @@ class _AdminHospitalFormScreenState extends State<AdminHospitalFormScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: IconButton(icon: const Icon(LucideIcons.arrowLeft, color: AppColors.textPrimary), onPressed: () => Navigator.pop(context)),
-        title: Text(_isEditing ? 'Edit hospital' : 'Add hospital', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: AppColors.textPrimary)),
+        leading: IconButton(icon: const Icon(LucideIcons.arrowLeft, color: AppColors.textPrimaryWarm), onPressed: () => Navigator.pop(context)),
+        title: Text(_isEditing ? 'Edit hospital' : 'Add hospital', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: AppColors.textPrimaryWarm)),
         centerTitle: true,
       ),
       body: SafeArea(

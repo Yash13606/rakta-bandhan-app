@@ -6,9 +6,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../services/backend.dart';
 import '../theme/app_colors.dart';
+import '../widgets/blood_group_droplet.dart';
 import '../widgets/filter_chip_row.dart';
 import '../widgets/state_card.dart';
-import '../widgets/status_badge.dart';
 import 'donor_details_screen.dart';
 
 enum _MapPermissionState { checking, prompt, granted, denied }
@@ -179,7 +179,7 @@ class _FindDonorsScreenState extends State<FindDonorsScreen> {
                         top: positions[i]['top'] as double,
                         left: positions[i]['left'],
                         right: positions[i]['right'],
-                        child: _buildMapPin(pinDonors[i]),
+                        child: _buildMapPin(pinDonors[i], primary: i == 0),
                       ),
                   ],
                 );
@@ -421,26 +421,61 @@ class _FindDonorsScreenState extends State<FindDonorsScreen> {
     );
   }
 
-  Widget _buildMapPin(Map<String, dynamic> donor) {
+  /// Avatar-disc marker per Visual Richness Proposal #07 ("avatar markers,
+  /// not pins") — the donor's initials disc carries a group droplet badge
+  /// and a small pointer tail, rather than a pill of text. The primary
+  /// (nearest) marker is larger and solid; others sit tinted and smaller.
+  Widget _buildMapPin(Map<String, dynamic> donor, {required bool primary}) {
     final isHighlighted = _highlightedDonorId == donor['id'];
+    final size = primary ? 56.0 : 44.0;
+    final isAvailable = donor['isAvailable'] as bool;
+
     return GestureDetector(
       onTap: () => setState(() => _highlightedDonorId = donor['id'] as String),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(colors: [AppColors.gradientMarkerStart, AppColors.gradientMarkerEnd]),
-          borderRadius: BorderRadius.circular(20),
-          border: isHighlighted ? Border.all(color: Colors.white, width: 2) : null,
-          boxShadow: [BoxShadow(color: AppColors.shadowHero, blurRadius: 8, offset: const Offset(0, 3))],
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(LucideIcons.droplet, color: AppColors.whiteTextOnPrimary, size: 12),
-            const SizedBox(width: 4),
-            Text(donor['bloodGroup'] as String, style: const TextStyle(color: AppColors.whiteTextOnPrimary, fontSize: 11, fontWeight: FontWeight.w600)),
-          ],
-        ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Container(
+                width: size,
+                height: size,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: primary ? AppColors.primary : AppColors.primaryLightTint,
+                  border: Border.all(color: Colors.white, width: isHighlighted ? 3 : 2.5),
+                  boxShadow: [BoxShadow(color: AppColors.shadowHero, blurRadius: 10, offset: const Offset(0, 4))],
+                ),
+                alignment: Alignment.center,
+                child: Text(
+                  donor['initials'] as String,
+                  style: TextStyle(color: primary ? AppColors.whiteTextOnPrimary : AppColors.primary, fontSize: primary ? 15 : 12, fontWeight: FontWeight.w600),
+                ),
+              ),
+              Positioned(
+                right: -6,
+                top: -6,
+                child: BloodGroupDroplet(label: donor['bloodGroup'] as String, size: primary ? 24 : 20, filled: true, color: AppColors.primary, textColor: const Color(0xFFFBE6E8), fontSize: 8),
+              ),
+              if (!primary)
+                Positioned(
+                  right: -1,
+                  bottom: -1,
+                  child: Container(
+                    width: 11,
+                    height: 11,
+                    decoration: BoxDecoration(
+                      color: isAvailable ? AppColors.warmGreenText : AppColors.textMuted,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.white, width: 2),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+          CustomPaint(size: const Size(14, 7), painter: _MarkerTailPainter(color: Colors.white)),
+        ],
       ),
     );
   }
@@ -462,23 +497,31 @@ class _FindDonorsScreenState extends State<FindDonorsScreen> {
         children: [
           Row(
             children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primaryLightTint),
-                alignment: Alignment.center,
-                child: Text(donor['initials'] as String, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: AppColors.primary)),
+              Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primaryLightTint),
+                    alignment: Alignment.center,
+                    child: Text(donor['initials'] as String, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: AppColors.primary)),
+                  ),
+                  Positioned(
+                    right: -6,
+                    bottom: -4,
+                    child: BloodGroupDroplet(label: donor['bloodGroup'] as String, size: 20, filled: true, color: AppColors.primary, textColor: const Color(0xFFFBE6E8), fontSize: 7),
+                  ),
+                ],
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: 14),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        Text(donor['name'] as String, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.textPrimary)),
-                        const SizedBox(width: 8),
-                        StatusBadge(label: donor['bloodGroup'] as String, background: AppColors.primaryLightTint, textColor: AppColors.primary, fontSize: 11),
+                        Text(donor['name'] as String, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.textPrimaryWarm)),
                         if (isVerified) ...[
                           const SizedBox(width: 8),
                           Container(
@@ -618,6 +661,25 @@ class _MapOverlay extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Small downward-pointing tail beneath an avatar-disc map marker.
+class _MarkerTailPainter extends CustomPainter {
+  final Color color;
+  const _MarkerTailPainter({required this.color});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final path = Path()
+      ..moveTo(size.width / 2 - 7, 0)
+      ..lineTo(size.width / 2 + 7, 0)
+      ..lineTo(size.width / 2, size.height)
+      ..close();
+    canvas.drawPath(path, Paint()..color = color);
+  }
+
+  @override
+  bool shouldRepaint(covariant _MarkerTailPainter oldDelegate) => oldDelegate.color != color;
 }
 
 class _MapBasePainter extends CustomPainter {

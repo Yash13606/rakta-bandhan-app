@@ -4,6 +4,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../services/backend.dart';
 import '../theme/app_colors.dart';
+import '../widgets/blood_group_droplet.dart';
 import '../widgets/loading_button.dart';
 import 'accept_result_screen.dart';
 
@@ -161,13 +162,10 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
-                                  decoration: BoxDecoration(color: AppColors.primaryLightTint, borderRadius: BorderRadius.circular(9)),
-                                  child: Text(bloodGroup, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: AppColors.primary)),
-                                ),
-                                const SizedBox(width: 8),
+                                BloodGroupDroplet(label: bloodGroup, size: 44, filled: true, color: AppColors.primary, textColor: const Color(0xFFFBE6E8), fontSize: 15, serif: true),
+                                const SizedBox(width: 10),
                                 if (urgency != 'normal')
                                   Container(
                                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),

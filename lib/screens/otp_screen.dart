@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../services/backend.dart';
 import '../theme/app_colors.dart';
+import '../theme/app_text_styles.dart';
 import '../widgets/loading_button.dart';
 import 'main_navigation_screen.dart';
 import 'registration_screen.dart';
@@ -85,14 +86,14 @@ class _OtpScreenState extends State<OtpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.pageBackground,
+      backgroundColor: AppColors.warmPageBackground,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(
             LucideIcons.arrowLeft,
-            color: AppColors.textPrimary,
+            color: AppColors.textPrimaryWarm,
           ),
           onPressed: () => Navigator.pop(context),
         ),
@@ -103,22 +104,27 @@ class _OtpScreenState extends State<OtpScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 20),
-              // Header
+              const SizedBox(height: 12),
+              Container(
+                width: 60,
+                height: 60,
+                margin: const EdgeInsets.only(bottom: 16),
+                alignment: Alignment.center,
+                decoration: const BoxDecoration(color: AppColors.primaryLightTint, shape: BoxShape.circle),
+                child: const Icon(LucideIcons.shieldCheck, size: 24, color: AppColors.primary),
+              ),
               Text(
                 'Verify your number',
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleLarge,
+                style: AppTextStyles.display(fontSize: 22, color: AppColors.textPrimaryWarm),
               ),
               const SizedBox(height: 8),
               Text(
                 'We sent a 6-digit code to ${_getMaskedNumber()}',
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: AppColors.textSecondary,
-                    ),
+                style: const TextStyle(fontSize: 14, color: AppColors.textSecondary),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 36),
 
               // 6 OTP Input Boxes
               Row(

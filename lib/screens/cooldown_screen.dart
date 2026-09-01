@@ -22,7 +22,7 @@ class CooldownScreen extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: IconButton(
-                  icon: const Icon(LucideIcons.arrowLeft, color: AppColors.textPrimary),
+                  icon: const Icon(LucideIcons.arrowLeft, color: AppColors.textPrimaryWarm),
                   onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
                 ),
               ),
@@ -56,7 +56,7 @@ class CooldownScreen extends StatelessWidget {
                       children: [
                         const Icon(LucideIcons.clock, size: 30, color: AppColors.statusPendingText),
                         const SizedBox(height: 12),
-                        const Text('On cooldown', style: TextStyle(fontSize: 19, fontWeight: FontWeight.w500, color: AppColors.textPrimary)),
+                        const Text('On cooldown', style: TextStyle(fontSize: 19, fontWeight: FontWeight.w500, color: AppColors.textPrimaryWarm)),
                         const SizedBox(height: 8),
                         const Text(
                           "Your body needs time to recover. You'll be marked available again automatically.",
@@ -67,7 +67,7 @@ class CooldownScreen extends StatelessWidget {
                         Container(
                           width: double.infinity,
                           padding: const EdgeInsets.all(20),
-                          decoration: BoxDecoration(color: Colors.white, border: Border.all(color: AppColors.border), borderRadius: BorderRadius.circular(16)),
+                          decoration: BoxDecoration(color: Colors.white, border: Border.all(color: AppColors.cardBorderWarm), borderRadius: BorderRadius.circular(16)),
                           child: Column(
                             children: [
                               Text(
@@ -80,14 +80,21 @@ class CooldownScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 16),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(4),
-                          child: LinearProgressIndicator(
-                            value: progress,
-                            minHeight: 8,
-                            backgroundColor: AppColors.border,
-                            valueColor: const AlwaysStoppedAnimation(AppColors.primary),
-                          ),
+                        Row(
+                          children: [
+                            for (var i = 0; i < 18; i++) ...[
+                              if (i > 0) const SizedBox(width: 4),
+                              Expanded(
+                                child: Container(
+                                  height: 3,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(2),
+                                    color: i / 18 < progress ? AppColors.primary : AppColors.dividerWarm,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ],
                         ),
                       ],
                     ),
@@ -115,7 +122,7 @@ class CooldownScreen extends StatelessWidget {
             child: const Icon(LucideIcons.checkCircle, size: 24, color: AppColors.warmGreenText),
           ),
           const SizedBox(height: 16),
-          const Text("You're eligible to donate again", textAlign: TextAlign.center, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: AppColors.textPrimary)),
+          const Text("You're eligible to donate again", textAlign: TextAlign.center, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: AppColors.textPrimaryWarm)),
           const SizedBox(height: 8),
           const Text(
             'Your cooldown period is over. Turn your availability back on from Profile whenever you\'re ready.',

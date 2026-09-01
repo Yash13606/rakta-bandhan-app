@@ -87,10 +87,10 @@ class _DonorDetailsScreenState extends State<DonorDetailsScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(LucideIcons.arrowLeft, color: AppColors.textPrimary),
+          icon: const Icon(LucideIcons.arrowLeft, color: AppColors.textPrimaryWarm),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text('Donor profile', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: AppColors.textPrimary)),
+        title: const Text('Donor profile', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: AppColors.textPrimaryWarm)),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -184,7 +184,7 @@ class _DonorDetailsScreenState extends State<DonorDetailsScreen> {
                       Container(
                         width: double.infinity,
                         padding: const EdgeInsets.symmetric(vertical: 13),
-                        decoration: BoxDecoration(color: AppColors.border, borderRadius: BorderRadius.circular(14)),
+                        decoration: BoxDecoration(color: AppColors.cardBorderWarm, borderRadius: BorderRadius.circular(14)),
                         alignment: Alignment.center,
                         child: const Text('Currently unavailable to donate', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.textMuted)),
                       ),

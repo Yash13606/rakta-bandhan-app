@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap">
+<style>
+  body{margin:0;background:#E8E4DC}
+  a{color:#8C1F2B}a:hover{color:#5C1119}
+  @keyframes vr-pulse{0%{transform:scale(1);opacity:.5}100%{transform:scale(2.6);opacity:0}}
+  @keyframes vr-sweep{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+</style>
+</helmet>
+<svg style="position:absolute;width:0;height:0" aria-hidden="true">
+<symbol id="v-arrow" viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="v-chev" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="v-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1 1 16 0z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/><circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.6" fill="none"/></symbol>
+<symbol id="v-phone" viewBox="0 0 24 24"><path d="M5 4c0-1 1-2 2-2h2l2 5-2 2c1.4 3 3.6 5.2 6.6 6.6l2-2 5 2v2c0 1-1 2-2 2C10 22 2 14 2 6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="v-msg" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-4 4V5z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="v-check" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="1.9" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="v-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 4 1.6 5.2 1.6 6.5H4.4C4.4 13.2 6 12 6 8z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M10 19a2 2 0 0 0 4 0" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="v-flame" viewBox="0 0 24 24"><path d="M12 2.5c1 3 4 4.5 4 8.5a4 4 0 1 1-8 0c0-1 .3-1.8.8-2.5.2 1 .9 1.6 1.7 1.6.9 0 1.3-.8 1-1.6-.7-1.8-1-3.5.5-6z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="v-home" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1v-9z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="v-clip" viewBox="0 0 24 24"><rect x="6" y="4" width="12" height="17" rx="2" stroke="currentColor" stroke-width="1.6" fill="none"/><rect x="9" y="2.2" width="6" height="3" rx="1" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M9 11h6M9 15h6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="v-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M4 20c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="v-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="v-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M8 11V8a4 4 0 1 1 8 0v3" stroke="currentColor" stroke-width="1.6" fill="none"/></symbol>
+<symbol id="v-sliders" viewBox="0 0 24 24"><path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h13M21 18h0" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/><circle cx="13" cy="6" r="2" stroke="currentColor" stroke-width="1.6" fill="none"/><circle cx="7" cy="12" r="2" stroke="currentColor" stroke-width="1.6" fill="none"/><circle cx="17" cy="18" r="2" stroke="currentColor" stroke-width="1.6" fill="none"/></symbol>
+
+<symbol id="v-drop-shape" viewBox="0 0 40 48"><path d="M20 2c8 10.4 15 17.4 15 24.6A15 15 0 1 1 5 26.6C5 19.4 12 12.4 20 2z" fill="currentColor"/></symbol>
+<symbol id="v-drop-outline" viewBox="0 0 40 48"><path d="M20 2c8 10.4 15 17.4 15 24.6A15 15 0 1 1 5 26.6C5 19.4 12 12.4 20 2z" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+</svg>
+
+<div style="padding:56px 64px 80px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif">
+
+  <div style="max-width:800px;margin-bottom:24px">
+    <div style="font-size:11px;font-weight:600;letter-spacing:.14em;color:#8C1F2B;text-transform:uppercase">Visual richness — proposal</div>
+    <div style="font-family:'Newsreader',Georgia,serif;font-size:38px;font-weight:600;color:#241416;letter-spacing:-.02em;line-height:1.1;margin-top:12px">Six devices, not twelve illustrations</div>
+    <div style="font-size:14.5px;color:#5A564F;line-height:1.65;margin-top:16px">The approved system stays exactly as it is. What's added is a second layer of <strong style="font-weight:600;color:#241416">recurring visual devices</strong> that carry product meaning — so richness comes from the same vocabulary appearing everywhere, not from each screen inventing its own artwork.</div>
+  </div>
+
+  <div style="max-width:1000px;margin-bottom:20px;padding:18px 20px;background:#F3EFE7;border-left:2px solid #8C1F2B">
+    <div style="font-size:12px;font-weight:600;color:#241416;margin-bottom:12px">The six devices</div>
+    <div style="display:flex;gap:22px">
+      <div style="flex:1"><div style="font-size:10.5px;font-weight:600;letter-spacing:.1em;color:#8C1F2B;text-transform:uppercase">Group token</div><div style="font-size:12px;color:#5A564F;line-height:1.5;margin-top:5px">Blood group inside a droplet. A group is never a rectangle again.</div></div>
+      <div style="flex:1"><div style="font-size:10.5px;font-weight:600;letter-spacing:.1em;color:#8C1F2B;text-transform:uppercase">Person</div><div style="font-size:12px;color:#5A564F;line-height:1.5;margin-top:5px">Initial disc + live ring. Human presence, honestly — no stock faces.</div></div>
+      <div style="flex:1"><div style="font-size:10.5px;font-weight:600;letter-spacing:.1em;color:#8C1F2B;text-transform:uppercase">Radius</div><div style="font-size:12px;color:#5A564F;line-height:1.5;margin-top:5px">The ring system carrying real distance. Spatial, not decorative.</div></div>
+      <div style="flex:1"><div style="font-size:10.5px;font-weight:600;letter-spacing:.1em;color:#8C1F2B;text-transform:uppercase">Connection</div><div style="font-size:12px;color:#5A564F;line-height:1.5;margin-top:5px">Hairline joining two people. Solid when live, dashed when pending.</div></div>
+      <div style="flex:1"><div style="font-size:10.5px;font-weight:600;letter-spacing:.1em;color:#8C1F2B;text-transform:uppercase">Compatibility</div><div style="font-size:12px;color:#5A564F;line-height:1.5;margin-top:5px">Which groups can answer this need, shown as relationship.</div></div>
+      <div style="flex:1"><div style="font-size:10.5px;font-weight:600;letter-spacing:.1em;color:#8C1F2B;text-transform:uppercase">Impact trail</div><div style="font-size:12px;color:#5A564F;line-height:1.5;margin-top:5px">Donations as a sequence of drops. Cumulative, not a number.</div></div>
+    </div>
+  </div>
+
+  <div style="max-width:1000px;margin-bottom:20px;padding:16px 20px;background:#F3EFE7;border-left:2px solid #8C1F2B">
+    <div style="font-size:12px;font-weight:600;color:#241416">Opacity never wraps text</div>
+    <div style="font-size:12.5px;color:#5A564F;line-height:1.62;margin-top:7px">Recession — distance, archival status, expiry — is carried by the <strong style="font-weight:600;color:#241416">devices only</strong>: droplet fill and size, avatar disc tint and diameter, dot colour, rule weight. A container <code style="font-family:ui-monospace,monospace;font-size:11.5px;background:#E8E1D5;padding:1px 4px;border-radius:3px">opacity</code> that encloses a string silently invalidates that string's measured contrast, so it is never used for that purpose here.</div>
+    <div style="font-size:12.5px;color:#5A564F;line-height:1.62;margin-top:9px">Text steps down by <strong style="font-weight:600;color:#241416">weight and token</strong> instead: <code style="font-family:ui-monospace,monospace;font-size:11.5px;background:#E8E1D5;padding:1px 4px;border-radius:3px">#241416</code> primary (14.1:1), <code style="font-family:ui-monospace,monospace;font-size:11.5px;background:#E8E1D5;padding:1px 4px;border-radius:3px">#3D3630</code> archival titles at w500 (10.5:1), <code style="font-family:ui-monospace,monospace;font-size:11.5px;background:#E8E1D5;padding:1px 4px;border-radius:3px">#6E6A62</code> muted (5.04:1) — all measured on #FBF7F1, all clearing AA at every size used. On the map's lightest disc (#F6F2EA) #6E6A62 measures 4.70:1.</div>
+  </div>
+
+  <div style="max-width:1000px;margin-bottom:44px;padding:16px 20px;background:#F3EFE7;border-left:2px solid #241416">
+    <div style="font-size:12px;font-weight:600;color:#241416">Rhythm is deliberate</div>
+    <div style="font-size:12.5px;color:#5A564F;line-height:1.6;margin-top:7px">Onboarding <strong style="font-weight:600;color:#241416">RICH</strong> → Home <strong style="font-weight:600;color:#241416">RICH</strong> → Requests <strong style="font-weight:600;color:#241416">LIVE</strong> → Create <strong style="font-weight:600;color:#241416">GUIDED</strong> → Matching <strong style="font-weight:600;color:#241416">ALIVE</strong> → Match <strong style="font-weight:600;color:#241416">EMOTIONAL</strong> → Profile <strong style="font-weight:600;color:#241416">IDENTITY</strong> → Settings/Legal <strong style="font-weight:600;color:#241416">QUIET</strong>. Settings and the legal screens are deliberately left as they are — a product where every screen is decorated has no peaks.</div>
+  </div>
+
+  <div style="display:flex;gap:36px;align-items:flex-start;flex-wrap:wrap">
+
+    <!-- ============ 01 ONBOARDING ============ -->
+    <div style="flex:none">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px"><span style="font-size:11px;font-weight:600;letter-spacing:.12em;color:#8C1F2B">01</span><span style="font-size:13.5px;font-weight:600;color:#241416">Onboarding · page 2</span></div>
+      <div style="width:390px;font-size:12px;color:#5A564F;line-height:1.5;margin-bottom:12px">Ring keeps the signature; compatibility becomes legible in one glance.</div>
+      <div style="width:390px;height:844px;position:relative;overflow:hidden;border-radius:34px;background:#FBF7F1;box-shadow:0 24px 56px rgba(43,20,20,.16)">
+        <div style="position:absolute;left:0;right:0;top:0;height:46px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:13px;font-weight:500;color:#241416"><span>9:41</span><span style="width:16px;height:10px;border:1.4px solid #241416;border-radius:2px;position:relative"><span style="position:absolute;inset:1.5px;background:#241416;border-radius:1px"></span></span></div>
+
+        <div style="position:absolute;left:196px;top:266px;width:0;height:0">
+          <div style="position:absolute;width:300px;height:300px;margin:-150px 0 0 -150px;box-sizing:border-box;border-radius:50%;border:1px solid #EDE4D6"></div>
+          <div style="position:absolute;width:211px;height:211px;margin:-105.5px 0 0 -105.5px;box-sizing:border-box;border-radius:50%;border:1px solid #E5DCCC"></div>
+
+          <svg width="320" height="320" viewBox="0 0 320 320" style="position:absolute;margin:-160px 0 0 -160px;overflow:visible">
+            <path d="M160 54.5 A105.5 105.5 0 0 1 251.4 106.2" stroke="#C98B92" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+            <path d="M160 108 L160 76" stroke="#D8CFC2" stroke-width="1" stroke-dasharray="2.5 3.5"/>
+            <path d="M138 122 L96 96" stroke="#D8CFC2" stroke-width="1" stroke-dasharray="2.5 3.5"/>
+            <path d="M182 122 L224 96" stroke="#D8CFC2" stroke-width="1" stroke-dasharray="2.5 3.5"/>
+            <path d="M160 212 L160 244" stroke="#D8CFC2" stroke-width="1" stroke-dasharray="2.5 3.5"/>
+          </svg>
+
+          <div style="position:absolute;left:-46px;top:-52px;width:92px;height:110px;display:flex;align-items:center;justify-content:center">
+            <svg width="92" height="110" viewBox="0 0 40 48" style="position:absolute;color:#8C1F2B"><use href="#v-drop-shape"></use></svg>
+            <span style="position:relative;font-family:'Newsreader',Georgia,serif;font-size:32px;font-weight:600;color:#FBE6E8;letter-spacing:-.02em;margin-top:14px">O+</span>
+          </div>
+          <div style="position:absolute;left:-64px;top:66px;width:128px;text-align:center;font-size:9.5px;font-weight:600;letter-spacing:.13em;color:#6E6A62;text-transform:uppercase">2 units · urgent</div>
+
+          <div style="position:absolute;left:-16px;top:-134px;width:32px;height:38px;display:flex;align-items:center;justify-content:center"><svg width="32" height="38" viewBox="0 0 40 48" style="position:absolute;color:#F6DCDE"><use href="#v-drop-shape"></use></svg><span style="position:relative;font-size:11px;font-weight:700;color:#8C1F2B;margin-top:5px">A+</span></div>
+          <div style="position:absolute;left:-80px;top:-88px;width:32px;height:38px;display:flex;align-items:center;justify-content:center"><svg width="32" height="38" viewBox="0 0 40 48" style="position:absolute;color:#F6DCDE"><use href="#v-drop-shape"></use></svg><span style="position:relative;font-size:11px;font-weight:700;color:#8C1F2B;margin-top:5px">O&#8722;</span></div>
+          <div style="position:absolute;left:48px;top:-88px;width:32px;height:38px;display:flex;align-items:center;justify-content:center"><svg width="32" height="38" viewBox="0 0 40 48" style="position:absolute;color:#F6DCDE"><use href="#v-drop-shape"></use></svg><span style="position:relative;font-size:11px;font-weight:700;color:#8C1F2B;margin-top:5px">B+</span></div>
+          <div style="position:absolute;left:-16px;top:96px;width:32px;height:38px;display:flex;align-items:center;justify-content:center"><svg width="32" height="38" viewBox="0 0 40 48" style="position:absolute;color:#F3EFE7"><use href="#v-drop-shape"></use></svg><span style="position:relative;font-size:11px;font-weight:700;color:#6E6A62;margin-top:5px">AB</span></div>
+        </div>
+
+        <div style="position:absolute;left:28px;top:492px;right:28px">
+          <div style="font-family:'Newsreader',Georgia,serif;font-size:29px;font-weight:600;color:#241416;letter-spacing:-.016em;line-height:1.16;max-width:284px">Find blood when it matters</div>
+          <div style="width:40px;height:1px;background:#D8CFC2;margin:18px 0"></div>
+          <div style="font-size:13.5px;color:#6E6A62;line-height:1.62;max-width:278px">Four blood groups can answer one need. We alert every compatible donor nearby at once.</div>
+        </div>
+
+        <div style="position:absolute;left:0;right:0;bottom:20px;height:104px;display:flex;align-items:center;padding:0 24px;box-sizing:border-box">
+          <div style="width:64px;font-size:13.5px;font-weight:500;color:#6E6A62">Skip</div>
+          <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px">
+            <span style="width:6px;height:6px;border-radius:3px;background:#D3C9BC"></span><span style="width:22px;height:6px;border-radius:3px;background:#8C1F2B"></span><span style="width:6px;height:6px;border-radius:3px;background:#D3C9BC"></span><span style="width:6px;height:6px;border-radius:3px;background:#D3C9BC"></span>
+          </div>
+          <div style="width:64px;display:flex;justify-content:flex-end"><div style="width:56px;height:56px;border-radius:50%;background:#8C1F2B;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px rgba(140,31,43,.26)"><svg width="21" height="21" style="color:#FBE6E8"><use href="#v-chev"></use></svg></div></div>
+        </div>
+      </div>
+      <div style="width:390px;font-size:12.5px;color:#5A564F;line-height:1.6;margin-top:14px">The need is a filled droplet at the centre; the three groups that can answer it are smaller tinted droplets on the ring, tethered by dotted lines. AB sits greyed — it cannot help. That single distinction teaches compatibility without a word of copy.</div>
+    </div>
+
+    <!-- ============ 02 HOME ============ -->
+    <div style="flex:none">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px"><span style="font-size:11px;font-weight:600;letter-spacing:.12em;color:#8C1F2B">02</span><span style="font-size:13.5px;font-weight:600;color:#241416">Home</span></div>
+      <div style="width:390px;font-size:12px;color:#5A564F;line-height:1.5;margin-bottom:12px">Same single card — but the request now has a face, a group and a distance.</div>
+      <div style="width:390px;height:844px;position:relative;overflow:hidden;border-radius:34px;background:#FBF7F1;box-shadow:0 24px 56px rgba(43,20,20,.16);display:flex;flex-direction:column">
+        <div style="flex:0 0 46px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:13px;font-weight:500;color:#241416"><span>9:41</span><span style="width:16px;height:10px;border:1.4px solid #241416;border-radius:2px;position:relative"><span style="position:absolute;inset:1.5px;background:#241416;border-radius:1px"></span></span></div>
+
+        <div style="flex:1;padding:8px 24px 0;overflow:hidden">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between">
+            <div>
+              <div style="font-size:11.5px;font-weight:600;letter-spacing:.1em;color:#6E6A62;text-transform:uppercase">Good morning</div>
+              <div style="font-family:'Newsreader',Georgia,serif;font-size:30px;font-weight:600;color:#241416;letter-spacing:-.02em;line-height:1.1;margin-top:5px">Aditi</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding-top:4px">
+              <div style="position:relative;width:34px;height:40px;display:flex;align-items:center;justify-content:center">
+                <svg width="34" height="40" viewBox="0 0 40 48" style="position:absolute;color:#F6DCDE"><use href="#v-drop-shape"></use></svg>
+                <span style="position:relative;font-size:12px;font-weight:700;color:#8C1F2B;margin-top:5px">O+</span>
+              </div>
+              <div style="position:relative"><svg width="21" height="21" style="color:#241416"><use href="#v-bell"></use></svg><span style="position:absolute;top:0;right:-2px;width:7px;height:7px;border-radius:50%;background:#8C1F2B;box-shadow:0 0 0 2px #FBF7F1"></span></div>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:7px;margin-top:14px">
+            <span style="position:relative;width:8px;height:8px;display:inline-block"><span style="position:absolute;inset:0;border-radius:50%;background:#2C6636"></span><span style="position:absolute;inset:0;border-radius:50%;background:#2C6636;animation:vr-pulse 2.4s cubic-bezier(.22,.61,.36,1) infinite"></span></span>
+            <span style="font-size:12.5px;font-weight:600;color:#2C6636">Available to donate</span>
+            <span style="font-size:12.5px;color:#6E6A62">· verified</span>
+          </div>
+
+          <div style="height:1px;background:#E5DCCC;margin-top:20px"></div>
+          <div style="margin-top:20px;font-size:11px;font-weight:600;letter-spacing:.11em;color:#6E6A62;text-transform:uppercase">Someone needs you</div>
+
+          <div style="margin-top:12px;background:#fff;border-radius:20px;padding:0;box-shadow:0 10px 28px rgba(43,20,20,.09);overflow:hidden">
+            <div style="height:4px;background:#8C1F2B"></div>
+            <div style="padding:16px 18px 18px">
+              <div style="display:flex;align-items:center;gap:14px">
+                <div style="position:relative;width:52px;height:62px;display:flex;align-items:center;justify-content:center;flex:none">
+                  <svg width="52" height="62" viewBox="0 0 40 48" style="position:absolute;color:#8C1F2B"><use href="#v-drop-shape"></use></svg>
+                  <span style="position:relative;font-family:'Newsreader',Georgia,serif;font-size:20px;font-weight:600;color:#FBE6E8;margin-top:8px">O+</span>
+                </div>
+                <div style="flex:1">
+                  <div style="display:flex;align-items:center;gap:6px">
+                    <svg width="13" height="13" style="color:#8C1F2B"><use href="#v-flame"></use></svg>
+                    <span style="font-size:11px;font-weight:600;letter-spacing:.1em;color:#8C1F2B;text-transform:uppercase">Urgent</span>
+                  </div>
+                  <div style="font-size:15.5px;font-weight:600;color:#241416;letter-spacing:-.005em;margin-top:5px">Sneha Hospital</div>
+                  <div style="font-size:12px;color:#6E6A62;margin-top:2px">Koramangala · 2 units · 12 min ago</div>
+                </div>
+              </div>
+
+              <div style="display:flex;align-items:center;gap:9px;margin-top:15px;padding-top:14px;border-top:1px solid #F3EFE7">
+                <span style="width:7px;height:7px;border-radius:50%;background:#8C1F2B;flex:none"></span>
+                <div style="flex:1;height:1px;background:#EFE7DC;position:relative"><span style="position:absolute;left:34%;top:-2px;width:5px;height:5px;border-radius:50%;background:#D8CFC2"></span><span style="position:absolute;left:68%;top:-2px;width:5px;height:5px;border-radius:50%;background:#D8CFC2"></span></div>
+                <span style="font-size:11.5px;font-weight:600;color:#241416;flex:none">2.4 km</span>
+                <div style="width:26px;height:26px;border-radius:50%;background:#F6DCDE;display:flex;align-items:center;justify-content:center;flex:none;font-size:9.5px;font-weight:600;color:#8C1F2B">You</div>
+              </div>
+
+              <button style="margin-top:16px;width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:14px;padding:13px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit">Accept &amp; help</button>
+            </div>
+          </div>
+
+          <div style="height:1px;background:#E5DCCC;margin-top:24px"></div>
+          <div style="margin-top:20px;font-size:11px;font-weight:600;letter-spacing:.11em;color:#6E6A62;text-transform:uppercase">Your record</div>
+          <div style="display:flex;align-items:flex-end;gap:14px;margin-top:14px">
+            <span style="font-family:'Newsreader',Georgia,serif;font-size:44px;font-weight:600;color:#241416;letter-spacing:-.025em;line-height:.9">3</span>
+            <div style="display:flex;align-items:flex-end;gap:7px;padding-bottom:5px">
+              <svg width="20" height="24" viewBox="0 0 40 48" style="color:#8C1F2B"><use href="#v-drop-shape"></use></svg>
+              <svg width="20" height="24" viewBox="0 0 40 48" style="color:#8C1F2B"><use href="#v-drop-shape"></use></svg>
+              <svg width="20" height="24" viewBox="0 0 40 48" style="color:#8C1F2B"><use href="#v-drop-shape"></use></svg>
+              <svg width="20" height="24" viewBox="0 0 40 48" style="color:#E5DCCC"><use href="#v-drop-outline"></use></svg>
+              <svg width="20" height="24" viewBox="0 0 40 48" style="color:#E5DCCC"><use href="#v-drop-outline"></use></svg>
+            </div>
+          </div>
+          <div style="font-size:11.5px;color:#6E6A62;margin-top:10px">Three lives helped · eligible again in 83 days</div>
+        </div>
+
+        <div style="flex:0 0 64px;display:flex;align-items:center;background:#fff;box-shadow:0 -6px 16px rgba(43,20,20,.05);padding:0 10px;gap:6px">
+          <div style="flex:1;background:#F6DCDE;border-radius:14px;padding:8px 0;display:flex;flex-direction:column;align-items:center;gap:3px;color:#8C1F2B"><svg width="18" height="18"><use href="#v-home"></use></svg><span style="font-size:10.5px;font-weight:600">Home</span></div>
+          <div style="flex:1;padding:8px 0;display:flex;flex-direction:column;align-items:center;gap:3px;color:#6E6A62"><svg width="18" height="18"><use href="#v-clip"></use></svg><span style="font-size:10.5px">Requests</span></div>
+          <div style="flex:1;padding:8px 0;display:flex;flex-direction:column;align-items:center;gap:3px;color:#6E6A62"><svg width="18" height="18"><use href="#v-user"></use></svg><span style="font-size:10.5px">Profile</span></div>
+        </div>
+        <div style="flex:0 0 20px;display:flex;align-items:center;justify-content:center"><div style="width:120px;height:4px;background:#241416;border-radius:2px;opacity:.7"></div></div>
+      </div>
+      <div style="width:390px;font-size:12.5px;color:#5A564F;line-height:1.6;margin-top:14px">Still one card. What changed: a red urgency edge along its top, the group as a droplet, a <strong style="font-weight:600;color:#241416">distance line</strong> running from the request to you, and the record as three filled drops against two empty ones. Your own group now sits in the header as identity.</div>
+    </div>
+
+    <!-- ============ 03 REQUESTS ============ -->
+    <div style="flex:none">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px"><span style="font-size:11px;font-weight:600;letter-spacing:.12em;color:#8C1F2B">03</span><span style="font-size:13.5px;font-weight:600;color:#241416">Requests · mine</span></div>
+      <div style="width:390px;font-size:12px;color:#5A564F;line-height:1.5;margin-bottom:12px">Four statuses, four genuinely different personalities.</div>
+      <div style="width:390px;height:844px;position:relative;overflow:hidden;border-radius:34px;background:#FBF7F1;box-shadow:0 24px 56px rgba(43,20,20,.16);display:flex;flex-direction:column">
+        <div style="flex:0 0 46px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:13px;font-weight:500;color:#241416"><span>9:41</span><span style="width:16px;height:10px;border:1.4px solid #241416;border-radius:2px;position:relative"><span style="position:absolute;inset:1.5px;background:#241416;border-radius:1px"></span></span></div>
+        <div style="flex:1;padding:8px 24px 0;overflow:hidden">
+          <div style="font-family:'Newsreader',Georgia,serif;font-size:30px;font-weight:600;color:#241416;letter-spacing:-.02em;line-height:1.1">Requests</div>
+          <div style="margin-top:18px;display:flex;gap:22px;border-bottom:1px solid #E5DCCC">
+            <div style="padding:0 0 11px;font-size:13.5px;font-weight:500;color:#6E6A62">Near you</div>
+            <div style="padding:0 0 11px;font-size:13.5px;font-weight:600;color:#241416;box-shadow:inset 0 -2px 0 #8C1F2B">Mine</div>
+          </div>
+
+          <div style="margin-top:16px;background:#fff;border-radius:18px;padding:0;box-shadow:0 8px 22px rgba(43,20,20,.08);overflow:hidden">
+            <div style="height:3px;background:#2C6636"></div>
+            <div style="padding:15px 16px">
+              <div style="display:flex;align-items:center;gap:12px">
+                <div style="position:relative;width:38px;height:46px;display:flex;align-items:center;justify-content:center;flex:none"><svg width="38" height="46" viewBox="0 0 40 48" style="position:absolute;color:#8C1F2B"><use href="#v-drop-shape"></use></svg><span style="position:relative;font-size:13px;font-weight:700;color:#FBE6E8;margin-top:6px">O+</span></div>
+                <div style="flex:1"><div style="font-size:10px;font-weight:600;letter-spacing:.1em;color:#2C6636;text-transform:uppercase">Matched</div><div style="font-size:14px;font-weight:600;color:#241416;margin-top:3px">Sneha Hospital</div></div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;margin-top:14px;padding-top:13px;border-top:1px solid #F3EFE7">
+                <div style="width:32px;height:32px;border-radius:50%;background:#F6DCDE;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#8C1F2B;flex:none">KI</div>
+                <div style="width:22px;height:1px;background:#2C6636;flex:none"></div>
+                <div style="width:32px;height:32px;border-radius:50%;background:#E8F1E2;display:flex;align-items:center;justify-content:center;flex:none"><svg width="14" height="14" style="color:#2C6636"><use href="#v-check"></use></svg></div>
+                <div style="flex:1;font-size:12.5px;color:#241416;font-weight:600;padding-left:2px">Karthik Iyer</div>
+                <svg width="15" height="15" style="color:#2C6636;flex:none"><use href="#v-phone"></use></svg>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:14px;padding:15px 0 16px;border-bottom:1px solid #EBE3D5">
+            <div style="display:flex;align-items:center;gap:12px">
+              <div style="position:relative;width:34px;height:41px;display:flex;align-items:center;justify-content:center;flex:none"><svg width="34" height="41" viewBox="0 0 40 48" style="position:absolute;color:#F6DCDE"><use href="#v-drop-shape"></use></svg><span style="position:relative;font-size:11.5px;font-weight:700;color:#8C1F2B;margin-top:5px">A&#8722;</span></div>
+              <div style="flex:1"><div style="font-size:10px;font-weight:600;letter-spacing:.1em;color:#8C1F2B;text-transform:uppercase">Searching</div><div style="font-size:14px;font-weight:600;color:#241416;margin-top:3px">Indiranagar Clinic</div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;margin-top:12px">
+              <div style="display:flex;gap:-4px">
+                <span style="width:22px;height:22px;border-radius:50%;background:#F6DCDE;border:1.5px solid #fff;display:inline-block"></span>
+                <span style="width:22px;height:22px;border-radius:50%;background:#F0D2D5;border:1.5px solid #fff;display:inline-block;margin-left:-7px"></span>
+                <span style="width:22px;height:22px;border-radius:50%;background:#EBC9CD;border:1.5px solid #fff;display:inline-block;margin-left:-7px"></span>
+              </div>
+              <span style="font-size:11.5px;color:#6E6A62">9 donors alerted · expanding to 15 km</span>
+            </div>
+          </div>
+
+          <div style="padding:15px 0 16px;border-bottom:1px solid #EBE3D5">
+            <div style="display:flex;align-items:center;gap:12px">
+              <div style="position:relative;width:32px;height:38px;display:flex;align-items:center;justify-content:center;flex:none"><svg width="32" height="38" viewBox="0 0 40 48" style="position:absolute;color:#E8F1E2"><use href="#v-drop-shape"></use></svg><span style="position:relative;font-size:11px;font-weight:700;color:#2C6636;margin-top:5px">B+</span></div>
+              <div style="flex:1"><div style="font-size:10px;font-weight:600;letter-spacing:.1em;color:#2C6636;text-transform:uppercase">Fulfilled</div><div style="font-size:14px;font-weight:600;color:#241416;margin-top:3px">Apollo Hospital</div></div>
+              <svg width="15" height="15" style="color:#2C6636;flex:none"><use href="#v-check"></use></svg>
+            </div>
+          </div>
+
+          <div style="padding:15px 0 16px">
+            <div style="display:flex;align-items:center;gap:12px">
+              <div style="position:relative;width:30px;height:36px;display:flex;align-items:center;justify-content:center;flex:none"><svg width="30" height="36" viewBox="0 0 40 48" style="position:absolute;color:#D8CFC2"><use href="#v-drop-outline"></use></svg><span style="position:relative;font-size:10.5px;font-weight:700;color:#6E6A62;margin-top:4px">AB</span></div>
+              <div style="flex:1"><div style="font-size:10px;font-weight:600;letter-spacing:.1em;color:#6E6A62;text-transform:uppercase">Expired</div><div style="font-size:14px;font-weight:600;color:#241416;margin-top:3px">Whitefield Diagnostics</div><div style="font-size:11.5px;color:#6E6A62;margin-top:3px">No donor in 6 hours — matching stopped</div></div>
+            </div>
+          </div>
+        </div>
+        <div style="flex:0 0 64px;display:flex;align-items:center;background:#fff;box-shadow:0 -6px 16px rgba(43,20,20,.05);padding:0 10px;gap:6px">
+          <div style="flex:1;padding:8px 0;display:flex;flex-direction:column;align-items:center;gap:3px;color:#6E6A62"><svg width="18" height="18"><use href="#v-home"></use></svg><span style="font-size:10.5px">Home</span></div>
+          <div style="flex:1;background:#F6DCDE;border-radius:14px;padding:8px 0;display:flex;flex-direction:column;align-items:center;gap:3px;color:#8C1F2B"><svg width="18" height="18"><use href="#v-clip"></use></svg><span style="font-size:10.5px;font-weight:600">Requests</span></div>
+          <div style="flex:1;padding:8px 0;display:flex;flex-direction:column;align-items:center;gap:3px;color:#6E6A62"><svg width="18" height="18"><use href="#v-user"></use></svg><span style="font-size:10.5px">Profile</span></div>
+        </div>
+        <div style="flex:0 0 20px;display:flex;align-items:center;justify-content:center"><div style="width:120px;height:4px;background:#241416;border-radius:2px;opacity:.7"></div></div>
+      </div>
+      <div style="width:390px;font-size:12.5px;color:#5A564F;line-height:1.6;margin-top:14px">Matched is the only card, with a green edge and the connection drawn to a named person. Searching shows the donor cluster it has reached. Fulfilled is a green outline droplet. Expired is an empty outline at 55%. The droplet fill state alone tells you the status.</div>
+    </div>
+
+    <!-- ============ 04 CREATE REQUEST ============ -->
+    <div style="flex:none">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px"><span style="font-size:11px;font-weight:600;letter-spacing:.12em;color:#8C1F2B">04</span><span style="font-size:13.5px;font-weight:600;color:#241416">Create request</span></div>
+      <div style="width:390px;font-size:12px;color:#5A564F;line-height:1.5;margin-bottom:12px">Approved single-screen flow. Groups now look like blood; the request assembles visibly.</div>
+      <div style="width:390px;height:844px;position:relative;overflow:hidden;border-radius:34px;background:#FBF7F1;box-shadow:0 24px 56px rgba(43,20,20,.16);display:flex;flex-direction:column">
+        <div style="flex:0 0 46px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:13px;font-weight:500;color:#241416"><span>9:41</span><span style="width:16px;height:10px;border:1.4px solid #241416;border-radius:2px;position:relative"><span style="position:absolute;inset:1.5px;background:#241416;border-radius:1px"></span></span></div>
+        <div style="flex:0 0 48px;display:flex;align-items:center;padding:0 18px;gap:12px"><svg width="20" height="20" style="color:#241416"><use href="#v-arrow"></use></svg><span style="font-size:16px;font-weight:600;color:#241416">New request</span></div>
+
+        <div style="flex:1;padding:4px 28px 0;overflow:hidden">
+          <div style="font-family:'Newsreader',Georgia,serif;font-size:27px;font-weight:600;color:#241416;letter-spacing:-.016em;line-height:1.18;max-width:280px">Who needs blood?</div>
+
+          <div style="margin-top:22px;display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;border-bottom:1px solid #E5DCCC">
+            <div style="display:flex;align-items:center;gap:12px">
+              <span style="width:18px;height:18px;border-radius:50%;background:#2C6636;display:flex;align-items:center;justify-content:center;flex:none"><svg width="11" height="11" style="color:#fff"><use href="#v-check"></use></svg></span>
+              <div style="position:relative;width:40px;height:48px;display:flex;align-items:center;justify-content:center;flex:none"><svg width="40" height="48" viewBox="0 0 40 48" style="position:absolute;color:#8C1F2B"><use href="#v-drop-shape"></use></svg><span style="position:relative;font-family:'Newsreader',Georgia,serif;font-size:16px;font-weight:600;color:#FBE6E8;margin-top:6px">O+</span></div>
+              <div><div style="font-size:10.5px;font-weight:600;letter-spacing:.11em;color:#6E6A62;text-transform:uppercase">Group</div><div style="font-size:14px;font-weight:600;color:#241416;margin-top:2px">2 units</div></div>
+            </div>
+            <svg width="15" height="15" style="color:#6E6A62"><use href="#v-chev"></use></svg>
+          </div>
+
+          <div style="margin-top:18px">
+            <div style="display:flex;align-items:center;gap:11px">
+              <span style="width:18px;height:18px;border-radius:50%;border:1.5px solid #8C1F2B;flex:none"></span>
+              <div style="font-size:10.5px;font-weight:600;letter-spacing:.11em;color:#8C1F2B;text-transform:uppercase">How urgent</div>
+            </div>
+            <div style="margin-top:12px;display:flex;flex-direction:column;gap:9px">
+              <div style="border:1px solid #E5DCCC;border-radius:15px;padding:12px 15px;display:flex;align-items:center;gap:13px">
+                <div style="display:flex;gap:3px;flex:none"><span style="width:5px;height:16px;border-radius:2px;background:#D8CFC2"></span><span style="width:5px;height:16px;border-radius:2px;background:#EFE7DC"></span><span style="width:5px;height:16px;border-radius:2px;background:#EFE7DC"></span></div>
+                <div><div style="font-size:14px;font-weight:600;color:#241416">Normal</div><div style="font-size:11.5px;color:#6E6A62;margin-top:1px">Within a day or two · 5 km</div></div>
+              </div>
+              <div style="background:#8C1F2B;border-radius:15px;padding:12px 15px;display:flex;align-items:center;gap:13px;box-shadow:0 10px 24px rgba(140,31,43,.24)">
+                <div style="display:flex;gap:3px;flex:none"><span style="width:5px;height:16px;border-radius:2px;background:#FBE6E8"></span><span style="width:5px;height:16px;border-radius:2px;background:#FBE6E8"></span><span style="width:5px;height:16px;border-radius:2px;background:rgba(251,230,232,.3)"></span></div>
+                <div><div style="font-size:14px;font-weight:600;color:#FFF9F5">Urgent</div><div style="font-size:11.5px;color:#E9BFC4;margin-top:1px">Within hours · 5 km, then 15 km</div></div>
+              </div>
+              <div style="border:1px solid #E5DCCC;border-radius:15px;padding:12px 15px;display:flex;align-items:center;gap:13px">
+                <div style="display:flex;gap:3px;flex:none"><span style="width:5px;height:16px;border-radius:2px;background:#8C1F2B"></span><span style="width:5px;height:16px;border-radius:2px;background:#8C1F2B"></span><span style="width:5px;height:16px;border-radius:2px;background:#8C1F2B"></span></div>
+                <div><div style="font-size:14px;font-weight:600;color:#241416">Critical</div><div style="font-size:11.5px;color:#6E6A62;margin-top:1px">Life-threatening · 15 km at once</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:20px;padding-top:16px;border-top:1px solid #E5DCCC;display:flex;align-items:center;justify-content:space-between">
+            <div style="display:flex;align-items:center;gap:11px">
+              <svg width="17" height="17" style="color:#6E6A62;flex:none"><use href="#v-pin"></use></svg>
+              <div><div style="font-size:10.5px;font-weight:600;letter-spacing:.11em;color:#6E6A62;text-transform:uppercase">Where</div><div style="font-size:13.5px;font-weight:600;color:#241416;margin-top:2px">Koramangala, Bengaluru</div></div>
+            </div>
+            <svg width="15" height="15" style="color:#6E6A62"><use href="#v-chev"></use></svg>
+          </div>
+        </div>
+
+        <div style="flex:0 0 116px;padding:0 28px;display:flex;flex-direction:column;justify-content:center;gap:10px">
+          <div style="display:flex;align-items:center;gap:8px;padding:0 2px">
+            <div style="display:flex;gap:-4px">
+              <span style="width:20px;height:20px;border-radius:50%;background:#F6DCDE;border:1.5px solid #FBF7F1;display:inline-block"></span>
+              <span style="width:20px;height:20px;border-radius:50%;background:#F0D2D5;border:1.5px solid #FBF7F1;display:inline-block;margin-left:-6px"></span>
+              <span style="width:20px;height:20px;border-radius:50%;background:#EBC9CD;border:1.5px solid #FBF7F1;display:inline-block;margin-left:-6px"></span>
+              <span style="width:20px;height:20px;border-radius:50%;background:#E5B9BE;border:1.5px solid #FBF7F1;display:inline-block;margin-left:-6px"></span>
+            </div>
+            <span style="font-size:11.5px;color:#6E6A62">14 compatible donors within 5 km</span>
+          </div>
+          <button style="width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:15px;padding:15px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;box-shadow:0 10px 24px rgba(140,31,43,.24)">Alert nearby donors</button>
+        </div>
+        <div style="flex:0 0 20px;display:flex;align-items:center;justify-content:center"><div style="width:120px;height:4px;background:#241416;border-radius:2px;opacity:.7"></div></div>
+      </div>
+      <div style="width:390px;font-size:12.5px;color:#5A564F;line-height:1.6;margin-top:14px">Urgency is now a three-bar gauge stating its actual search radius — the choice has consequences you can see. Above the CTA, the avatar cluster shows how many real people this will reach, so the request feels like it is being aimed rather than filled in.</div>
+    </div>
+
+    <!-- ============ 05 MATCHING ============ -->
+    <div style="flex:none">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px"><span style="font-size:11px;font-weight:600;letter-spacing:.12em;color:#8C1F2B">05</span><span style="font-size:13.5px;font-weight:600;color:#241416">Matching</span></div>
+      <div style="width:390px;font-size:12px;color:#5A564F;line-height:1.5;margin-bottom:12px">A search in progress over real people, not a spinner.</div>
+      <div style="width:390px;height:844px;position:relative;overflow:hidden;border-radius:34px;background:linear-gradient(178deg,#3A0F14 0%,#1A0A0C 70%);box-shadow:0 24px 56px rgba(43,20,20,.22);display:flex;flex-direction:column">
+        <div style="flex:0 0 46px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:13px;font-weight:500;color:rgba(255,249,245,.9)"><span>9:41</span><span style="width:16px;height:10px;border:1.4px solid rgba(255,249,245,.9);border-radius:2px;position:relative"><span style="position:absolute;inset:1.5px;background:rgba(255,249,245,.9);border-radius:1px"></span></span></div>
+
+        <div style="position:absolute;left:195px;top:296px;width:0;height:0">
+          <div style="position:absolute;width:300px;height:300px;margin:-150px 0 0 -150px;box-sizing:border-box;border-radius:50%;border:1px dashed rgba(251,230,232,.16)"></div>
+          <div style="position:absolute;width:211px;height:211px;margin:-105.5px 0 0 -105.5px;box-sizing:border-box;border-radius:50%;border:1px solid rgba(251,230,232,.3)"></div>
+          <div style="position:absolute;width:211px;height:211px;margin:-105.5px 0 0 -105.5px;border-radius:50%;background:conic-gradient(from 0deg,rgba(233,191,196,.22),transparent 32%);animation:vr-sweep 3.4s linear infinite"></div>
+
+          <div style="position:absolute;left:-72px;top:-84px;width:44px;height:44px;border-radius:50%;background:#FBF7F1;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#8C1F2B;box-shadow:0 6px 16px rgba(0,0,0,.3)">RM</div>
+          <div style="position:absolute;left:44px;top:-96px;width:38px;height:38px;border-radius:50%;background:rgba(251,230,232,.9);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#8C1F2B">PN</div>
+          <div style="position:absolute;left:-116px;top:44px;width:34px;height:34px;border-radius:50%;background:rgba(251,230,232,.82);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#8C1F2B">SS</div>
+          <div style="position:absolute;left:76px;top:56px;width:30px;height:30px;border-radius:50%;background:rgba(251,230,232,.8);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#8C1F2B">KI</div>
+
+          <div style="position:absolute;left:-28px;top:-34px;width:56px;height:68px;display:flex;align-items:center;justify-content:center">
+            <svg width="56" height="68" viewBox="0 0 40 48" style="position:absolute;color:#8C1F2B"><use href="#v-drop-shape"></use></svg>
+            <span style="position:relative;font-family:'Newsreader',Georgia,serif;font-size:20px;font-weight:600;color:#FBE6E8;margin-top:9px">O+</span>
+          </div>
+        </div>
+
+        <div style="flex:1;padding:480px 28px 0;text-align:center;position:relative">
+          <div style="font-size:11px;font-weight:600;letter-spacing:.13em;color:#E0A8AF;text-transform:uppercase">Searching · 5 km</div>
+          <div style="font-family:'Newsreader',Georgia,serif;font-size:27px;font-weight:600;color:#FFF9F5;letter-spacing:-.016em;line-height:1.2;margin-top:12px">Reaching 14 donors<br>who can help</div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:7px;margin-top:16px">
+            <span style="width:6px;height:6px;border-radius:50%;background:#7FCB8E"></span>
+            <span style="font-size:12.5px;color:#E9BFC4">6 notified · 8 pending</span>
+          </div>
+        </div>
+
+        <div style="flex:0 0 168px;padding:0 28px;display:flex;flex-direction:column;justify-content:center;gap:12px">
+          <div style="display:flex;align-items:center;gap:11px"><span style="width:20px;height:20px;border-radius:50%;background:rgba(127,203,142,.2);display:flex;align-items:center;justify-content:center;flex:none"><svg width="11" height="11" style="color:#7FCB8E"><use href="#v-check"></use></svg></span><span style="font-size:12.5px;color:rgba(255,249,245,.85)">Alerted everyone within 5 km</span></div>
+          <div style="display:flex;align-items:center;gap:11px"><span style="width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,.18);border-top-color:#EDA5AC;flex:none"></span><span style="font-size:12.5px;color:rgba(255,249,245,.85)">Expanding to 15 km in 12 min</span></div>
+          <div style="text-align:center;font-size:12.5px;color:#D9AFB4;padding-top:6px">You'll be notified — no need to wait here</div>
+        </div>
+        <div style="flex:0 0 20px;display:flex;align-items:center;justify-content:center"><div style="width:120px;height:4px;background:#FBE6E8;border-radius:2px;opacity:.6"></div></div>
+      </div>
+      <div style="width:390px;font-size:12.5px;color:#5A564F;line-height:1.6;margin-top:14px">A radar sweep rotates over the radius, and the donors it is reaching are actual avatars — brightest nearest, fading with distance. The need sits at the centre as a droplet. You can see the search happening to people.</div>
+    </div>
+
+    <!-- ============ 06 MATCH CONTACT ============ -->
+    <div style="flex:none">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px"><span style="font-size:11px;font-weight:600;letter-spacing:.12em;color:#8C1F2B">06</span><span style="font-size:13.5px;font-weight:600;color:#241416">Donor found</span></div>
+      <div style="width:390px;font-size:12px;color:#5A564F;line-height:1.5;margin-bottom:12px">Person first, connection second, action third.</div>
+      <div style="width:390px;height:844px;position:relative;overflow:hidden;border-radius:34px;background:linear-gradient(172deg,#7E1C26 0%,#2A0C11 68%,#180809 100%);box-shadow:0 24px 56px rgba(43,20,20,.22);display:flex;flex-direction:column">
+        <div style="flex:0 0 46px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:13px;font-weight:500;color:rgba(255,249,245,.9)"><span>9:41</span><span style="width:16px;height:10px;border:1.4px solid rgba(255,249,245,.9);border-radius:2px;position:relative"><span style="position:absolute;inset:1.5px;background:rgba(255,249,245,.9);border-radius:1px"></span></span></div>
+
+        <div style="position:absolute;left:196px;top:250px;width:0;height:0;opacity:.5">
+          <div style="position:absolute;width:194px;height:194px;margin:-97px 0 0 -97px;box-sizing:border-box;border-radius:50%;border:1px solid rgba(251,230,232,.5)"></div>
+          <div style="position:absolute;width:137px;height:137px;margin:-68.5px 0 0 -68.5px;box-sizing:border-box;border-radius:50%;border:1px solid rgba(251,230,232,.75)"></div>
+        </div>
+
+        <div style="position:absolute;left:127.5px;top:250px;width:68px;height:68px;margin:-34px 0 0 -34px;box-sizing:border-box;border-radius:50%;background:rgba(251,230,232,.14);border:1.5px solid rgba(251,230,232,.55);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600;color:#FFF9F5;z-index:2">AS</div>
+        <div style="position:absolute;left:169px;top:250px;width:54px;height:1px;background:rgba(251,230,232,.6);z-index:2"></div>
+        <div style="position:absolute;left:264.5px;top:250px;width:88px;height:88px;margin:-44px 0 0 -44px;box-sizing:border-box;border-radius:50%;background:#FBF7F1;display:flex;align-items:center;justify-content:center;font-family:'Newsreader',Georgia,serif;font-size:28px;font-weight:600;color:#8C1F2B;box-shadow:0 12px 30px rgba(0,0,0,.34);z-index:2">KI</div>
+        <div style="position:absolute;left:296px;top:284px;width:34px;height:41px;display:flex;align-items:center;justify-content:center;z-index:3"><svg width="34" height="41" viewBox="0 0 40 48" style="position:absolute;color:#8C1F2B"><use href="#v-drop-shape"></use></svg><span style="position:relative;font-size:11px;font-weight:700;color:#FBE6E8;margin-top:5px">O+</span></div>
+
+        <div style="flex:1;padding:334px 28px 0;text-align:center;position:relative">
+          <div style="display:flex;align-items:center;justify-content:center;gap:7px">
+            <span style="position:relative;width:7px;height:7px;display:inline-block"><span style="position:absolute;inset:0;border-radius:50%;background:#7FCB8E"></span><span style="position:absolute;inset:0;border-radius:50%;background:#7FCB8E;animation:vr-pulse 2.4s cubic-bezier(.22,.61,.36,1) infinite"></span></span>
+            <span style="font-size:11px;font-weight:600;letter-spacing:.13em;color:#9FD9AB;text-transform:uppercase">Available now</span>
+          </div>
+          <div style="font-family:'Newsreader',Georgia,serif;font-size:32px;font-weight:600;color:#FFF9F5;letter-spacing:-.02em;line-height:1.14;margin-top:14px">Karthik Iyer</div>
+          <div style="font-size:13.5px;color:#E9BFC4;line-height:1.6;margin-top:10px">Verified donor · 2.1 km away</div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:20px">
+            <svg width="15" height="15" style="color:#EFCDD1"><use href="#v-phone"></use></svg>
+            <span style="font-family:'Newsreader',Georgia,serif;font-size:23px;font-weight:500;color:#FFF9F5;letter-spacing:.01em">98765 22110</span>
+          </div>
+        </div>
+
+        <div style="flex:0 0 186px;padding:0 28px;display:flex;flex-direction:column;justify-content:center;gap:10px">
+          <button style="width:100%;background:#FBF7F1;color:#5C1119;border:none;border-radius:15px;padding:16px;font-size:15.5px;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 12px 28px rgba(0,0,0,.26)"><svg width="17" height="17"><use href="#v-phone"></use></svg>Call Karthik</button>
+          <button style="width:100%;background:none;border:1px solid rgba(251,230,232,.55);color:#FBE6E8;border-radius:15px;padding:14px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px"><svg width="15" height="15"><use href="#v-msg"></use></svg>WhatsApp</button>
+          <div style="text-align:center;font-size:12.5px;color:#D9AFB4;padding-top:2px">Mark as donated afterwards</div>
+        </div>
+        <div style="flex:0 0 20px;display:flex;align-items:center;justify-content:center"><div style="width:120px;height:4px;background:#FBE6E8;border-radius:2px;opacity:.6"></div></div>
+      </div>
+      <div style="width:390px;font-size:12.5px;color:#5A564F;line-height:1.6;margin-top:14px">The donor's disc is larger than yours and carries their group as a droplet badge — they are the subject of this screen. A live green pulse says available <em>now</em>. Their name is the headline; the number is set in Newsreader as a human fact.</div>
+    </div>
+
+    <!-- ============ 07 FIND DONORS ============ -->
+    <div style="flex:none">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px"><span style="font-size:11px;font-weight:600;letter-spacing:.12em;color:#8C1F2B">07</span><span style="font-size:13.5px;font-weight:600;color:#241416">Find donors</span></div>
+      <div style="width:390px;font-size:12px;color:#5A564F;line-height:1.5;margin-bottom:12px">Avatar markers, not pins. Selected marker owns the sheet.</div>
+      <div style="width:390px;height:844px;position:relative;overflow:hidden;border-radius:34px;background:#EDE8DF;box-shadow:0 24px 56px rgba(43,20,20,.16)">
+        <svg width="390" height="560" viewBox="0 0 390 560" style="position:absolute;left:0;top:0">
+          <rect width="390" height="560" fill="#EAE4DA"/>
+          <path d="M-10 150 L400 250" stroke="#E0D8CB" stroke-width="14" fill="none"/>
+          <path d="M90 -10 L150 570" stroke="#E0D8CB" stroke-width="12" fill="none"/>
+          <path d="M-10 400 Q160 330 400 430" stroke="#E0D8CB" stroke-width="10" fill="none"/>
+          <path d="M270 -10 L320 570" stroke="#E5DED2" stroke-width="8" fill="none"/>
+          <rect x="30" y="180" width="52" height="42" fill="#E5DED2"/>
+          <rect x="180" y="90" width="64" height="48" fill="#E5DED2"/>
+          <rect x="300" y="300" width="58" height="44" fill="#E5DED2"/>
+        </svg>
+
+        <div style="position:absolute;left:186px;top:286px;width:0;height:0">
+          <div style="position:absolute;width:250px;height:250px;margin:-125px 0 0 -125px;border-radius:50%;background:rgba(140,31,43,.07);border:1px solid rgba(140,31,43,.18)"></div>
+          <div style="position:absolute;left:-13px;top:-13px;width:26px;height:26px;border-radius:50%;background:#241416;border:3px solid #fff;box-shadow:0 3px 10px rgba(0,0,0,.24)"></div>
+        </div>
+
+        <div style="position:absolute;left:104px;top:196px;width:60px;height:74px">
+          <div style="width:60px;height:60px;border-radius:50%;background:#8C1F2B;border:3px solid #fff;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(92,17,25,.34)">
+            <span style="font-size:16px;font-weight:600;color:#FBE6E8">RM</span>
+          </div>
+          <div style="width:0;height:0;margin:0 auto;border-left:7px solid transparent;border-right:7px solid transparent;border-top:11px solid #fff"></div>
+          <div style="position:absolute;right:-2px;top:-2px;width:24px;height:29px;display:flex;align-items:center;justify-content:center"><svg width="24" height="29" viewBox="0 0 40 48" style="position:absolute;color:#FBF7F1"><use href="#v-drop-shape"></use></svg><span style="position:relative;font-size:8.5px;font-weight:700;color:#8C1F2B;margin-top:4px">O+</span></div>
+        </div>
+
+        <div style="position:absolute;left:262px;top:154px;width:46px;height:58px">
+          <div style="width:46px;height:46px;border-radius:50%;background:#F6DCDE;border:2.5px solid #fff;display:flex;align-items:center;justify-content:center;box-shadow:0 5px 14px rgba(43,20,20,.18)"><span style="font-size:13px;font-weight:600;color:#8C1F2B">PN</span></div>
+          <div style="width:0;height:0;margin:0 auto;border-left:6px solid transparent;border-right:6px solid transparent;border-top:9px solid #fff"></div>
+          <span style="position:absolute;right:0;bottom:12px;width:10px;height:10px;border-radius:50%;background:#2C6636;border:2px solid #fff"></span>
+        </div>
+
+        <div style="position:absolute;left:78px;top:372px;width:40px;height:51px">
+          <div style="width:40px;height:40px;border-radius:50%;background:#F6F2EA;border:2.5px solid #fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 11px rgba(43,20,20,.11)"><span style="font-size:11.5px;font-weight:600;color:#6E6A62">KI</span></div>
+          <div style="width:0;height:0;margin:0 auto;border-left:6px solid transparent;border-right:6px solid transparent;border-top:9px solid #fff"></div>
+        </div>
+
+        <div style="position:absolute;left:284px;top:392px;width:38px;height:38px;border-radius:50%;background:#241416;display:flex;align-items:center;justify-content:center;box-shadow:0 5px 14px rgba(0,0,0,.22)"><span style="font-size:12.5px;font-weight:600;color:#fff">+4</span></div>
+
+        <div style="position:absolute;left:0;right:0;top:0;height:46px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:13px;font-weight:500;color:#241416"><span>9:41</span><span style="width:16px;height:10px;border:1.4px solid #241416;border-radius:2px;position:relative"><span style="position:absolute;inset:1.5px;background:#241416;border-radius:1px"></span></span></div>
+        <div style="position:absolute;left:20px;right:20px;top:56px;background:#fff;border-radius:15px;display:flex;align-items:center;padding:0 14px;gap:10px;box-shadow:0 6px 18px rgba(43,20,20,.1)">
+          <svg width="16" height="16" style="color:#6E6A62"><use href="#v-search"></use></svg>
+          <div style="flex:1;padding:12px 0;font-size:14px;color:#6E6A62">O+ compatible · within 5 km</div>
+        </div>
+
+        <div style="position:absolute;left:0;right:0;bottom:0;height:328px;background:#fff;border-radius:22px 22px 0 0;box-shadow:0 -10px 30px rgba(43,20,20,.14);display:flex;flex-direction:column">
+          <div style="width:36px;height:4px;background:#E9E2D8;border-radius:2px;margin:10px auto 0"></div>
+          <div style="padding:14px 22px 0">
+            <div style="display:flex;align-items:center;gap:14px">
+              <div style="width:60px;height:60px;border-radius:50%;background:#8C1F2B;display:flex;align-items:center;justify-content:center;flex:none;box-shadow:0 8px 20px rgba(92,17,25,.26)"><span style="font-size:17px;font-weight:600;color:#FBE6E8">RM</span></div>
+              <div style="flex:1">
+                <div style="font-family:'Newsreader',Georgia,serif;font-size:22px;font-weight:600;color:#241416;letter-spacing:-.014em;line-height:1.1">Rohan Mehta</div>
+                <div style="display:flex;align-items:center;gap:7px;margin-top:6px">
+                  <span style="position:relative;width:7px;height:7px;display:inline-block"><span style="position:absolute;inset:0;border-radius:50%;background:#2C6636"></span><span style="position:absolute;inset:0;border-radius:50%;background:#2C6636;animation:vr-pulse 2.4s cubic-bezier(.22,.61,.36,1) infinite"></span></span>
+                  <span style="font-size:12px;font-weight:600;color:#2C6636">Available now</span>
+                  <span style="font-size:12px;color:#6E6A62">· verified</span>
+                </div>
+              </div>
+              <div style="position:relative;width:38px;height:46px;display:flex;align-items:center;justify-content:center;flex:none"><svg width="38" height="46" viewBox="0 0 40 48" style="position:absolute;color:#8C1F2B"><use href="#v-drop-shape"></use></svg><span style="position:relative;font-size:12.5px;font-weight:700;color:#FBE6E8;margin-top:5px">O+</span></div>
+            </div>
+
+            <div style="display:flex;align-items:center;gap:9px;margin-top:16px;padding-top:14px;border-top:1px solid #F3EFE7">
+              <div style="width:24px;height:24px;border-radius:50%;background:#241416;display:flex;align-items:center;justify-content:center;flex:none;font-size:8.5px;font-weight:600;color:#fff">You</div>
+              <div style="flex:1;height:1px;background:#EFE7DC;position:relative"><span style="position:absolute;left:50%;top:-2px;width:5px;height:5px;border-radius:50%;background:#D8CFC2"></span></div>
+              <span style="font-size:12px;font-weight:600;color:#241416;flex:none">2.4 km</span>
+              <div style="width:24px;height:24px;border-radius:50%;background:#F6DCDE;display:flex;align-items:center;justify-content:center;flex:none;font-size:8.5px;font-weight:600;color:#8C1F2B">RM</div>
+            </div>
+
+            <button style="margin-top:16px;width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:15px;padding:14px;font-size:14.5px;font-weight:600;cursor:pointer;font-family:inherit;box-shadow:0 10px 24px rgba(140,31,43,.22)">Request Rohan</button>
+            <div style="text-align:center;font-size:11.5px;color:#6E6A62;margin-top:9px">His number unlocks once he accepts</div>
+          </div>
+        </div>
+      </div>
+      <div style="width:390px;font-size:12.5px;color:#5A564F;line-height:1.6;margin-top:14px">Markers are avatars carrying group droplets and availability dots. The selected donor is enlarged, saturated and repeated verbatim in the sheet — marker and sheet are visibly one object. Distant donors cluster into a +4 chip.</div>
+    </div>
+
+    <!-- ============ 08 PROFILE ============ -->
+    <div style="flex:none">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px"><span style="font-size:11px;font-weight:600;letter-spacing:.12em;color:#8C1F2B">08</span><span style="font-size:13.5px;font-weight:600;color:#241416">Profile</span></div>
+      <div style="width:390px;font-size:12px;color:#5A564F;line-height:1.5;margin-bottom:12px">Donor identity, not account settings.</div>
+      <div style="width:390px;height:844px;position:relative;overflow:hidden;border-radius:34px;background:#FBF7F1;box-shadow:0 24px 56px rgba(43,20,20,.16);display:flex;flex-direction:column">
+        <div style="flex:0 0 46px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:13px;font-weight:500;color:#241416"><span>9:41</span><span style="width:16px;height:10px;border:1.4px solid #241416;border-radius:2px;position:relative"><span style="position:absolute;inset:1.5px;background:#241416;border-radius:1px"></span></span></div>
+
+        <div style="flex:1;overflow:hidden">
+          <div style="padding:14px 24px 0;display:flex;align-items:flex-start;gap:16px">
+            <div style="position:relative;flex:none">
+              <div style="width:78px;height:78px;border-radius:50%;background:#F6DCDE;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:600;color:#8C1F2B">AS</div>
+              <div style="position:absolute;right:-6px;bottom:-4px;width:34px;height:41px;display:flex;align-items:center;justify-content:center"><svg width="34" height="41" viewBox="0 0 40 48" style="position:absolute;color:#8C1F2B"><use href="#v-drop-shape"></use></svg><span style="position:relative;font-size:11px;font-weight:700;color:#FBE6E8;margin-top:5px">O+</span></div>
+            </div>
+            <div style="flex:1;padding-top:6px">
+              <div style="font-family:'Newsreader',Georgia,serif;font-size:26px;font-weight:600;color:#241416;letter-spacing:-.018em;line-height:1.1">Aditi Sharma</div>
+              <div style="display:flex;align-items:center;gap:6px;margin-top:8px">
+                <span style="width:16px;height:16px;border-radius:50%;background:#E8F1E2;display:flex;align-items:center;justify-content:center;flex:none"><svg width="9" height="9" style="color:#2C6636"><use href="#v-check"></use></svg></span>
+                <span style="font-size:12px;font-weight:600;color:#2C6636">Verified donor</span>
+                <span style="font-size:12px;color:#6E6A62">· since Nov 2025</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin:20px 24px 0;background:#fff;border-radius:18px;padding:15px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 8px 22px rgba(43,20,20,.07)">
+            <span style="position:relative;width:9px;height:9px;display:inline-block;flex:none"><span style="position:absolute;inset:0;border-radius:50%;background:#2C6636"></span><span style="position:absolute;inset:0;border-radius:50%;background:#2C6636;animation:vr-pulse 2.4s cubic-bezier(.22,.61,.36,1) infinite"></span></span>
+            <div style="flex:1"><div style="font-size:13.5px;font-weight:600;color:#241416">Available to donate</div><div style="font-size:11px;color:#6E6A62;margin-top:2px">Nearby requests can reach you</div></div>
+            <div style="width:44px;height:26px;border-radius:14px;background:#8C1F2B;position:relative;flex:none"><span style="position:absolute;top:2px;left:20px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2)"></span></div>
+          </div>
+
+          <div style="padding:24px 24px 0">
+            <div style="font-size:11px;font-weight:600;letter-spacing:.11em;color:#6E6A62;text-transform:uppercase">Your impact</div>
+            <div style="display:flex;align-items:flex-end;gap:14px;margin-top:14px">
+              <span style="font-family:'Newsreader',Georgia,serif;font-size:52px;font-weight:600;color:#241416;letter-spacing:-.028em;line-height:.88">3</span>
+              <div style="padding-bottom:6px">
+                <div style="display:flex;align-items:flex-end;gap:7px">
+                  <svg width="22" height="26" viewBox="0 0 40 48" style="color:#8C1F2B"><use href="#v-drop-shape"></use></svg>
+                  <svg width="22" height="26" viewBox="0 0 40 48" style="color:#8C1F2B"><use href="#v-drop-shape"></use></svg>
+                  <svg width="22" height="26" viewBox="0 0 40 48" style="color:#8C1F2B"><use href="#v-drop-shape"></use></svg>
+                  <svg width="22" height="26" viewBox="0 0 40 48" style="color:#E5DCCC"><use href="#v-drop-outline"></use></svg>
+                </div>
+                <div style="font-size:12px;color:#6E6A62;margin-top:8px">donations · 3 lives helped</div>
+              </div>
+            </div>
+
+            <div style="margin-top:20px;display:flex;gap:4px">
+              <span style="flex:1;height:3px;border-radius:2px;background:#8C1F2B"></span><span style="flex:1;height:3px;border-radius:2px;background:#8C1F2B"></span>
+              <span style="flex:1;height:3px;border-radius:2px;background:#E5DCCC"></span><span style="flex:1;height:3px;border-radius:2px;background:#E5DCCC"></span><span style="flex:1;height:3px;border-radius:2px;background:#E5DCCC"></span><span style="flex:1;height:3px;border-radius:2px;background:#E5DCCC"></span><span style="flex:1;height:3px;border-radius:2px;background:#E5DCCC"></span><span style="flex:1;height:3px;border-radius:2px;background:#E5DCCC"></span><span style="flex:1;height:3px;border-radius:2px;background:#E5DCCC"></span><span style="flex:1;height:3px;border-radius:2px;background:#E5DCCC"></span><span style="flex:1;height:3px;border-radius:2px;background:#E5DCCC"></span><span style="flex:1;height:3px;border-radius:2px;background:#E5DCCC"></span>
+            </div>
+            <div style="font-size:11.5px;color:#6E6A62;margin-top:9px">Eligible again in 83 days · 12 Aug</div>
+
+            <div style="height:1px;background:#E5DCCC;margin:22px 0 4px"></div>
+            <div style="display:flex;align-items:center;gap:11px;padding:14px 0;border-bottom:1px solid #EBE3D5"><span style="width:30px;height:30px;border-radius:10px;background:#F6DCDE;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" style="color:#8C1F2B"><use href="#v-clip"></use></svg></span><span style="flex:1;font-size:13.5px;font-weight:600;color:#241416">Donation history</span><svg width="15" height="15" style="color:#C9BFAF"><use href="#v-chev"></use></svg></div>
+            <div style="display:flex;align-items:center;gap:11px;padding:14px 0;border-bottom:1px solid #EBE3D5"><span style="width:30px;height:30px;border-radius:10px;background:#F3EFE7;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" style="color:#6E6A62"><use href="#v-user"></use></svg></span><span style="flex:1;font-size:13.5px;font-weight:600;color:#241416">Personal information</span><svg width="15" height="15" style="color:#C9BFAF"><use href="#v-chev"></use></svg></div>
+            <div style="display:flex;align-items:center;gap:11px;padding:14px 0"><span style="width:30px;height:30px;border-radius:10px;background:#F3EFE7;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" style="color:#6E6A62"><use href="#v-sliders"></use></svg></span><span style="flex:1;font-size:13.5px;font-weight:600;color:#241416">Settings</span><svg width="15" height="15" style="color:#C9BFAF"><use href="#v-chev"></use></svg></div>
+          </div>
+        </div>
+
+        <div style="flex:0 0 64px;display:flex;align-items:center;background:#fff;box-shadow:0 -6px 16px rgba(43,20,20,.05);padding:0 10px;gap:6px">
+          <div style="flex:1;padding:8px 0;display:flex;flex-direction:column;align-items:center;gap:3px;color:#6E6A62"><svg width="18" height="18"><use href="#v-home"></use></svg><span style="font-size:10.5px">Home</span></div>
+          <div style="flex:1;padding:8px 0;display:flex;flex-direction:column;align-items:center;gap:3px;color:#6E6A62"><svg width="18" height="18"><use href="#v-clip"></use></svg><span style="font-size:10.5px">Requests</span></div>
+          <div style="flex:1;background:#F6DCDE;border-radius:14px;padding:8px 0;display:flex;flex-direction:column;align-items:center;gap:3px;color:#8C1F2B"><svg width="18" height="18"><use href="#v-user"></use></svg><span style="font-size:10.5px;font-weight:600">Profile</span></div>
+        </div>
+        <div style="flex:0 0 20px;display:flex;align-items:center;justify-content:center"><div style="width:120px;height:4px;background:#241416;border-radius:2px;opacity:.7"></div></div>
+      </div>
+      <div style="width:390px;font-size:12.5px;color:#5A564F;line-height:1.6;margin-top:14px">The red hero band is gone — identity now comes from the avatar with its group droplet attached, the live availability pulse, and the impact trail. Legal and account rows move to Settings, so this screen is about being a donor.</div>
+    </div>
+
+    <!-- ============ 09 DONATION HISTORY ============ -->
+    <div style="flex:none">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px"><span style="font-size:11px;font-weight:600;letter-spacing:.12em;color:#8C1F2B">09</span><span style="font-size:13.5px;font-weight:600;color:#241416">Donation history</span></div>
+      <div style="width:390px;font-size:12px;color:#5A564F;line-height:1.5;margin-bottom:12px">Ledger discipline, with the impact made visible.</div>
+      <div style="width:390px;height:844px;position:relative;overflow:hidden;border-radius:34px;background:#FBF7F1;box-shadow:0 24px 56px rgba(43,20,20,.16);display:flex;flex-direction:column">
+        <div style="flex:0 0 46px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:13px;font-weight:500;color:#241416"><span>9:41</span><span style="width:16px;height:10px;border:1.4px solid #241416;border-radius:2px;position:relative"><span style="position:absolute;inset:1.5px;background:#241416;border-radius:1px"></span></span></div>
+        <div style="flex:0 0 48px;display:flex;align-items:center;padding:0 18px;gap:12px"><svg width="20" height="20" style="color:#241416"><use href="#v-arrow"></use></svg><span style="font-size:16px;font-weight:600;color:#241416">Donation history</span></div>
+
+        <div style="flex:1;padding:6px 24px 0;overflow:hidden">
+          <div style="display:flex;align-items:flex-end;gap:14px">
+            <span style="font-family:'Newsreader',Georgia,serif;font-size:48px;font-weight:600;color:#241416;letter-spacing:-.028em;line-height:.88">3</span>
+            <div style="padding-bottom:5px"><div style="font-size:13.5px;color:#6E6A62;line-height:1.45">units given ·<br>three people helped</div></div>
+          </div>
+          <div style="display:flex;align-items:flex-end;gap:8px;margin-top:18px">
+            <svg width="26" height="31" viewBox="0 0 40 48" style="color:#8C1F2B"><use href="#v-drop-shape"></use></svg>
+            <svg width="26" height="31" viewBox="0 0 40 48" style="color:#8C1F2B"><use href="#v-drop-shape"></use></svg>
+            <svg width="26" height="31" viewBox="0 0 40 48" style="color:#8C1F2B"><use href="#v-drop-shape"></use></svg>
+            <svg width="26" height="31" viewBox="0 0 40 48" style="color:#E5DCCC"><use href="#v-drop-outline"></use></svg>
+            <svg width="26" height="31" viewBox="0 0 40 48" style="color:#E5DCCC"><use href="#v-drop-outline"></use></svg>
+            <svg width="26" height="31" viewBox="0 0 40 48" style="color:#E5DCCC"><use href="#v-drop-outline"></use></svg>
+          </div>
+          <div style="font-size:11.5px;color:#6E6A62;margin-top:10px">Three more and you reach the ten-unit mark</div>
+
+          <div style="height:1px;background:#E5DCCC;margin:24px 0 0"></div>
+
+          <div style="display:flex;gap:0;padding-top:18px">
+            <div style="flex:none;width:26px;display:flex;flex-direction:column;align-items:center;padding-top:4px">
+              <div style="width:12px;height:12px;border-radius:50%;background:#8C1F2B"></div>
+              <div style="width:1px;flex:1;background:#E5DCCC;margin-top:4px"></div>
+            </div>
+            <div style="flex:1;padding-bottom:26px">
+              <div style="display:flex;align-items:baseline;justify-content:space-between">
+                <div style="font-size:13.5px;font-weight:600;color:#241416">Fortis Hospital</div>
+                <div style="font-family:'Newsreader',Georgia,serif;font-size:15px;font-weight:600;color:#241416">14 May</div>
+              </div>
+              <div style="font-size:11.5px;color:#6E6A62;margin-top:3px">Cunningham Road · O+ · 1 unit</div>
+              <div style="display:flex;align-items:center;gap:7px;margin-top:8px"><span style="width:16px;height:16px;border-radius:50%;background:#E8F1E2;display:flex;align-items:center;justify-content:center;flex:none"><svg width="9" height="9" style="color:#2C6636"><use href="#v-check"></use></svg></span><span style="font-size:11.5px;color:#2C6636;font-weight:600">Confirmed by hospital</span></div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:0">
+            <div style="flex:none;width:26px;display:flex;flex-direction:column;align-items:center">
+              <div style="width:12px;height:12px;border-radius:50%;background:#8C1F2B"></div>
+              <div style="width:1px;flex:1;background:#E5DCCC;margin-top:4px"></div>
+            </div>
+            <div style="flex:1;padding-bottom:26px">
+              <div style="display:flex;align-items:baseline;justify-content:space-between">
+                <div style="font-size:13.5px;font-weight:600;color:#241416">St. John's Medical College</div>
+                <div style="font-family:'Newsreader',Georgia,serif;font-size:15px;font-weight:600;color:#241416">2 Feb</div>
+              </div>
+              <div style="font-size:11.5px;color:#6E6A62;margin-top:3px">Sarjapur Road · O+ · 1 unit</div>
+              <div style="display:flex;align-items:center;gap:7px;margin-top:8px"><span style="width:16px;height:16px;border-radius:50%;background:#E8F1E2;display:flex;align-items:center;justify-content:center;flex:none"><svg width="9" height="9" style="color:#2C6636"><use href="#v-check"></use></svg></span><span style="font-size:11.5px;color:#2C6636;font-weight:600">Confirmed by hospital</span></div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:0">
+            <div style="flex:none;width:26px;display:flex;flex-direction:column;align-items:center">
+              <div style="width:12px;height:12px;border-radius:50%;background:#8C1F2B"></div>
+            </div>
+            <div style="flex:1">
+              <div style="display:flex;align-items:baseline;justify-content:space-between">
+                <div style="font-size:13.5px;font-weight:600;color:#241416">Apollo Hospital</div>
+                <div style="font-family:'Newsreader',Georgia,serif;font-size:15px;font-weight:600;color:#241416">9 Nov</div>
+              </div>
+              <div style="font-size:11.5px;color:#6E6A62;margin-top:3px">Bannerghatta · O+ · 1 unit</div>
+              <div style="font-size:11px;color:#6E6A62;margin-top:8px">Your first donation</div>
+            </div>
+          </div>
+        </div>
+        <div style="flex:0 0 20px;display:flex;align-items:center;justify-content:center"><div style="width:120px;height:4px;background:#241416;border-radius:2px;opacity:.7"></div></div>
+      </div>
+      <div style="width:390px;font-size:12.5px;color:#5A564F;line-height:1.6;margin-top:14px">A real vertical timeline replaces the date column, so the gaps between donations are visible as time. The impact trail at the top shows three given against a ten-unit horizon. "Your first donation" marks the beginning of the story.</div>
+    </div>
+
+    <!-- ============ 10 NOTIFICATIONS ============ -->
+    <div style="flex:none">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px"><span style="font-size:11px;font-weight:600;letter-spacing:.12em;color:#8C1F2B">10</span><span style="font-size:13.5px;font-weight:600;color:#241416">Notifications</span></div>
+      <div style="width:390px;font-size:12px;color:#5A564F;line-height:1.5;margin-bottom:12px">Four types, four visual treatments.</div>
+      <div style="width:390px;height:844px;position:relative;overflow:hidden;border-radius:34px;background:#FBF7F1;box-shadow:0 24px 56px rgba(43,20,20,.16);display:flex;flex-direction:column">
+        <div style="flex:0 0 46px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:13px;font-weight:500;color:#241416"><span>9:41</span><span style="width:16px;height:10px;border:1.4px solid #241416;border-radius:2px;position:relative"><span style="position:absolute;inset:1.5px;background:#241416;border-radius:1px"></span></span></div>
+        <div style="flex:0 0 48px;display:flex;align-items:center;padding:0 18px;gap:12px"><svg width="20" height="20" style="color:#241416"><use href="#v-arrow"></use></svg><span style="font-size:16px;font-weight:600;color:#241416">Notifications</span></div>
+
+        <div style="flex:1;padding:6px 24px 0;overflow:hidden">
+          <div style="font-size:11px;font-weight:600;letter-spacing:.11em;color:#8C1F2B;text-transform:uppercase">Needs you now</div>
+          <div style="margin-top:12px;background:#fff;border-radius:18px;box-shadow:0 8px 22px rgba(43,20,20,.08);overflow:hidden">
+            <div style="height:3px;background:#8C1F2B"></div>
+            <div style="padding:15px 16px">
+              <div style="display:flex;align-items:center;gap:13px">
+                <div style="position:relative;width:42px;height:51px;display:flex;align-items:center;justify-content:center;flex:none"><svg width="42" height="51" viewBox="0 0 40 48" style="position:absolute;color:#8C1F2B"><use href="#v-drop-shape"></use></svg><span style="position:relative;font-size:13px;font-weight:700;color:#FBE6E8;margin-top:6px">B+</span></div>
+                <div style="flex:1">
+                  <div style="font-size:14px;font-weight:600;color:#241416">New request near you</div>
+                  <div style="font-size:11.5px;color:#6E6A62;margin-top:3px">Fortis Hospital · 1.8 km · 4 min ago</div>
+                </div>
+              </div>
+              <button style="margin-top:14px;width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:13px;padding:12px;font-size:13.5px;font-weight:600;cursor:pointer;font-family:inherit">View request</button>
+            </div>
+          </div>
+
+          <div style="margin-top:22px;font-size:11px;font-weight:600;letter-spacing:.11em;color:#6E6A62;text-transform:uppercase">Earlier</div>
+
+          <div style="margin-top:8px;display:flex;gap:12px;padding:14px 0;border-bottom:1px solid #EBE3D5">
+            <div style="display:flex;align-items:center;flex:none;padding-top:2px">
+              <div style="width:26px;height:26px;border-radius:50%;background:#F6DCDE;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;color:#8C1F2B">KI</div>
+              <div style="width:10px;height:1px;background:#2C6636"></div>
+              <div style="width:18px;height:18px;border-radius:50%;background:#E8F1E2;display:flex;align-items:center;justify-content:center"><svg width="10" height="10" style="color:#2C6636"><use href="#v-check"></use></svg></div>
+            </div>
+            <div style="flex:1"><div style="font-size:13.5px;font-weight:600;color:#241416">Karthik accepted your request</div><div style="font-size:12.5px;color:#6E6A62;line-height:1.5;margin-top:3px">Contact details are ready</div></div>
+            <span style="font-size:11px;color:#6E6A62;flex:none;padding-top:2px">22m</span>
+          </div>
+
+          <div style="display:flex;gap:12px;padding:14px 0;border-bottom:1px solid #EBE3D5">
+            <div style="flex:none;width:26px;height:31px;display:flex;align-items:center;justify-content:center;margin-top:1px"><svg width="26" height="31" viewBox="0 0 40 48" style="position:absolute;color:#E8F1E2"><use href="#v-drop-shape"></use></svg><svg width="11" height="11" style="color:#2C6636;position:relative;margin-top:4px"><use href="#v-check"></use></svg></div>
+            <div style="flex:1"><div style="font-size:13.5px;font-weight:600;color:#241416">Donation confirmed</div><div style="font-size:12.5px;color:#6E6A62;line-height:1.5;margin-top:3px">Apollo Hospital · your third unit</div></div>
+            <span style="font-size:11px;color:#6E6A62;flex:none;padding-top:2px">1d</span>
+          </div>
+
+          <div style="display:flex;gap:12px;padding:14px 0;border-bottom:1px solid #EBE3D5">
+            <span style="width:7px;height:7px;border-radius:50%;background:#DED5C7;flex:none;margin-top:8px;margin-left:10px"></span>
+            <div style="flex:1"><div style="font-size:13.5px;font-weight:500;color:#3D3630">A request was cancelled</div><div style="font-size:12.5px;color:#6E6A62;line-height:1.5;margin-top:3px">The O&#8722; request in Indiranagar is no longer active</div></div>
+            <span style="font-size:11px;color:#6E6A62;flex:none;padding-top:2px">1h</span>
+          </div>
+
+          <div style="display:flex;gap:12px;padding:14px 0">
+            <span style="width:7px;height:7px;border-radius:50%;background:#DED5C7;flex:none;margin-top:8px;margin-left:10px"></span>
+            <div style="flex:1"><div style="font-size:13.5px;font-weight:500;color:#3D3630">Request expired</div><div style="font-size:12.5px;color:#6E6A62;line-height:1.5;margin-top:3px">No donor found for the AB&#8722; request</div></div>
+            <span style="font-size:11px;color:#6E6A62;flex:none;padding-top:2px">3h</span>
+          </div>
+        </div>
+        <div style="flex:0 0 20px;display:flex;align-items:center;justify-content:center"><div style="width:120px;height:4px;background:#241416;border-radius:2px;opacity:.7"></div></div>
+      </div>
+      <div style="width:390px;font-size:12.5px;color:#5A564F;line-height:1.6;margin-top:14px">A request carries a red-edged card and a group droplet. A match draws the connection between two people. A confirmation is a green droplet. Everything archival is a plain grey dot. The type of event is legible before the words.</div>
+    </div>
+
+    <!-- ============ 11 TERMINAL SUCCESS ============ -->
+    <div style="flex:none">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px"><span style="font-size:11px;font-weight:600;letter-spacing:.12em;color:#8C1F2B">11</span><span style="font-size:13.5px;font-weight:600;color:#241416">Donation confirmed</span></div>
+      <div style="width:390px;font-size:12px;color:#5A564F;line-height:1.5;margin-bottom:12px">Terminal success — gratitude and impact.</div>
+      <div style="width:390px;height:844px;position:relative;overflow:hidden;border-radius:34px;background:linear-gradient(172deg,#7E1C26 0%,#2A0C11 68%,#180809 100%);box-shadow:0 24px 56px rgba(43,20,20,.22);display:flex;flex-direction:column">
+        <div style="flex:0 0 46px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:13px;font-weight:500;color:rgba(255,249,245,.9)"><span>9:41</span><span style="width:16px;height:10px;border:1.4px solid rgba(255,249,245,.9);border-radius:2px;position:relative"><span style="position:absolute;inset:1.5px;background:rgba(255,249,245,.9);border-radius:1px"></span></span></div>
+
+        <div style="position:absolute;left:196px;top:262px;width:0;height:0;opacity:.4">
+          <div style="position:absolute;width:216px;height:216px;margin:-108px 0 0 -108px;box-sizing:border-box;border-radius:50%;border:1px solid rgba(251,230,232,.5)"></div>
+          <div style="position:absolute;width:152px;height:152px;margin:-76px 0 0 -76px;box-sizing:border-box;border-radius:50%;border:1px solid rgba(251,230,232,.75)"></div>
+        </div>
+        <div style="position:absolute;left:196px;top:262px;width:0;height:0;z-index:2">
+          <div style="position:absolute;left:-38px;top:-46px;width:76px;height:92px;display:flex;align-items:center;justify-content:center">
+            <svg width="76" height="92" viewBox="0 0 40 48" style="position:absolute;color:#FBF7F1"><use href="#v-drop-shape"></use></svg>
+            <svg width="30" height="30" style="color:#8C1F2B;position:relative;margin-top:12px"><use href="#v-check"></use></svg>
+          </div>
+        </div>
+
+        <div style="flex:1;padding:392px 28px 0;text-align:center;position:relative">
+          <div style="font-size:11px;font-weight:600;letter-spacing:.13em;color:#E0A8AF;text-transform:uppercase">Donation recorded</div>
+          <div style="font-family:'Newsreader',Georgia,serif;font-size:33px;font-weight:600;color:#FFF9F5;letter-spacing:-.02em;line-height:1.14;margin-top:14px">That's four lives<br>you've helped</div>
+
+          <div style="display:flex;align-items:flex-end;justify-content:center;gap:9px;margin-top:26px">
+            <svg width="24" height="29" viewBox="0 0 40 48" style="color:rgba(251,230,232,.55)"><use href="#v-drop-shape"></use></svg>
+            <svg width="24" height="29" viewBox="0 0 40 48" style="color:rgba(251,230,232,.55)"><use href="#v-drop-shape"></use></svg>
+            <svg width="24" height="29" viewBox="0 0 40 48" style="color:rgba(251,230,232,.55)"><use href="#v-drop-shape"></use></svg>
+            <svg width="30" height="36" viewBox="0 0 40 48" style="color:#FBE6E8"><use href="#v-drop-shape"></use></svg>
+          </div>
+          <div style="font-size:12.5px;color:#E9BFC4;margin-top:14px">Today · Sneha Hospital · O+</div>
+        </div>
+
+        <div style="flex:0 0 176px;padding:0 28px;display:flex;flex-direction:column;justify-content:center;gap:12px">
+          <div style="font-size:13px;color:#D9AFB4;line-height:1.6;text-align:center;max-width:290px;margin:0 auto">Rest now. You'll be marked available again automatically on 12 August.</div>
+          <button style="width:100%;background:#FBF7F1;color:#5C1119;border:none;border-radius:15px;padding:15px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;box-shadow:0 12px 28px rgba(0,0,0,.26)">Done</button>
+        </div>
+        <div style="flex:0 0 20px;display:flex;align-items:center;justify-content:center"><div style="width:120px;height:4px;background:#FBE6E8;border-radius:2px;opacity:.6"></div></div>
+      </div>
+      <div style="width:390px;font-size:12.5px;color:#5A564F;line-height:1.6;margin-top:14px">The impact trail returns here, with the newest drop larger and brighter than the three before it — the moment is placed inside a history rather than announced in isolation. A cream droplet holding a check is the mark, closed inside the ring.</div>
+    </div>
+
+    <!-- ============ 12 TERMINAL FAILURE ============ -->
+    <div style="flex:none">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px"><span style="font-size:11px;font-weight:600;letter-spacing:.12em;color:#8C1F2B">12</span><span style="font-size:13.5px;font-weight:600;color:#241416">No donor found</span></div>
+      <div style="width:390px;font-size:12px;color:#5A564F;line-height:1.5;margin-bottom:12px">Terminal failure — reassurance, and what happens next.</div>
+      <div style="width:390px;height:844px;position:relative;overflow:hidden;border-radius:34px;background:#FBF7F1;box-shadow:0 24px 56px rgba(43,20,20,.16);display:flex;flex-direction:column">
+        <div style="flex:0 0 46px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:13px;font-weight:500;color:#241416"><span>9:41</span><span style="width:16px;height:10px;border:1.4px solid #241416;border-radius:2px;position:relative"><span style="position:absolute;inset:1.5px;background:#241416;border-radius:1px"></span></span></div>
+
+        <div style="flex:1;padding:0 28px;display:flex;flex-direction:column;justify-content:center">
+          <div style="position:relative;height:200px;margin-bottom:6px">
+            <div style="position:absolute;left:88px;top:100px;width:0;height:0">
+              <div style="position:absolute;width:196px;height:196px;margin:-98px 0 0 -98px;box-sizing:border-box;border-radius:50%;border:1px dashed #E0D5C4"></div>
+              <div style="position:absolute;width:138px;height:138px;margin:-69px 0 0 -69px;box-sizing:border-box;border-radius:50%;border:1px dashed #E5DCCC"></div>
+              <div style="position:absolute;left:-24px;top:-29px;width:48px;height:58px;display:flex;align-items:center;justify-content:center"><svg width="48" height="58" viewBox="0 0 40 48" style="position:absolute;color:#F6DCDE"><use href="#v-drop-shape"></use></svg><span style="position:relative;font-size:13px;font-weight:700;color:#8C1F2B;margin-top:6px">AB&#8722;</span></div>
+              <div style="position:absolute;left:-96px;top:-72px;width:30px;height:30px;border-radius:50%;background:#EFE7DC;opacity:.6"></div>
+              <div style="position:absolute;left:62px;top:-84px;width:26px;height:26px;border-radius:50%;background:#EFE7DC;opacity:.5"></div>
+              <div style="position:absolute;left:-70px;top:56px;width:22px;height:22px;border-radius:50%;background:#EFE7DC;opacity:.4"></div>
+            </div>
+          </div>
+
+          <div style="font-size:11px;font-weight:600;letter-spacing:.11em;color:#96590A;text-transform:uppercase">Still searching</div>
+          <div style="font-family:'Newsreader',Georgia,serif;font-size:29px;font-weight:600;color:#241416;letter-spacing:-.016em;line-height:1.18;margin-top:10px;max-width:288px">AB&#8722; is rare — this one takes longer</div>
+          <div style="font-size:13.5px;color:#6E6A62;line-height:1.62;margin-top:12px;max-width:286px">We've alerted all 3 compatible donors within 15 km. Your request is now with our admin team for a manual broadcast.</div>
+
+          <div style="margin-top:24px;display:flex;align-items:center;gap:10px">
+            <div style="display:flex">
+              <span style="width:26px;height:26px;border-radius:50%;background:#EFE7DC;border:1.5px solid #FBF7F1;display:inline-block"></span>
+              <span style="width:26px;height:26px;border-radius:50%;background:#EFE7DC;border:1.5px solid #FBF7F1;display:inline-block;margin-left:-8px"></span>
+              <span style="width:26px;height:26px;border-radius:50%;background:#EFE7DC;border:1.5px solid #FBF7F1;display:inline-block;margin-left:-8px"></span>
+            </div>
+            <span style="font-size:12px;color:#6E6A62">3 alerted · none available yet</span>
+          </div>
+
+          <div style="height:1px;background:#E5DCCC;margin:22px 0 16px"></div>
+          <div style="font-size:12.5px;color:#6E6A62;line-height:1.6;max-width:286px">The request stays open for 6 hours. You'll be notified the moment someone accepts — you don't need to keep this screen open.</div>
+        </div>
+
+        <div style="flex:0 0 156px;padding:0 28px;display:flex;flex-direction:column;justify-content:center;gap:9px">
+          <button style="width:100%;background:#8C1F2B;color:#FBE6E8;border:none;border-radius:15px;padding:15px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;box-shadow:0 10px 24px rgba(140,31,43,.24)">Keep waiting</button>
+          <button style="width:100%;background:none;border:none;color:#6E6A62;padding:13px;font-size:13.5px;font-weight:500;cursor:pointer;font-family:inherit">Cancel this request</button>
+        </div>
+        <div style="flex:0 0 20px;display:flex;align-items:center;justify-content:center"><div style="width:120px;height:4px;background:#241416;border-radius:2px;opacity:.7"></div></div>
+      </div>
+      <div style="width:390px;font-size:12.5px;color:#5A564F;line-height:1.6;margin-top:14px">Dashed rings say the search reached its edge; the empty avatars are the three real people it found. The headline explains <em>why</em> — AB&#8722; is rare — which turns a failure into information. Cream, not red: this is not an emergency, it is a wait.</div>
+    </div>
+
+  </div>
+
+  <div style="max-width:900px;margin-top:64px;padding-top:36px;border-top:1px solid #D3CCC0">
+    <div style="font-family:'Newsreader',Georgia,serif;font-size:24px;font-weight:600;color:#241416;letter-spacing:-.016em">What is unchanged</div>
+    <div style="font-size:13.5px;color:#5A564F;line-height:1.7;margin-top:12px;max-width:740px">Every token, surface rule, elevation rule, CTA level, motion duration and spacing value from the approved system. No gradients added outside the two existing red fields. No new colours. No screen gained a second card. Settings, the legal set, admin login and OTP are deliberately untouched — the rhythm needs quiet screens to make these read as rich.</div>
+    <div style="font-size:13.5px;color:#5A564F;line-height:1.7;margin-top:18px;max-width:740px"><strong style="font-weight:600;color:#241416">On photography:</strong> the brief mentions human imagery. The product has no photo upload and no avatar field in the donor schema, so every person here is an initial disc. That is an honest constraint, not a placeholder — if you want real faces, it needs a backend field and a moderation policy first, which I'd raise as a separate product decision rather than mock in.</div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../services/backend.dart';
 import '../theme/app_colors.dart';
+import '../theme/app_text_styles.dart';
+import '../widgets/blood_group_droplet.dart';
 import 'consent_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -129,14 +131,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.pageBackground,
+      backgroundColor: AppColors.warmPageBackground,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(
             LucideIcons.arrowLeft,
-            color: AppColors.textPrimary,
+            color: AppColors.textPrimaryWarm,
           ),
           onPressed: () => Navigator.pop(context),
         ),
@@ -151,20 +153,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               Text(
                 'Complete registration',
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleLarge,
+                style: AppTextStyles.display(fontSize: 22, color: AppColors.textPrimaryWarm),
               ),
               const SizedBox(height: 8),
-              Text(
+              const Text(
                 'Provide details to complete your profile.',
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodySmall,
+                style: TextStyle(fontSize: 13, color: AppColors.textSecondary),
               ),
               const SizedBox(height: 32),
 
               // Name Field
-              Text(
+              const Text(
                 'Full name',
-                style: Theme.of(context).textTheme.titleSmall,
+                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textPrimaryWarm),
               ),
               const SizedBox(height: 8),
               TextField(
@@ -189,9 +191,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               const SizedBox(height: 24),
 
               // WhatsApp Field
-              Text(
+              const Text(
                 'WhatsApp number',
-                style: Theme.of(context).textTheme.titleSmall,
+                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textPrimaryWarm),
               ),
               const SizedBox(height: 8),
               TextField(
@@ -217,9 +219,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               const SizedBox(height: 24),
 
               // Location Field
-              Text(
+              const Text(
                 'Location',
-                style: Theme.of(context).textTheme.titleSmall,
+                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textPrimaryWarm),
               ),
               const SizedBox(height: 8),
               TextField(
@@ -244,8 +246,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 Container(
                   margin: const EdgeInsets.only(top: 6),
                   decoration: BoxDecoration(
-                    color: AppColors.surface,
-                    border: Border.all(color: AppColors.border),
+                    color: Colors.white,
+                    border: Border.all(color: AppColors.cardBorderWarm),
                     borderRadius: BorderRadius.circular(14),
                   ),
                   child: Column(
@@ -279,98 +281,39 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               const SizedBox(height: 24),
 
               // Blood Group Grid
-              Text(
+              const Text(
                 'Blood group',
-                style: Theme.of(context).textTheme.titleSmall,
+                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textPrimaryWarm),
               ),
               const SizedBox(height: 8),
               
-              // 4x2 Grid of blood groups using columns of rows (custom GridView style)
-              Column(
+              // Blood group grid — droplet token, matching Create Request.
+              GridView.count(
+                crossAxisCount: 4,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                mainAxisSpacing: 8,
+                crossAxisSpacing: 8,
+                childAspectRatio: 0.82,
                 children: [
-                  Row(
-                    children: List.generate(4, (index) {
-                      final group = _bloodGroups[index];
-                      final isSelected = _selectedBloodGroup == group;
-                      return Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            right: index < 3 ? 8.0 : 0.0,
-                          ),
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _selectedBloodGroup = group;
-                                _bloodGroupError = null;
-                              });
-                            },
-                            child: Container(
-                              height: 44,
-                              decoration: BoxDecoration(
-                                color: isSelected ? AppColors.primary : AppColors.surface,
-                                border: Border.all(
-                                  color: isSelected ? AppColors.primary : AppColors.border,
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(14),
-                              ),
-                              alignment: Alignment.center,
-                              child: Text(
-                                group,
-                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                      color: isSelected
-                                          ? AppColors.whiteTextOnPrimary
-                                          : AppColors.textPrimary,
-                                    ),
-                              ),
-                            ),
-                          ),
+                  for (final group in _bloodGroups)
+                    GestureDetector(
+                      onTap: () => setState(() {
+                        _selectedBloodGroup = group;
+                        _bloodGroupError = null;
+                      }),
+                      child: Center(
+                        child: BloodGroupDroplet(
+                          label: group,
+                          size: 40,
+                          filled: true,
+                          color: _selectedBloodGroup == group ? AppColors.primary : AppColors.dividerWarm,
+                          textColor: _selectedBloodGroup == group ? const Color(0xFFFBE6E8) : AppColors.textSecondary,
+                          fontSize: 12,
+                          serif: _selectedBloodGroup == group,
                         ),
-                      );
-                    }),
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: List.generate(4, (index) {
-                      final group = _bloodGroups[index + 4];
-                      final isSelected = _selectedBloodGroup == group;
-                      return Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            right: index < 3 ? 8.0 : 0.0,
-                          ),
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _selectedBloodGroup = group;
-                                _bloodGroupError = null;
-                              });
-                            },
-                            child: Container(
-                              height: 44,
-                              decoration: BoxDecoration(
-                                color: isSelected ? AppColors.primary : AppColors.surface,
-                                border: Border.all(
-                                  color: isSelected ? AppColors.primary : AppColors.border,
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(14),
-                              ),
-                              alignment: Alignment.center,
-                              child: Text(
-                                group,
-                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                      color: isSelected
-                                          ? AppColors.whiteTextOnPrimary
-                                          : AppColors.textPrimary,
-                                    ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    }),
-                  ),
+                      ),
+                    ),
                 ],
               ),
               if (_bloodGroupError != null) ...[

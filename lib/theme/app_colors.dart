@@ -74,4 +74,11 @@ class AppColors {
   static const Color warmGreenBg = Color(0xFFE3F0DE);
   static const Color warmGreenBorder = Color(0xFFE3EEDC);
   static const Color warmGreenText = Color(0xFF2F6B3A);
+
+  // Ember gradient — the dark red-to-black field used for the two "emotional
+  // peak" moments (Onboarding page 1 "Brand", and Matched/donor-found): from
+  // Product & Onboarding Art Direction, ~172deg #7E1C26 -> #270B0F -> #160809.
+  static const Color gradientEmberStart = Color(0xFF7E1C26);
+  static const Color gradientEmberMid = Color(0xFF270B0F);
+  static const Color gradientEmberEnd = Color(0xFF160809);
 }

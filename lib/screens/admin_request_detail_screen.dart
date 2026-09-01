@@ -13,7 +13,7 @@ class AdminRequestDetailScreen extends StatelessWidget {
         'open' => (AppColors.statusUrgentBg, AppColors.statusUrgentText),
         'matched' => (AppColors.statusPendingBg, AppColors.statusPendingText),
         'fulfilled' => (AppColors.statusAvailableBg, AppColors.statusAvailableText),
-        _ => (AppColors.border, AppColors.textPrimary),
+        _ => (AppColors.cardBorderWarm, AppColors.textPrimaryWarm),
       };
 
   @override
@@ -24,8 +24,8 @@ class AdminRequestDetailScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: IconButton(icon: const Icon(LucideIcons.arrowLeft, color: AppColors.textPrimary), onPressed: () => Navigator.pop(context)),
-        title: const Text('Request details', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: AppColors.textPrimary)),
+        leading: IconButton(icon: const Icon(LucideIcons.arrowLeft, color: AppColors.textPrimaryWarm), onPressed: () => Navigator.pop(context)),
+        title: const Text('Request details', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: AppColors.textPrimaryWarm)),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -36,7 +36,7 @@ class AdminRequestDetailScreen extends StatelessWidget {
             children: [
               Container(
                 padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(color: Colors.white, border: Border.all(color: AppColors.border), borderRadius: BorderRadius.circular(16)),
+                decoration: BoxDecoration(color: Colors.white, border: Border.all(color: AppColors.cardBorderWarm), borderRadius: BorderRadius.circular(16)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -56,7 +56,7 @@ class AdminRequestDetailScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    Text(request.location, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.textPrimary)),
+                    Text(request.location, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.textPrimaryWarm)),
                     const SizedBox(height: 10),
                     Row(
                       children: [
@@ -73,14 +73,14 @@ class AdminRequestDetailScreen extends StatelessWidget {
               const SizedBox(height: 16),
               Container(
                 padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(color: Colors.white, border: Border.all(color: AppColors.border), borderRadius: BorderRadius.circular(16)),
+                decoration: BoxDecoration(color: Colors.white, border: Border.all(color: AppColors.cardBorderWarm), borderRadius: BorderRadius.circular(16)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text('Matched donor', style: TextStyle(fontSize: 13.5, color: AppColors.textSecondary)),
                     Text(
                       request.matchedDonorName ?? 'Not matched yet',
-                      style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600, color: request.matchedDonorName == null ? AppColors.textMuted : AppColors.textPrimary),
+                      style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600, color: request.matchedDonorName == null ? AppColors.textMuted : AppColors.textPrimaryWarm),
                     ),
                   ],
                 ),

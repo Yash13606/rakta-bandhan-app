@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../theme/app_colors.dart';
+import '../theme/app_text_styles.dart';
 import 'verifying_screen.dart';
 
 class ConsentScreen extends StatefulWidget {
@@ -21,12 +22,12 @@ class _ConsentScreenState extends State<ConsentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.pageBackground,
+      backgroundColor: AppColors.warmPageBackground,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(LucideIcons.arrowLeft, color: AppColors.textPrimary),
+          icon: const Icon(LucideIcons.arrowLeft, color: AppColors.textPrimaryWarm),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -36,16 +37,19 @@ class _ConsentScreenState extends State<ConsentScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Icon(LucideIcons.lock, size: 30, color: AppColors.primary),
-              const SizedBox(height: 14),
-              Text('Your data, handled carefully', style: Theme.of(context).textTheme.titleLarge),
+              Container(
+                width: 52,
+                height: 52,
+                alignment: Alignment.center,
+                decoration: const BoxDecoration(color: AppColors.primaryLightTint, shape: BoxShape.circle),
+                child: const Icon(LucideIcons.lock, size: 22, color: AppColors.primary),
+              ),
+              const SizedBox(height: 16),
+              Text('Your data, handled carefully', style: AppTextStyles.display(fontSize: 21, color: AppColors.textPrimaryWarm)),
               const SizedBox(height: 8),
-              Text(
+              const Text(
                 "Before you continue, here's what we do with your information.",
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: AppColors.textSecondary,
-                      height: 1.4,
-                    ),
+                style: TextStyle(fontSize: 14, color: AppColors.textSecondary, height: 1.4),
               ),
               const SizedBox(height: 22),
               _infoCard(
@@ -79,13 +83,10 @@ class _ConsentScreenState extends State<ConsentScreen> {
                       ),
                     ),
                     const SizedBox(width: 4),
-                    Expanded(
+                    const Expanded(
                       child: Text(
                         'I agree to the privacy policy and consent to being contacted for blood donation requests.',
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: AppColors.textSecondary,
-                              height: 1.4,
-                            ),
+                        style: TextStyle(fontSize: 12, color: AppColors.textSecondary, height: 1.4),
                       ),
                     ),
                   ],
@@ -112,8 +113,8 @@ class _ConsentScreenState extends State<ConsentScreen> {
       width: double.infinity,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: AppColors.surface,
-        border: Border.all(color: AppColors.border),
+        color: Colors.white,
+        border: Border.all(color: AppColors.cardBorderWarm),
         borderRadius: BorderRadius.circular(14),
       ),
       child: Column(
@@ -121,7 +122,7 @@ class _ConsentScreenState extends State<ConsentScreen> {
         children: [
           Text(
             title,
-            style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w500, color: AppColors.textPrimary),
+            style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600, color: AppColors.textPrimaryWarm),
           ),
           const SizedBox(height: 4),
           Text(

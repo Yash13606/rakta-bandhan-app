@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../services/donor_match_service.dart';
 import '../theme/app_colors.dart';
-import '../widgets/avatar_badge.dart';
-import '../widgets/status_badge.dart';
+import '../theme/app_text_styles.dart';
+import '../widgets/blood_group_droplet.dart';
+import '../widgets/two_person_connection.dart';
 
-/// Terminal screen of the mock matching ladder's "donor found" outcome.
-/// The donor identity comes from DonorMatchService/MockDonorMatchService —
-/// no real donor accepted anything (see MatchingScreen). The backend
-/// developer swaps in a real matched-donor lookup behind that interface
-/// without changing this screen.
+/// Terminal screen of the mock matching ladder's "donor found" outcome —
+/// the "Matched" emotional peak per Product Art Direction: two avatars
+/// joined by a hairline on a dark ember field, the committed ring group at
+/// 0.90x recentred on the connection itself, both discs seated on the
+/// middle ring's own radius. The donor identity comes from
+/// DonorMatchService/MockDonorMatchService — no real donor accepted
+/// anything (see MatchingScreen). The backend developer swaps in a real
+/// matched-donor lookup behind that interface without changing this screen.
 class DonorFoundScreen extends StatelessWidget {
   final String requestId;
   final DonorMatchService _service = MockDonorMatchService();
@@ -27,107 +31,96 @@ class DonorFoundScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.warmPageBackground,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(LucideIcons.arrowLeft, color: AppColors.textPrimary),
-          onPressed: () => _goHome(context),
+      backgroundColor: AppColors.gradientEmberStart,
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment(-0.25, -1),
+            end: Alignment(0.25, 1),
+            colors: [AppColors.gradientEmberStart, AppColors.gradientEmberMid, AppColors.gradientEmberEnd],
+            stops: [0, 0.68, 1],
+          ),
         ),
-      ),
-      body: SafeArea(
-        child: FutureBuilder<DonorMatch>(
-          future: _service.fetchMatch(requestId),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return const Center(child: CircularProgressIndicator(strokeWidth: 2));
-            }
-            final donor = snapshot.data!;
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: SafeArea(
+          child: FutureBuilder<DonorMatch>(
+            future: _service.fetchMatch(requestId),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return const Center(child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white));
+              }
+              final donor = snapshot.data!;
+              return Column(
                 children: [
-                  const SizedBox(height: 8),
-                  Container(
-                    width: 56,
-                    height: 56,
-                    decoration: const BoxDecoration(color: AppColors.warmGreenBg, shape: BoxShape.circle),
-                    alignment: Alignment.center,
-                    child: const Icon(LucideIcons.checkCircle, size: 24, color: AppColors.warmGreenText),
+                  SizedBox(
+                    height: 48,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: IconButton(
+                        icon: const Icon(LucideIcons.arrowLeft, color: Colors.white),
+                        onPressed: () => _goHome(context),
+                      ),
+                    ),
                   ),
-                  const SizedBox(height: 14),
-                  Text(
-                    '${donor.name.split(' ').first} accepted your request',
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: AppColors.textPrimaryWarm),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    '${donor.bloodGroup} · ${donor.distance} · verified donor',
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 13, color: AppColors.textSecondary),
-                  ),
-                  const SizedBox(height: 20),
-                  Container(
-                    padding: const EdgeInsets.all(18),
-                    decoration: BoxDecoration(color: Colors.white, border: Border.all(color: AppColors.border), borderRadius: BorderRadius.circular(16)),
+                  Expanded(child: TwoPersonConnection(leftLabel: 'You', rightInitials: donor.initials)),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 28),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Row(
-                          children: [
-                            AvatarBadge(initials: donor.initials, size: 44, fontSize: 15),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(donor.name, style: const TextStyle(fontSize: 14.5, fontWeight: FontWeight.w500, color: AppColors.textPrimary)),
-                                  const SizedBox(height: 2),
-                                  Row(
-                                    children: [
-                                      StatusBadge.bloodGroup(donor.bloodGroup),
-                                      const SizedBox(width: 6),
-                                      const Text('Available now', style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                        const Text("YOU'RE CONNECTED", style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, letterSpacing: 1.5, color: Color(0xFFE0A8AF))),
+                        const SizedBox(height: 12),
+                        Text(
+                          '${donor.name.split(' ').first} is ready\nto help you',
+                          textAlign: TextAlign.center,
+                          style: AppTextStyles.display(fontSize: 28, color: const Color(0xFFFFF9F5), height: 1.2),
                         ),
-                        const SizedBox(height: 16),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: ElevatedButton.icon(
-                                onPressed: () => _placeholderAction(context, 'Call'),
-                                icon: const Icon(LucideIcons.phone, size: 14),
-                                label: const Text('Call'),
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: OutlinedButton.icon(
-                                onPressed: () => _placeholderAction(context, 'WhatsApp'),
-                                icon: const Icon(LucideIcons.messageSquare, size: 14),
-                                label: const Text('WhatsApp'),
-                              ),
-                            ),
-                          ],
+                        const SizedBox(height: 12),
+                        Text(
+                          '${donor.bloodGroup} · ${donor.distance} · verified donor. Reach out and agree a time.',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(fontSize: 13.5, color: Color(0xFFE9BFC4), height: 1.6),
+                        ),
+                        const SizedBox(height: 20),
+                        BloodGroupDroplet(label: donor.bloodGroup, size: 34, filled: true, color: AppColors.primary, textColor: const Color(0xFFFBE6E8), fontSize: 12),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(28, 0, 28, 20),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton.icon(
+                            style: ElevatedButton.styleFrom(backgroundColor: AppColors.warmPageBackground, foregroundColor: AppColors.gradientEmberMid),
+                            onPressed: () => _placeholderAction(context, 'Call'),
+                            icon: const Icon(LucideIcons.phone, size: 16),
+                            label: const Text('Call', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        SizedBox(
+                          width: double.infinity,
+                          child: OutlinedButton.icon(
+                            style: OutlinedButton.styleFrom(foregroundColor: const Color(0xFFFBE6E8), side: const BorderSide(color: Color(0x8CFBE6E8))),
+                            onPressed: () => _placeholderAction(context, 'WhatsApp'),
+                            icon: const Icon(LucideIcons.messageSquare, size: 15),
+                            label: const Text('WhatsApp'),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        const Text('Mark as donated afterwards', textAlign: TextAlign.center, style: TextStyle(fontSize: 12.5, color: Color(0xFFD9AFB4))),
+                        TextButton(
+                          onPressed: () => _goHome(context),
+                          child: const Text('Back to home', style: TextStyle(fontSize: 13, color: Color(0xFFE9BFC4))),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  OutlinedButton(onPressed: () => _goHome(context), child: const Text('Back to home')),
-                  const SizedBox(height: 20),
                 ],
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );

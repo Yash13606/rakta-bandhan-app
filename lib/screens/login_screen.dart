@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../theme/app_colors.dart';
+import '../theme/app_text_styles.dart';
+import '../widgets/brand_mark.dart';
 import 'otp_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -43,29 +46,29 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.pageBackground,
+      backgroundColor: AppColors.warmPageBackground,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 60),
+              const SizedBox(height: 32),
+              const Center(child: BrandMark(progress: 1, size: 84)),
+              const SizedBox(height: 20),
               // Header
               Text(
                 'Welcome to Rakta Bandhan',
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleLarge,
+                style: AppTextStyles.display(fontSize: 24, color: AppColors.textPrimaryWarm),
               ),
               const SizedBox(height: 8),
-              Text(
+              const Text(
                 'Your help can save a life.',
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: AppColors.textSecondary,
-                    ),
+                style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
               ),
-              const SizedBox(height: 48),
+              const SizedBox(height: 40),
 
               // Country Code & Phone Input Row
               Row(
@@ -78,22 +81,20 @@ class _LoginScreenState extends State<LoginScreen> {
                       vertical: 12,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.surface,
+                      color: Colors.white,
                       border: Border.all(
-                        color: AppColors.border,
+                        color: AppColors.cardBorderWarm,
                         width: 1,
                       ),
                       borderRadius: BorderRadius.circular(14),
                     ),
-                    child: Text(
+                    child: const Text(
                       '+91',
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            fontWeight: FontWeight.w500,
-                          ),
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.textPrimaryWarm),
                     ),
                   ),
                   const SizedBox(width: 8),
-                  
+
                   // Phone TextField
                   Expanded(
                     child: TextField(
@@ -108,6 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       decoration: const InputDecoration(
                         hintText: 'Enter phone number',
+                        prefixIcon: Icon(LucideIcons.phone, size: 16),
                       ),
                     ),
                   ),
@@ -121,9 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 4.0),
                   child: Text(
                     _errorMessage!,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AppColors.primary,
-                        ),
+                    style: const TextStyle(fontSize: 12, color: AppColors.primary),
                   ),
                 ),
               ],
@@ -142,13 +142,10 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 24),
 
               // Consent Text
-              Text(
+              const Text(
                 'By continuing, you consent to receive an OTP code to verify your phone number.',
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: AppColors.textMuted,
-                      fontSize: 12,
-                    ),
+                style: TextStyle(fontSize: 12, color: AppColors.textMutedWarm),
               ),
             ],
           ),

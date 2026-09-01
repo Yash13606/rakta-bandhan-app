@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../theme/app_colors.dart';
+import '../theme/app_text_styles.dart';
 import 'main_navigation_screen.dart';
 
 class VerifyingScreen extends StatelessWidget {
@@ -17,7 +18,7 @@ class VerifyingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.pageBackground,
+      backgroundColor: AppColors.warmPageBackground,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 26.0),
@@ -27,24 +28,20 @@ class VerifyingScreen extends StatelessWidget {
               Container(
                 width: 64,
                 height: 64,
-                decoration: const BoxDecoration(color: AppColors.statusPendingBg, shape: BoxShape.circle),
+                decoration: const BoxDecoration(color: AppColors.warmAmberBg, shape: BoxShape.circle),
                 alignment: Alignment.center,
-                child: const Icon(LucideIcons.shieldCheck, size: 28, color: AppColors.statusPendingText),
+                child: const Icon(LucideIcons.shieldCheck, size: 28, color: AppColors.warmAmberText),
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: 16),
               Text(
                 'Verification pending',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 19),
+                style: AppTextStyles.display(fontSize: 21, color: AppColors.textPrimaryWarm),
               ),
               const SizedBox(height: 8),
-              Text(
+              const Text(
                 "We're reviewing your details — usually within a few hours. You can browse and receive requests in the meantime; donating unlocks once verified.",
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: AppColors.textSecondary,
-                      height: 1.55,
-                      fontSize: 13.5,
-                    ),
+                style: TextStyle(fontSize: 13.5, color: AppColors.textSecondary, height: 1.55),
               ),
               const SizedBox(height: 22),
               SizedBox(

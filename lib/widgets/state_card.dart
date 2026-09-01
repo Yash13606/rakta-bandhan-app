@@ -18,7 +18,7 @@ class StateCard extends StatelessWidget {
     super.key,
     required this.icon,
     required this.title,
-    this.iconBackground = AppColors.border,
+    this.iconBackground = AppColors.cardBorderWarm,
     this.iconColor = AppColors.textMuted,
     this.message,
     this.actionLabel,
@@ -76,7 +76,7 @@ class StateCard extends StatelessWidget {
           Text(
             title,
             textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.textPrimaryWarm),
           ),
           if (message != null) ...[
             const SizedBox(height: 6),

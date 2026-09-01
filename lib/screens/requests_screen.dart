@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../services/backend.dart';
 import '../theme/app_colors.dart';
+import '../widgets/blood_group_droplet.dart';
 import '../widgets/state_card.dart';
 import '../widgets/status_badge.dart';
 import 'cancel_confirm_screen.dart';
@@ -38,7 +39,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
       case 'fulfilled':
         return AppColors.statusAvailableBg;
       default:
-        return AppColors.border;
+        return AppColors.cardBorderWarm;
     }
   }
 
@@ -51,7 +52,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
       case 'fulfilled':
         return AppColors.statusAvailableText;
       default:
-        return AppColors.textPrimary;
+        return AppColors.textPrimaryWarm;
     }
   }
 
@@ -86,10 +87,10 @@ class _RequestsScreenState extends State<RequestsScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(LucideIcons.arrowLeft, color: AppColors.textPrimary),
+          icon: const Icon(LucideIcons.arrowLeft, color: AppColors.textPrimaryWarm),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text('Blood requests', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: AppColors.textPrimary)),
+        title: const Text('Blood requests', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: AppColors.textPrimaryWarm)),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -235,8 +236,10 @@ class _RequestsScreenState extends State<RequestsScreen> {
         ? request['location_label'] as String
         : '${request['units_needed'] ?? 1} unit(s) needed';
 
+    final isMatched = status == 'matched' && request['matched_donor_phone'] != null;
+
     return Container(
-      padding: const EdgeInsets.all(16),
+      clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(14),
@@ -246,54 +249,106 @@ class _RequestsScreenState extends State<RequestsScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            children: [
-              StatusBadge.bloodGroup(bloodGroup),
-              const SizedBox(width: 8),
-              StatusBadge(label: _statusLabel(status), background: _getStatusBg(status), textColor: _getStatusText(status)),
-            ],
-          ),
-          const SizedBox(height: 14),
-          Row(
-            children: [
-              const Icon(LucideIcons.mapPin, size: 14, color: AppColors.textSecondary),
-              const SizedBox(width: 6),
-              Expanded(
-                child: Text(
-                  locationLabel,
-                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textPrimaryWarm),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ],
-          ),
-          if (status == 'matched' && request['matched_donor_phone'] != null) ...[
-            const SizedBox(height: 10),
-            Row(
+          if (isMatched) Container(height: 3, color: AppColors.warmGreenText),
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Icon(LucideIcons.phone, size: 14, color: AppColors.textSecondary),
-                const SizedBox(width: 6),
-                Text(
-                  '${request['matched_donor_name']} · ${request['matched_donor_phone']}',
-                  style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: AppColors.textPrimary),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    BloodGroupDroplet(
+                      label: bloodGroup,
+                      size: 38,
+                      filled: status != 'fulfilled' && status != 'expired',
+                      color: status == 'fulfilled'
+                          ? AppColors.statusAvailableBg
+                          : (status == 'expired' ? AppColors.dividerWarm : AppColors.primaryLightTint),
+                      textColor: status == 'fulfilled'
+                          ? AppColors.statusAvailableText
+                          : (status == 'expired' ? AppColors.textSecondary : AppColors.primary),
+                      fontSize: 12,
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          StatusBadge(label: _statusLabel(status), background: _getStatusBg(status), textColor: _getStatusText(status)),
+                          const SizedBox(height: 4),
+                          Text(
+                            locationLabel,
+                            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textPrimaryWarm),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
+                if (isMatched) ...[
+                  Container(
+                    margin: const EdgeInsets.only(top: 14),
+                    padding: const EdgeInsets.only(top: 13),
+                    decoration: const BoxDecoration(border: Border(top: BorderSide(color: AppColors.dividerWarm))),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 32,
+                          height: 32,
+                          decoration: const BoxDecoration(color: AppColors.primaryLightTint, shape: BoxShape.circle),
+                          alignment: Alignment.center,
+                          child: Text(
+                            _initials(request['matched_donor_name'] as String? ?? '?'),
+                            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.primary),
+                          ),
+                        ),
+                        Container(width: 22, height: 1, color: AppColors.warmGreenText),
+                        Container(
+                          width: 32,
+                          height: 32,
+                          decoration: const BoxDecoration(color: AppColors.warmGreenBg, shape: BoxShape.circle),
+                          alignment: Alignment.center,
+                          child: const Icon(LucideIcons.check, size: 14, color: AppColors.warmGreenText),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Text(
+                            request['matched_donor_name'] as String? ?? '',
+                            style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w600, color: AppColors.textPrimaryWarm),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        const Icon(LucideIcons.phone, size: 15, color: AppColors.warmGreenText),
+                      ],
+                    ),
+                  ),
+                ],
+                if (status == 'expired') ...[
+                  const SizedBox(height: 10),
+                  _terminalNote('No donor found in time — matching stopped. You can create a new request.'),
+                ],
+                if (status == 'cancelled') ...[
+                  const SizedBox(height: 10),
+                  _terminalNote('You cancelled this request.'),
+                ],
+                const SizedBox(height: 14),
+                _cardActions(requestId, status, primaryAction),
               ],
             ),
-          ],
-          if (status == 'expired') ...[
-            const SizedBox(height: 10),
-            _terminalNote('No donor found in time — matching stopped. You can create a new request.'),
-          ],
-          if (status == 'cancelled') ...[
-            const SizedBox(height: 10),
-            _terminalNote('You cancelled this request.'),
-          ],
-          const SizedBox(height: 14),
-          _cardActions(requestId, status, primaryAction),
+          ),
         ],
       ),
     );
+  }
+
+  String _initials(String name) {
+    final trimmed = name.trim();
+    if (trimmed.isEmpty) return '?';
+    return trimmed.split(RegExp(r'\s+')).take(2).map((w) => w[0].toUpperCase()).join();
   }
 
   Widget _terminalNote(String text) {
