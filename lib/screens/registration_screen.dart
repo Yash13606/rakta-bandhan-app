@@ -112,6 +112,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         bloodGroup: _selectedBloodGroup!,
         lat: lat,
         lng: lng,
+        locationLabel: _locationController.text.trim(),
       );
       if (!mounted) return;
       setState(() => _isSubmitting = false);

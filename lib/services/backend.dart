@@ -81,13 +81,23 @@ class RequestAlreadyClaimedException implements Exception {
   String toString() => 'Someone else already accepted this request.';
 }
 
+/// Thrown when a donor tries to accept a second request while already
+/// matched on another one. `request_detail_screen.dart` checks this
+/// proactively (`_findExistingActiveMatch`) before calling acceptRequest;
+/// this is the transactional backstop for the race that check can't cover.
+class DonorAlreadyMatchedException implements Exception {
+  const DonorAlreadyMatchedException();
+  @override
+  String toString() => 'You already have an active match. Finish or cancel it first.';
+}
+
 /// Firebase data layer for Rakta Bandhan.
 ///
-/// No Cloud Functions run behind this (Spark plan, see
-/// backend/BACKEND_REFERENCE.md) — matching, accept-locking, contact
-/// reveal, and the 90-day cooldown are all done here, client-side, backed
-/// by Firestore transactions and security rules for the parts that need to
-/// stay honest (see backend/firestore.rules for the matching validation).
+/// No Cloud Functions run behind this (Spark plan, see backend/README.md)
+/// — matching, accept-locking, contact reveal, admin verification/ban, and
+/// the 90-day cooldown are all done here, client-side, backed by Firestore
+/// transactions and security rules for the parts that need to stay honest
+/// (see backend/firestore.rules).
 class Backend {
   Backend._();
   static final Backend instance = Backend._();
@@ -137,12 +147,18 @@ class Backend {
 
   Future<bool> hasProfile() async => (await myDonorDoc()).exists;
 
+  /// New donors start unverified and unbanned — `is_verified` is
+  /// admin-only from here on (see backend/firestore.rules), matching the
+  /// admin dashboard's verification queue. [locationLabel] is the free-text
+  /// address the donor searched/picked at registration, shown back to
+  /// admins in the console (donor docs otherwise only have raw lat/lng).
   Future<void> registerDonor({
     required String name,
     required String phone,
     required String bloodGroup,
     required double lat,
     required double lng,
+    String? locationLabel,
   }) async {
     final geohash = encodeGeohash(lat, lng);
     final now = FieldValue.serverTimestamp();
@@ -152,11 +168,14 @@ class Backend {
       'name': name,
       'phone': phone,
       'blood_group': bloodGroup,
+      'location_label': locationLabel ?? '',
       'geohash': geohash,
       'lat': lat,
       'lng': lng,
       'is_available': true,
-      'is_verified': true,
+      'is_verified': false,
+      'is_banned': false,
+      'active_request_id': null,
       'created_at': now,
     });
     batch.set(_db.collection('donors_public').doc(_uid), {
@@ -166,7 +185,7 @@ class Backend {
       'lat': lat,
       'lng': lng,
       'is_available': true,
-      'is_verified': true,
+      'is_verified': false,
       'updated_at': now,
     });
     await batch.commit();
@@ -216,6 +235,10 @@ class Backend {
       .map((e) => e.key)
       .toList();
 
+  /// Denormalizes the requester's own name/phone onto the request at
+  /// creation time — the matched donor then reads contact info straight
+  /// off this doc (see MatchContactScreen) instead of needing a second,
+  /// separately-authorized read of `donors/{requester_uid}`.
   Future<String> createRequest({
     required String bloodGroup,
     required int unitsNeeded,
@@ -224,9 +247,12 @@ class Backend {
     required double lng,
     required String locationLabel,
   }) async {
+    final requester = (await myDonorDoc()).data();
     final geohash = encodeGeohash(lat, lng);
     final ref = await _db.collection('requests').add({
       'requester_uid': _uid,
+      'requester_name': requester?['name'] ?? 'Requester',
+      'requester_phone': requester?['phone'] ?? '',
       'blood_group': bloodGroup,
       'units_needed': unitsNeeded,
       'urgency': urgency,
@@ -243,23 +269,57 @@ class Backend {
     return ref.id;
   }
 
-  Future<void> cancelRequest(String requestId) =>
-      _db.collection('requests').doc(requestId).update({'status': 'cancelled'});
+  Future<void> cancelRequest(String requestId) => _db.collection('requests').doc(requestId).update({
+        'status': 'cancelled',
+        'cancelled_at': FieldValue.serverTimestamp(),
+      });
+
+  /// Lazy stand-in for the Blaze-only expireOldRequests scheduled function
+  /// — call opportunistically wherever a request doc is already being
+  /// read (list/detail/tracking screens). A no-op unless it's genuinely
+  /// still `open` and past its `expires_at`; safe to call on every doc a
+  /// screen renders.
+  Future<void> expireIfStale(String requestId, Map<String, dynamic> data) async {
+    if (data['status'] != 'open') return;
+    final expiresAt = data['expires_at'] as Timestamp?;
+    if (expiresAt == null || expiresAt.toDate().isAfter(DateTime.now())) return;
+    try {
+      await _db.collection('requests').doc(requestId).update({
+        'status': 'expired',
+        'expired_at': FieldValue.serverTimestamp(),
+      });
+    } catch (_) {
+      // Already transitioned by someone else / no longer open — fine.
+    }
+  }
 
   /// Donor accepts an open request. A Firestore transaction still
   /// serializes concurrent accepts correctly even without a Cloud
   /// Function — only one donor's write wins; the loser gets this thrown.
+  /// Also enforces "one active match per donor" transactionally: the
+  /// donor's own `active_request_id` is the lock, self-healed here if it
+  /// points at a request that's no longer actually active (matched
+  /// elsewhere finished/cancelled without this donor's client seeing it).
   Future<void> acceptRequest(String requestId) async {
-    final donorSnap = await myDonorDoc();
-    if (!donorSnap.exists) throw StateError('No donor profile.');
-    final donor = donorSnap.data()!;
-
     await _db.runTransaction((tx) async {
+      final donorRef = _db.collection('donors').doc(_uid);
+      final donorSnap = await tx.get(donorRef);
+      if (!donorSnap.exists) throw StateError('No donor profile.');
+      final donor = donorSnap.data()!;
+
+      final activeId = donor['active_request_id'] as String?;
+      if (activeId != null && activeId != requestId) {
+        final activeSnap = await tx.get(_db.collection('requests').doc(activeId));
+        final stillActive = activeSnap.exists && activeSnap.data()?['status'] == 'matched';
+        if (stillActive) throw const DonorAlreadyMatchedException();
+      }
+
       final reqRef = _db.collection('requests').doc(requestId);
       final reqSnap = await tx.get(reqRef);
       if (!reqSnap.exists || reqSnap.data()!['status'] != 'open') {
         throw const RequestAlreadyClaimedException();
       }
+
       tx.update(reqRef, {
         'status': 'matched',
         'matched_donor_id': _uid,
@@ -267,11 +327,15 @@ class Backend {
         'matched_donor_phone': donor['phone'],
         'matched_at': FieldValue.serverTimestamp(),
       });
+      tx.update(donorRef, {'active_request_id': requestId});
     });
   }
 
-  /// Matched donor self-reports the donation done and starts their own
-  /// 90-day cooldown (admin confirmation is the Blaze-upgrade path).
+  /// Matched donor self-reports the donation done, writes the immutable
+  /// history record, and starts their own 90-day cooldown (admin
+  /// confirmation of the same donation is also possible — see
+  /// AdminService — but self-report is the only path the app's own UI
+  /// drives today).
   Future<void> markFulfilled(String requestId) async {
     final reactivateAt = DateTime.now().add(const Duration(days: donorCooldownDays));
 
@@ -283,11 +347,18 @@ class Backend {
     batch.update(_db.collection('donors').doc(_uid), {
       'last_donation_date': FieldValue.serverTimestamp(),
       'is_available': false,
+      'active_request_id': null,
       'reactivation_scheduled_at': Timestamp.fromDate(reactivateAt),
     });
     batch.update(_db.collection('donors_public').doc(_uid), {
       'is_available': false,
       'updated_at': FieldValue.serverTimestamp(),
+    });
+    batch.set(_db.collection('donation_history').doc(), {
+      'donor_id': _uid,
+      'request_id': requestId,
+      'donation_date': FieldValue.serverTimestamp(),
+      'confirmed_by': 'self',
     });
     await batch.commit();
   }
@@ -301,6 +372,97 @@ class Backend {
         .get();
     return snap.count ?? 0;
   }
+
+  /// Requests this donor has been matched to (any status) — the other
+  /// half of "my requests" alongside [myRequestsStream], used to derive
+  /// the notifications feed (see FirestoreNotificationsService) without a
+  /// separate notifications collection.
+  Stream<QuerySnapshot<Map<String, dynamic>>> myMatchedRequestsStream() =>
+      _db.collection('requests').where('matched_donor_id', isEqualTo: _uid).snapshots();
+
+  // ------------------------------------------------------------- Admin
+  //
+  // No custom-claims roles (that needs the Admin SDK / a Cloud Function).
+  // A doc's existence at admins/{uid} is the admin flag; firestore.rules
+  // enforces that only an admin can write it, verify/ban a donor, or
+  // manage hospitals — these methods don't re-check isAdmin() themselves,
+  // the rules do, so a non-admin's write here fails at Firestore, not
+  // silently.
+
+  Future<bool> isCurrentUserAdmin() async {
+    final user = _auth.currentUser;
+    if (user == null) return false;
+    final snap = await _db.collection('admins').doc(user.uid).get();
+    return snap.exists;
+  }
+
+  Future<void> _logAdminAction(String action, String target) =>
+      _db.collection('audit_log').add({
+        'actor_uid': _uid,
+        'action': action,
+        'target': target,
+        'at': FieldValue.serverTimestamp(),
+      });
+
+  Future<void> adminVerifyDonor(String donorId) async {
+    final batch = _db.batch();
+    batch.update(_db.collection('donors').doc(donorId), {'is_verified': true});
+    batch.update(_db.collection('donors_public').doc(donorId), {
+      'is_verified': true,
+      'updated_at': FieldValue.serverTimestamp(),
+    });
+    await batch.commit();
+    await _logAdminAction('verify_donor', donorId);
+  }
+
+  Future<void> adminBanDonor(String donorId) async {
+    final batch = _db.batch();
+    batch.update(_db.collection('donors').doc(donorId), {'is_banned': true, 'is_available': false});
+    batch.update(_db.collection('donors_public').doc(donorId), {
+      'is_available': false,
+      'updated_at': FieldValue.serverTimestamp(),
+    });
+    await batch.commit();
+    await _logAdminAction('ban_donor', donorId);
+  }
+
+  Future<void> adminUnbanDonor(String donorId) async {
+    await _db.collection('donors').doc(donorId).update({'is_banned': false});
+    await _logAdminAction('unban_donor', donorId);
+  }
+
+  Future<void> adminSetDonorAvailability(String donorId, bool available) async {
+    final batch = _db.batch();
+    batch.update(_db.collection('donors').doc(donorId), {'is_available': available});
+    batch.update(_db.collection('donors_public').doc(donorId), {
+      'is_available': available,
+      'updated_at': FieldValue.serverTimestamp(),
+    });
+    await batch.commit();
+    await _logAdminAction(available ? 'mark_available' : 'mark_unavailable', donorId);
+  }
+
+  Future<void> adminAddHospital(String name, String address) async {
+    final ref = await _db.collection('hospitals').add({'name': name, 'address': address});
+    await _logAdminAction('add_hospital', ref.id);
+  }
+
+  Future<void> adminUpdateHospital(String id, String name, String address) async {
+    await _db.collection('hospitals').doc(id).update({'name': name, 'address': address});
+    await _logAdminAction('update_hospital', id);
+  }
+
+  Future<void> adminDeleteHospital(String id) async {
+    await _db.collection('hospitals').doc(id).delete();
+    await _logAdminAction('delete_hospital', id);
+  }
+
+  /// Not a real broadcast — sending a push needs a server (Cloud Function
+  /// + FCM Admin SDK), which is exactly what Spark doesn't allow. This
+  /// just records the intent in the audit trail so the admin UI's
+  /// broadcast action isn't silently dead; see backend/README.md.
+  Future<void> adminSendBroadcast(String message, String audience) =>
+      _logAdminAction('broadcast[$audience]', message);
 
   /// Falls back to Thiruvananthapuram (matches the existing UI's demo
   /// city) if the browser/device denies location — never blocks the flow.
