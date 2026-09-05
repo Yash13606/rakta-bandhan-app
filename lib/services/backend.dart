@@ -163,42 +163,47 @@ class Backend {
     final geohash = encodeGeohash(lat, lng);
     final now = FieldValue.serverTimestamp();
 
-    final batch = _db.batch();
-    batch.set(_db.collection('donors').doc(_uid), {
-      'name': name,
-      'phone': phone,
-      'blood_group': bloodGroup,
-      'location_label': locationLabel ?? '',
-      'geohash': geohash,
-      'lat': lat,
-      'lng': lng,
-      'is_available': true,
-      'is_verified': false,
-      'is_banned': false,
-      'active_request_id': null,
-      'created_at': now,
+    // A real transaction, not a batch: donors_public's create rule reads
+    // donors/{uid} (get()) to confirm is_verified/is_available match —
+    // that read is only guaranteed to see this write's own donors/{uid}
+    // value within the same transaction, not necessarily within a plain
+    // batch. See backend/firestore.rules.
+    await _db.runTransaction((tx) async {
+      tx.set(_db.collection('donors').doc(_uid), {
+        'name': name,
+        'phone': phone,
+        'blood_group': bloodGroup,
+        'location_label': locationLabel ?? '',
+        'geohash': geohash,
+        'lat': lat,
+        'lng': lng,
+        'is_available': true,
+        'is_verified': false,
+        'is_banned': false,
+        'active_request_id': null,
+        'created_at': now,
+      });
+      tx.set(_db.collection('donors_public').doc(_uid), {
+        'name': name,
+        'blood_group': bloodGroup,
+        'geohash': geohash,
+        'lat': lat,
+        'lng': lng,
+        'is_available': true,
+        'is_verified': false,
+        'updated_at': now,
+      });
     });
-    batch.set(_db.collection('donors_public').doc(_uid), {
-      'name': name,
-      'blood_group': bloodGroup,
-      'geohash': geohash,
-      'lat': lat,
-      'lng': lng,
-      'is_available': true,
-      'is_verified': false,
-      'updated_at': now,
-    });
-    await batch.commit();
   }
 
   Future<void> setAvailability(bool available) async {
-    final batch = _db.batch();
-    batch.update(_db.collection('donors').doc(_uid), {'is_available': available});
-    batch.update(_db.collection('donors_public').doc(_uid), {
-      'is_available': available,
-      'updated_at': FieldValue.serverTimestamp(),
+    await _db.runTransaction((tx) async {
+      tx.update(_db.collection('donors').doc(_uid), {'is_available': available});
+      tx.update(_db.collection('donors_public').doc(_uid), {
+        'is_available': available,
+        'updated_at': FieldValue.serverTimestamp(),
+      });
     });
-    await batch.commit();
   }
 
   /// Client-side stand-in for scheduledReactivation.js — call on profile load.
@@ -339,28 +344,28 @@ class Backend {
   Future<void> markFulfilled(String requestId) async {
     final reactivateAt = DateTime.now().add(const Duration(days: donorCooldownDays));
 
-    final batch = _db.batch();
-    batch.update(_db.collection('requests').doc(requestId), {
-      'status': 'fulfilled',
-      'fulfilled_at': FieldValue.serverTimestamp(),
+    await _db.runTransaction((tx) async {
+      tx.update(_db.collection('requests').doc(requestId), {
+        'status': 'fulfilled',
+        'fulfilled_at': FieldValue.serverTimestamp(),
+      });
+      tx.update(_db.collection('donors').doc(_uid), {
+        'last_donation_date': FieldValue.serverTimestamp(),
+        'is_available': false,
+        'active_request_id': null,
+        'reactivation_scheduled_at': Timestamp.fromDate(reactivateAt),
+      });
+      tx.update(_db.collection('donors_public').doc(_uid), {
+        'is_available': false,
+        'updated_at': FieldValue.serverTimestamp(),
+      });
+      tx.set(_db.collection('donation_history').doc(), {
+        'donor_id': _uid,
+        'request_id': requestId,
+        'donation_date': FieldValue.serverTimestamp(),
+        'confirmed_by': 'self',
+      });
     });
-    batch.update(_db.collection('donors').doc(_uid), {
-      'last_donation_date': FieldValue.serverTimestamp(),
-      'is_available': false,
-      'active_request_id': null,
-      'reactivation_scheduled_at': Timestamp.fromDate(reactivateAt),
-    });
-    batch.update(_db.collection('donors_public').doc(_uid), {
-      'is_available': false,
-      'updated_at': FieldValue.serverTimestamp(),
-    });
-    batch.set(_db.collection('donation_history').doc(), {
-      'donor_id': _uid,
-      'request_id': requestId,
-      'donation_date': FieldValue.serverTimestamp(),
-      'confirmed_by': 'self',
-    });
-    await batch.commit();
   }
 
   Future<int> myDonationCount() async {
@@ -405,24 +410,24 @@ class Backend {
       });
 
   Future<void> adminVerifyDonor(String donorId) async {
-    final batch = _db.batch();
-    batch.update(_db.collection('donors').doc(donorId), {'is_verified': true});
-    batch.update(_db.collection('donors_public').doc(donorId), {
-      'is_verified': true,
-      'updated_at': FieldValue.serverTimestamp(),
+    await _db.runTransaction((tx) async {
+      tx.update(_db.collection('donors').doc(donorId), {'is_verified': true});
+      tx.update(_db.collection('donors_public').doc(donorId), {
+        'is_verified': true,
+        'updated_at': FieldValue.serverTimestamp(),
+      });
     });
-    await batch.commit();
     await _logAdminAction('verify_donor', donorId);
   }
 
   Future<void> adminBanDonor(String donorId) async {
-    final batch = _db.batch();
-    batch.update(_db.collection('donors').doc(donorId), {'is_banned': true, 'is_available': false});
-    batch.update(_db.collection('donors_public').doc(donorId), {
-      'is_available': false,
-      'updated_at': FieldValue.serverTimestamp(),
+    await _db.runTransaction((tx) async {
+      tx.update(_db.collection('donors').doc(donorId), {'is_banned': true, 'is_available': false});
+      tx.update(_db.collection('donors_public').doc(donorId), {
+        'is_available': false,
+        'updated_at': FieldValue.serverTimestamp(),
+      });
     });
-    await batch.commit();
     await _logAdminAction('ban_donor', donorId);
   }
 
@@ -432,13 +437,13 @@ class Backend {
   }
 
   Future<void> adminSetDonorAvailability(String donorId, bool available) async {
-    final batch = _db.batch();
-    batch.update(_db.collection('donors').doc(donorId), {'is_available': available});
-    batch.update(_db.collection('donors_public').doc(donorId), {
-      'is_available': available,
-      'updated_at': FieldValue.serverTimestamp(),
+    await _db.runTransaction((tx) async {
+      tx.update(_db.collection('donors').doc(donorId), {'is_available': available});
+      tx.update(_db.collection('donors_public').doc(donorId), {
+        'is_available': available,
+        'updated_at': FieldValue.serverTimestamp(),
+      });
     });
-    await batch.commit();
     await _logAdminAction(available ? 'mark_available' : 'mark_unavailable', donorId);
   }
 
