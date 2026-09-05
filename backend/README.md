@@ -14,6 +14,33 @@ needs the Blaze plan to deploy at all and was never built. What's here is
 the Spark-compatible replacement; see the "requires Blaze" table in the
 plan this was built from for exactly what's simulated instead.
 
+## vs. `Rakta_Bandhan_Technical_HLD.md`
+
+That doc (root of repo) is the original, more ambitious architecture —
+Cloud Functions, real FCM push, Geoflutterfire, MSG91, a separate web admin
+dashboard. Decision: stay on Spark, keep what's built here. Three
+different reasons an HLD item isn't built as literally specified —
+worth keeping distinct, since only the first one is a hard wall:
+
+**Genuinely Blaze-only — simulated instead, can't be done any other way on Spark:**
+| HLD item | What we do instead |
+|---|---|
+| Cloud Functions (matching trigger, contact reveal, verification) | Client-side Firestore transactions + `firestore.rules` (this folder) |
+| FCM push, backgrounded/closed app | In-app only, live while the app is open (`FirestoreNotificationsService`) |
+| Scheduled functions (auto-expire, 90-day reactivation) | Lazy checks on read (`Backend.expireIfStale`, `Backend.maybeReactivate`) |
+| MSG91 SMS fallback | Not built — no fallback channel if push/in-app is missed |
+
+**Spark-compatible, just not built yet — no Blaze needed if you want these later:**
+- Firebase Storage for donor ID proof / hospital verification docs (Storage has a free Spark tier)
+- A real web admin dashboard via Firebase Hosting (Hosting is also free-tier; could be the same Flutter app built for web, since `firebase_options.dart` already has a `web` config)
+- Firebase Analytics (not wired in at all)
+- Real geohash *range* queries (Geoflutterfire-style `where(geohash, >=, ...)`) instead of the current full-scan-then-Haversine-filter — fine at demo scale, would matter at real scale
+
+**Matches the HLD as-is, different mechanism, same result:**
+- Data model (`donors`, `requests`, `hospitals`, `donation_history`) — same shape, `notifications` is derived instead of stored (see collections table below)
+- OSM/Nominatim for geocoding — the HLD lists this as the fallback; it's what we use as the only method (no Google Maps Platform key)
+- Admin verification gating (`is_verified`) and G-I-F-T flow (group → identify → fast accept → time/schedule) — same behavior, enforced by rules instead of a Function
+
 ## Deploy
 
 ```
