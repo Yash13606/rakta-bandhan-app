@@ -21,6 +21,11 @@ const bloodCompatibility = <String, List<String>>{
 const donorCooldownDays = 90;
 const requestExpiryHours = 6;
 
+/// Mapbox public token for street-level address search (searchAddress
+/// below). Get one free at mapbox.com -> Account -> Tokens (no card
+/// needed) and paste it here.
+const mapboxAccessToken = 'PASTE_MAPBOX_PUBLIC_TOKEN_HERE';
+
 const _base32 = '0123456789bcdefghjkmnpqrstuvwxyz';
 
 /// Standard interleaved-bits geohash encoder. Stored on donor/request docs
@@ -487,32 +492,67 @@ class Backend {
     }
   }
 
-  /// Free OpenStreetMap Nominatim geocoding — no API key, no billing (same
-  /// no-paid-tools choice as the MapLibre/CARTO map elsewhere in this app).
+  /// Mapbox Geocoding API (free up to 100k requests/month, no billing card).
+  /// `types=address` + `autocomplete=true` gets street/house-number-level
+  /// matches as the user types; `proximity` biases results toward wherever
+  /// the device currently is so "Main St" resolves to the nearby one first.
   /// Converts a typed address into a pickable list of {label, lat, lng}.
   Future<List<Map<String, dynamic>>> searchAddress(String query) async {
     if (query.trim().length < 3) return [];
-    final uri = Uri.https('nominatim.openstreetmap.org', '/search', {
-      'q': query,
-      'format': 'jsonv2',
+    final params = {
+      'access_token': mapboxAccessToken,
+      'autocomplete': 'true',
+      'types': 'address,place,poi',
       'limit': '5',
-    });
+    };
     try {
-      final response = await http.get(
-        uri,
-        headers: {'User-Agent': 'RaktaBandhan/1.0 (Rotary Club blood donor app)'},
-      );
+      final proximity = await currentPosition();
+      params['proximity'] = '${proximity.longitude},${proximity.latitude}';
+    } catch (_) {
+      // No fix yet — plain (non-biased) search still works fine.
+    }
+    final uri = Uri.https(
+      'api.mapbox.com',
+      '/geocoding/v5/mapbox.places/${Uri.encodeComponent(query)}.json',
+      params,
+    );
+    try {
+      final response = await http.get(uri);
       if (response.statusCode != 200) return [];
-      final results = jsonDecode(response.body) as List;
+      final body = jsonDecode(response.body) as Map<String, dynamic>;
+      final results = body['features'] as List;
       return results
           .map((r) => {
-                'label': r['display_name'] as String,
-                'lat': double.parse(r['lat'] as String),
-                'lng': double.parse(r['lon'] as String),
+                'label': r['place_name'] as String,
+                'lat': ((r['center'] as List)[1] as num).toDouble(),
+                'lng': ((r['center'] as List)[0] as num).toDouble(),
               })
           .toList();
     } catch (_) {
       return [];
+    }
+  }
+
+  /// Mapbox reverse geocoding — turns a GPS fix into a real street-level
+  /// address label (e.g. "MG Road, Kochi") instead of a generic "Current
+  /// location" placeholder, matching the Uber/Rapido pattern of showing
+  /// your actual detected address by default. Returns null (caller falls
+  /// back to a generic label) if the lookup fails or the token isn't set.
+  Future<String?> reverseGeocode(double lat, double lng) async {
+    final uri = Uri.https(
+      'api.mapbox.com',
+      '/geocoding/v5/mapbox.places/$lng,$lat.json',
+      {'access_token': mapboxAccessToken, 'types': 'address,place'},
+    );
+    try {
+      final response = await http.get(uri);
+      if (response.statusCode != 200) return null;
+      final body = jsonDecode(response.body) as Map<String, dynamic>;
+      final results = body['features'] as List;
+      if (results.isEmpty) return null;
+      return results.first['place_name'] as String;
+    } catch (_) {
+      return null;
     }
   }
 

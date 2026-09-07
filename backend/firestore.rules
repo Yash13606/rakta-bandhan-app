@@ -56,20 +56,31 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
 
-    // donors_public/{uid} — map-safe mirror. No phone field, ever. Owner
-    // -written, but is_verified/is_available must mirror the private doc
-    // so a donor can't self-verify or fake availability on the public
-    // copy either.
+    // donors_public/{uid} — map-safe mirror. No phone field, ever.
+    //
+    // NOTE: get()/exists() inside a transaction's rule evaluation sees the
+    // database as of BEFORE the transaction started — never a sibling
+    // write made earlier in that same transaction. registerDonor() (and
+    // every admin/self write below) sets donors/{uid} and donors_public/{uid}
+    // together in one transaction, so a rule here that called
+    // get(donors/{uid}) would read a doc that doesn't exist yet (brand-new
+    // donor) or a stale pre-write value (verify/ban/availability) — always
+    // denying. Every check below reads only this document's own fields
+    // instead, so it can't depend on write order within the transaction.
     match /donors_public/{uid} {
       allow read: if isSignedIn();
 
-      allow create, update: if (isOwner(uid) || isAdmin())
+      // A fresh donor always starts unverified (see registerDonor).
+      allow create: if (isOwner(uid) || isAdmin())
         && !('phone' in request.resource.data)
-        && (isAdmin() || get(/databases/$(database)/documents/donors/$(uid)).data.is_banned == false)
-        && request.resource.data.is_verified ==
-             get(/databases/$(database)/documents/donors/$(uid)).data.is_verified
-        && request.resource.data.is_available ==
-             get(/databases/$(database)/documents/donors/$(uid)).data.is_available;
+        && request.resource.data.is_verified == false;
+
+      // is_verified can only change via an admin write — an owner's own
+      // update must leave it exactly as it already was.
+      allow update: if (isOwner(uid) || isAdmin())
+        && !('phone' in request.resource.data)
+        && (isAdmin() || (!isBanned()
+              && request.resource.data.is_verified == resource.data.is_verified));
 
       allow delete: if isOwner(uid) || isAdmin();
     }
